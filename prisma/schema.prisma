@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Account {
-  id            Int     @id @unique @default(sequence())
-  email         String  @unique
+  id            Int            @id @unique @default(sequence())
+  email         String         @unique
   password      String
   type          String
   kelasDiampu   kelas[]
-  kelasDiambil  kelas[] @relation("kelasDiambil")
+  kelasDiambil  kelas[]        @relation("kelasDiambil")
+  diskusi       forumDiskusi[]
+  comment       comment[]
   kelasFavorite Int[]
   tutorFavorite Int[]
 }
@@ -32,6 +34,27 @@ model kelas {
   owner       Account   @relation(fields: [ownerId], references: [id])
   ownerId     Int
   siswa       Account[] @relation("kelasDiambil")
+}
+
+model forumDiskusi {
+  id       Int       @id @unique @default(sequence())
+  owner    Account   @relation(fields: [ownerId], references: [id])
+  ownerId  Int
+  title    String
+  kategori String
+  content  String
+  postedAt String
+  comment  comment[]
+}
+
+model comment {
+  id             Int          @id @unique @default(sequence())
+  owner          Account      @relation(fields: [ownerId], references: [id])
+  ownerId        Int
+  forumDiskusi   forumDiskusi @relation(fields: [forumDiskusiId], references: [id])
+  forumDiskusiId Int
+  content        String
+  postedAt       String
 }
 
 model modul {
