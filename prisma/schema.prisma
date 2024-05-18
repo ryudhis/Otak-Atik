@@ -10,8 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id       Int    @unique @default(sequence())
-  email    String @unique
-  password String
+model Account {
+  id            Int     @id @unique @default(sequence())
+  email         String  @unique
+  password      String
+  type          String
+  kelasDiampu   kelas[]
+  kelasDiambil  kelas[] @relation("kelasDiambil")
+  kelasFavorite Int[]
+  tutorFavorite Int[]
+}
+
+model kelas {
+  id          Int       @id @unique @default(sequence())
+  nama        String
+  kategori    String
+  materi      String[]
+  spesifikasi String[]
+  metode      String[]
+  jadwal      String[]
+  owner       Account   @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  siswa       Account[] @relation("kelasDiambil")
+}
+
+model modul {
+  id Int @unique @default(sequence())
 }
