@@ -4,6 +4,7 @@ import Button from "./Button";
 import HelpCenter from "@svg/helpcenter.svg";
 import Notification from "@svg/notification.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -12,12 +13,16 @@ const Header = () => {
         <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
           <Image src={HelpCenter} alt="help center" />
         </Button>
-        <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
-          <Image src={Notification} alt="notification" />
-        </Button>
-        <Button alternateStyle="text-white bg-tertiary border-secondary border-[2px]">
-          Daftar
-        </Button>
+        <Link href="/login">
+          <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
+            <Image src={Notification} alt="notification" />
+          </Button>
+        </Link>
+        <Link href="/login/register">
+          <Button alternateStyle="text-white bg-tertiary border-secondary border-[2px]">
+            Daftar
+          </Button>
+        </Link>
         <Button alternateStyle="text-tertiary">Masuk</Button>
       </div>
     </div>
