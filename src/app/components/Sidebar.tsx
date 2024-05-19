@@ -23,7 +23,11 @@ const Sidebar = () => {
       <div className="flex flex-col gap-6">
         <Link href="/dashboard">
           <Image
-            className={pathname === "/dashboard" ? `scale-110` : `scale-100`}
+            className={
+              pathname === "/dashboard"
+                ? `scale-110`
+                : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
+            }
             src={pathname === "/dashboard" ? menuSolid : menu}
             alt="menu image"
           />
@@ -31,7 +35,9 @@ const Sidebar = () => {
         <Link href="/dashboard/courses">
           <Image
             className={
-              pathname === "/dashboard/courses" ? `scale-110` : `scale-100`
+              pathname === "/dashboard/courses"
+                ? `scale-110`
+                : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
             }
             src={pathname === "/dashboard/courses" ? courseSolid : course}
             alt="course image"
@@ -40,7 +46,9 @@ const Sidebar = () => {
         <Link href="/dashboard/forum">
           <Image
             className={
-              pathname === "/dashboard/forum" ? `scale-110` : `scale-100`
+              pathname === "/dashboard/forum"
+                ? `scale-110`
+                : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
             }
             src={pathname === "/dashboard/forum" ? messageSolid : message}
             alt="forum image"
@@ -49,7 +57,9 @@ const Sidebar = () => {
         <Link href="/dashboard/setting">
           <Image
             className={
-              pathname === "/dashboard/setting" ? `scale-110` : `scale-100`
+              pathname === "/dashboard/setting"
+                ? `scale-110`
+                : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
             }
             src={pathname === "/dashboard/setting" ? settingSolid : setting}
             alt="setting image"
