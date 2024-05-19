@@ -13,6 +13,7 @@ datasource db {
 model Account {
   id            Int            @id @unique @default(sequence())
   email         String         @unique
+  username      String         @unique
   password      String
   type          String
   kelasDiampu   kelas[]

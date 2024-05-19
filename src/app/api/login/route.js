@@ -16,13 +16,13 @@ const validatePassword = async (password1, password2) => {
 };
 
 export async function POST(req) {
-  const { email, password } = await req.json();
+  const { username, password } = await req.json();
   let token;
 
   try {
     const account = await prisma.account.findUnique({
       where: {
-        email,
+        username,
       },
     });
 
