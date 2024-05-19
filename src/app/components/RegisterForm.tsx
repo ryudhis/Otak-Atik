@@ -51,7 +51,7 @@ const Registerform = () => {
 
   return (
     <div className='w-full max-w-md mx-auto p-6 bg-primary rounded-lg shadow-md'>
-      <h2 className='text-3xl font-bold mb-4 text-white'>Masuk</h2>
+      <h2 className='text-3xl font-bold mb-4 text-white'>Daftar</h2>
       <form onSubmit={handleSubmit(signIn)} className='space-y-6'>
         <div className='relative'>
           <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
@@ -65,9 +65,6 @@ const Registerform = () => {
               errors.username ? "border-red-500" : ""
             }`}
           />
-          {errors.username && (
-            <span className='text-red-600 text-sm'>This field is required</span>
-          )}
         </div>
 
         <div className='relative'>
@@ -82,9 +79,6 @@ const Registerform = () => {
               errors.username ? "border-red-500" : ""
             }`}
           />
-          {errors.username && (
-            <span className='text-red-600 text-sm'>This field is required</span>
-          )}
         </div>
 
         <div className='relative'>
@@ -99,9 +93,6 @@ const Registerform = () => {
               errors.password ? "border-red-500" : ""
             }`}
           />
-          {errors.password && (
-            <span className='text-red-600 text-sm'>This field is required</span>
-          )}
         </div>
 
         <button
