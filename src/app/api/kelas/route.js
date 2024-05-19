@@ -2,7 +2,11 @@ import prisma from "@/utils/prisma";
 
 export async function GET() {
   try {
-    const kelas = await prisma.kelas.findMany();
+    const kelas = await prisma.kelas.findMany({
+      include: {
+        owner: true,
+      }
+    });
 
     return Response.json({
       status: 200,

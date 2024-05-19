@@ -18,36 +18,38 @@ model Account {
   kelasDiampu   kelas[]
   kelasDiambil  kelas[]        @relation("kelasDiambil")
   diskusi       forumDiskusi[]
-  comment       comment[]
   kelasFavorite Int[]
   tutorFavorite Int[]
+  commentForum  commentForum[]
+  commentKelas  commentKelas[]
 }
 
 model kelas {
-  id          Int       @id @unique @default(sequence())
-  nama        String
-  kategori    String
-  materi      String[]
-  spesifikasi String[]
-  metode      String[]
-  jadwal      String[]
-  owner       Account   @relation(fields: [ownerId], references: [id])
-  ownerId     Int
-  siswa       Account[] @relation("kelasDiambil")
+  id           Int            @id @unique @default(sequence())
+  nama         String
+  kategori     String
+  materi       String[]
+  spesifikasi  String[]
+  metode       String[]
+  jadwal       String[]
+  owner        Account        @relation(fields: [ownerId], references: [id])
+  ownerId      Int
+  siswa        Account[]      @relation("kelasDiambil")
+  commentKelas commentKelas[]
 }
 
 model forumDiskusi {
-  id       Int       @id @unique @default(sequence())
-  owner    Account   @relation(fields: [ownerId], references: [id])
+  id       Int            @id @unique @default(sequence())
+  owner    Account        @relation(fields: [ownerId], references: [id])
   ownerId  Int
   title    String
   kategori String
   content  String
   postedAt String
-  comment  comment[]
+  comment  commentForum[]
 }
 
-model comment {
+model commentForum {
   id             Int          @id @unique @default(sequence())
   owner          Account      @relation(fields: [ownerId], references: [id])
   ownerId        Int
@@ -55,6 +57,16 @@ model comment {
   forumDiskusiId Int
   content        String
   postedAt       String
+}
+
+model commentKelas {
+  id       Int     @id @unique @default(sequence())
+  owner    Account @relation(fields: [ownerId], references: [id])
+  ownerId  Int
+  kelas    kelas   @relation(fields: [kelasId], references: [id])
+  kelasId  Int
+  content  String
+  postedAt String
 }
 
 model modul {
