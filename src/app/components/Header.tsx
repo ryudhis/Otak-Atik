@@ -13,17 +13,17 @@ const Header = () => {
         <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
           <Image src={HelpCenter} alt="help center" />
         </Button>
-        <Link href="/login">
-          <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
-            <Image src={Notification} alt="notification" />
-          </Button>
-        </Link>
+        <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
+          <Image src={Notification} alt="notification" />
+        </Button>
         <Link href="/login/register">
           <Button alternateStyle="text-white bg-tertiary border-secondary border-[2px]">
             Daftar
           </Button>
         </Link>
-        <Button alternateStyle="text-tertiary">Masuk</Button>
+        <Link href="/login">
+          <Button alternateStyle="text-tertiary">Masuk</Button>
+        </Link>
       </div>
     </div>
   );
