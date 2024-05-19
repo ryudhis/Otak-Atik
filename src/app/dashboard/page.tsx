@@ -1,10 +1,44 @@
-import React from "react";
+"use client";
+import axiosConfig from "@utils/axios";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import Star from "@svg/star.svg";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
 
+export interface dashboard {
+  nama: string;
+  ownerId: number;
+  owner: ownerItem;
+}
+
+export interface ownerItem {
+  username: string;
+}
+
 const Dashboard = () => {
+  const [dashboard, setDashboard] = useState<dashboard[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const getDashboard = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axiosConfig.get("api/kelas");
+      if (response.data.status !== 400) {
+      } else {
+        alert(response.data.message);
+      }
+      setDashboard(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    getDashboard();
+  }, []);
+
   return (
     <div className="bg-tertiary p-28 h-screen">
       <div className="flex flex-col gap-12">
@@ -20,20 +54,23 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="flex">
-          <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl flex flex-col gap-8">
-            <div className="flex justify-between items-center">
-              <h1>Rizky</h1>
-              <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
-                <Image src={Star} alt="" />
-              </Button>
+          {dashboard.slice(0, 3).map((item) => (
+            <div
+              key={item.ownerId}
+              className="p-6 w-56 h-80 border-2 border-primary rounded-3xl flex flex-col gap-8"
+            >
+              <div className="flex justify-between items-center">
+                <h1>{item.owner.username}</h1>
+                <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
+                  <Image src={Star} alt="" />
+                </Button>
+              </div>
+              <div className="flex flex-col justify-center items-center gap-4">
+                <Image src={tech} alt="" />
+                <h1 className="text-lg font-bold text-center">{item.nama}</h1>
+              </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <Image src={tech} alt="" />
-              <h1 className="text-lg font-bold text-center">
-                Data Visualization dengan Python
-              </h1>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
