@@ -17,7 +17,7 @@ model Account {
   password      String
   type          String
   kelasDiampu   kelas[]
-  kelasDiambil  kelas[]        @relation("kelasDiambil")
+  kelasDiambil  kelas[]        @relation("kelasDiambil") 
   diskusi       forumDiskusi[]
   kelasFavorite Int[]
   tutorFavorite Int[]
