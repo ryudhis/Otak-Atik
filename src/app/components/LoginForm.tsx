@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import axiosConfig from '../../utils/axios';
-import Cookies from 'js-cookie';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import UsernameIcon from '@img/login/username.png';
-import PasswordIcon from '@img/login/password.png';
-import Image from 'next/image';
+import React from "react";
+import { useRouter } from "next/navigation";
+import axiosConfig from "../../utils/axios";
+import Cookies from "js-cookie";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import UsernameIcon from "@img/login/username.png";
+import PasswordIcon from "@img/login/password.png";
+import Image from "next/image";
 
 const formSchema = z.object({
   username: z.string().min(6).max(50),
@@ -18,26 +18,31 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
   });
 
-  const signIn = async (values:any) => {
+  const signIn = async (values: any) => {
     try {
-      const response = await axiosConfig.post('api/login', values);
+      const response = await axiosConfig.post("api/login", values);
       if (response.data.status !== 400) {
-        Cookies.set('token', response.data.token, { expires: 1 });
-        alert('Berhasil Login');
-        router.push('/dashboard');
+        Cookies.set("token", response.data.token, { expires: 1 });
+        alert("Berhasil Login");
+        router.push("/dashboard");
       } else {
         alert(response.data.message);
       }
     } catch (error) {
-      alert('Gagal Login');
+      alert("Gagal Login");
     }
     reset();
   };
@@ -53,10 +58,14 @@ const LoginForm = () => {
           <input
             type="text"
             placeholder="Username"
-            {...register('username', { required: true })}
-            className={`pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${errors.username ? 'border-red-500' : ''}`}
+            {...register("username", { required: true })}
+            className={`text-black pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+              errors.username ? "border-red-500" : ""
+            }`}
           />
-          {errors.username && <span className="text-red-600 text-sm">This field is required</span>}
+          {errors.username && (
+            <span className="text-red-600 text-sm">This field is required</span>
+          )}
         </div>
 
         <div className="relative">
@@ -66,10 +75,14 @@ const LoginForm = () => {
           <input
             type="password"
             placeholder="Password"
-            {...register('password', { required: true })}
-            className={`pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${errors.password ? 'border-red-500' : ''}`}
+            {...register("password", { required: true })}
+            className={`text-black pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+              errors.password ? "border-red-500" : ""
+            }`}
           />
-          {errors.password && <span className="text-red-600 text-sm">This field is required</span>}
+          {errors.password && (
+            <span className="text-red-600 text-sm">This field is required</span>
+          )}
         </div>
 
         <button

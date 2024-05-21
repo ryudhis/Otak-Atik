@@ -59,83 +59,83 @@ const Registerform = () => {
   };
 
   return (
-    <div className='w-full max-w-md mx-auto p-6 bg-primary rounded-lg shadow-md'>
-      <h2 className='text-3xl font-bold mb-4 text-white'>Daftar</h2>
-      <form onSubmit={handleSubmit(registerAccount)} className='space-y-6'>
-        <div className='relative'>
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-            <Image src={UsernameIcon} alt='Email Icon' className='h-5 w-5' />
+    <div className="w-full max-w-md mx-auto p-6 bg-primary rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold mb-4 text-white">Daftar</h2>
+      <form onSubmit={handleSubmit(registerAccount)} className="space-y-6">
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Image src={UsernameIcon} alt="Email Icon" className="h-5 w-5" />
           </div>
           <input
-            type='email'
-            placeholder='Email'
+            type="email"
+            placeholder="Email"
             {...register("email", { required: true })}
-            className={`pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+            className={`text-black pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
               errors.email ? "border-red-500" : ""
             }`}
           />
         </div>
 
-        <div className='relative'>
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-            <Image src={UsernameIcon} alt='Username Icon' className='h-5 w-5' />
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Image src={UsernameIcon} alt="Username Icon" className="h-5 w-5" />
           </div>
           <input
-            type='text'
-            placeholder='Username'
+            type="text"
+            placeholder="Username"
             {...register("username", { required: true })}
-            className={`pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+            className={`text-black pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
               errors.username ? "border-red-500" : ""
             }`}
           />
         </div>
 
-        <div className='relative'>
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-            <Image src={PasswordIcon} alt='Password Icon' className='h-5 w-5' />
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Image src={PasswordIcon} alt="Password Icon" className="h-5 w-5" />
           </div>
           <input
-            type='password'
-            placeholder='Password'
+            type="password"
+            placeholder="Password"
             {...register("password", { required: true })}
-            className={`pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+            className={`text-black pl-10 mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
               errors.password ? "border-red-500" : ""
             }`}
           />
         </div>
 
-        <div className='flex space-x-2 justify-center'>
+        <div className="flex space-x-2 justify-center">
           <button
-            type='button'
+            type="button"
             onClick={() => handleTypeSelection("pelajar")}
             className={`px-4 py-2 rounded-md font-semibold w-full ${
-              userType === "pelajar" ? "bg-secondary  border-primary border-[1px] text-slate-800" : "bg-primary border-[1px] border-secondary text-white"
+              userType === "pelajar"
+                ? "bg-secondary  border-primary border-[1px] text-slate-800"
+                : "bg-primary border-[1px] border-secondary text-white"
             }`}
           >
             Pelajar
           </button>
           <button
-            type='button'
+            type="button"
             onClick={() => handleTypeSelection("tutor")}
             className={`px-4 py-2 rounded-md font-semibold w-full ${
-              userType === "tutor" ? "bg-secondary border-primary border-[1px] text-slate-800" : "bg-primary border-[1px] border-secondary text-white"
+              userType === "tutor"
+                ? "bg-secondary border-primary border-[1px] text-slate-800"
+                : "bg-primary border-[1px] border-secondary text-white"
             }`}
           >
             Tutor
           </button>
         </div>
 
-        <input
-          type='hidden'
-          value={userType}
-          {...register("type")}
-        />
+        <input type="hidden" value={userType} {...register("type")} />
 
-        {errors.type && <p className='text-red-500'>Type is required</p>}
+        {errors.type && <p className="text-red-500">Type is required</p>}
 
         <button
-          type='submit'
-          className='w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+          type="submit"
+          className="w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           Daftar
         </button>
