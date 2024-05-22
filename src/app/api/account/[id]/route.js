@@ -7,6 +7,9 @@ export async function GET(req) {
       where: {
         id: parseInt(id),
       },
+      include: {
+        kelasDiampu: true, kelasDiambil: true, diskusi: true, commentForum: true, commentKelas: true,
+      }
     });
 
     return Response.json({
