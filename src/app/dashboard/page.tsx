@@ -20,9 +20,8 @@ export interface OwnerItem {
   username: string;
 }
 
-// Define a custom type that extends JwtPayload and includes the id property
 interface CustomJwtPayload extends JwtPayload {
-  id: string; // Adjust the type based on the actual type of your id
+  id: string;
 }
 
 const Dashboard = () => {
@@ -158,6 +157,23 @@ const Dashboard = () => {
         </div>
         <div className="p-6 w-[600px] h-80 border-2 border-primary rounded-3xl flex flex-col gap-8">
           <h1 className="text-3xl font-bold">Kelas Favorit</h1>
+          {userData.kelasFavorite?.length === 0 && (
+            <h1 className="text-center">Tidak ada kelas favorit</h1>
+          )}
+          {kelas
+            .filter((item) => userData.kelasFavorite.includes(item.id))
+            .map((item: any) => (
+              <div
+                key={item.id}
+                className="flex justify-between items-center gap-4"
+              >
+                <div className="flex gap-1 items-center">
+                  <Image src={tech} alt="" width={32} />
+                  <h1>{item.owner.username}</h1>
+                </div>
+                <h1>{item.nama}</h1>
+              </div>
+            ))}
           <div className="flex py-2 justify-between">
             <h1 className="font-bold text-lg">Kelas 1</h1>
             <div className="flex justify-center items-center gap-2">
