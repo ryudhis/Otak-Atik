@@ -5,29 +5,33 @@ import Button from "../components/Button";
 import Star from "@svg/star.svg";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
-export interface kelas {
+export interface Kelas {
   nama: string;
   id: number;
-  owner: ownerItem;
+  owner: OwnerItem;
   kategori: string;
 }
 
-export interface ownerItem {
+export interface OwnerItem {
   username: string;
 }
 
-// export interface account {
-//   username: string;
-//   email: string;
-//   password: string;
-// }
+// Define a custom type that extends JwtPayload and includes the id property
+interface CustomJwtPayload extends JwtPayload {
+  id: string; // Adjust the type based on the actual type of your id
+}
 
 const Dashboard = () => {
-  const [kelas, setKelas] = useState<kelas[]>([]);
+  const [kelas, setKelas] = useState<Kelas[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState<any>(null);
   const listKategori = ["Computer Science", "Science", "Sport"];
   const [currentKelas, setCurrentKelas] = useState("Computer Science");
+
   const switchKelas = (direction: string) => {
     const currentIndex = listKategori.indexOf(currentKelas);
     let newIndex;
@@ -37,10 +41,10 @@ const Dashboard = () => {
     } else if (direction === "prev") {
       newIndex = (currentIndex - 1 + listKategori.length) % listKategori.length;
     } else {
-      newIndex = 0; // Set a default value for newIndex
+      newIndex = 0;
     }
 
-    setCurrentKelas(listKategori[newIndex]); // Update state variable
+    setCurrentKelas(listKategori[newIndex]);
   };
 
   const getKelas = async () => {
@@ -48,20 +52,39 @@ const Dashboard = () => {
     try {
       const response = await axiosConfig.get("api/kelas");
       if (response.data.status !== 400) {
+        setKelas(response.data.data);
       } else {
         alert(response.data.message);
       }
-      setKelas(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     getKelas();
   }, [currentKelas]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          const decodedToken = jwtDecode<CustomJwtPayload>(token);
+          const userId = decodedToken.id;
+
+          const response = await axios.get(`/api/account/${userId}`);
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="bg-tertiary p-28 h-screen flex justify-between">

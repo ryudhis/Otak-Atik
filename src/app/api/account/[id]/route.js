@@ -5,7 +5,7 @@ export async function GET(req) {
     const id = req.url.split("/account/")[1];
     const account = await prisma.account.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
