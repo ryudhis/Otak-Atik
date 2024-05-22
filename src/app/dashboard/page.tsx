@@ -158,8 +158,74 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="p-6 w-[420px] h-[568px] border-2 border-primary rounded-3xl flex flex-col gap-8">
+      <div className="p-6 w-[420px] h-[660px] border-2 border-primary rounded-3xl flex flex-col gap-6">
         <h1 className="text-2xl font-bold">Performa Saya</h1>
+        <h1 className="text-lg font-semibold">Kelas diikuti</h1>
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-3">
+            <Image src={tech} alt="" width={32}></Image>
+            <div className="flex flex-col">
+              <h1 className="text-base font-semibold">Kelas 1</h1>
+              <h1 className="text-sm">12 Mei 2024</h1>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Image src={tech} alt="" width={32}></Image>
+            <div className="flex flex-col">
+              <h1 className="text-base font-semibold">Kelas 2</h1>
+              <h1 className="text-sm">12 Mei 2024</h1>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Image src={tech} alt="" width={32}></Image>
+            <div className="flex flex-col">
+              <h1 className="text-base font-semibold">Kelas 3</h1>
+              <h1 className="text-sm">12 Mei 2024</h1>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Image src={tech} alt="" width={32}></Image>
+            <div className="flex flex-col">
+              <h1 className="text-base font-semibold">Kelas 4</h1>
+              <h1 className="text-sm">12 Mei 2024</h1>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Image src={tech} alt="" width={32}></Image>
+            <div className="flex flex-col">
+              <h1 className="text-base font-semibold">Kelas 5</h1>
+              <h1 className="text-sm">12 Mei 2024</h1>
+            </div>
+          </div>
+        </div>
+        <h1 className="text-lg font-semibold">Tutor Favorit</h1>
+        <div className="flex gap-4">
+          <div className="flex flex-col">
+            <Image src={tech} alt="" width={32}></Image>
+            <h1 className="text-sm">Jarwo</h1>
+          </div>
+          <div className="flex flex-col">
+            <Image src={tech} alt="" width={32}></Image>
+            <h1 className="text-sm">Jarwi</h1>
+          </div>
+          <div className="flex flex-col">
+            <Image src={tech} alt="" width={32}></Image>
+            <h1 className="text-sm">Jarwa</h1>
+          </div>
+          <div className="flex flex-col">
+            <Image src={tech} alt="" width={32}></Image>
+            <h1 className="text-sm">Jarwu</h1>
+          </div>
+          <div className="flex flex-col">
+            <Image src={tech} alt="" width={32}></Image>
+            <h1 className="text-sm">Jarwe</h1>
+          </div>
+        </div>
+        <h1 className="text-lg font-semibold">Materi Favorit</h1>
+        <div className="flex gap-4">
+          <Image src={tech} alt="" width={32}></Image>
+          <Image src={tech} alt="" width={32}></Image>
+        </div>
       </div>
     </div>
   );
