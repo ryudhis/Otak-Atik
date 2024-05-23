@@ -16,6 +16,7 @@ model Account {
   username      String         @unique
   password      String
   type          String
+  avatar        String
   kelasDiampu   kelas[]
   kelasDiambil  kelas[]        @relation("kelasDiambil") 
   diskusi       forumDiskusi[]

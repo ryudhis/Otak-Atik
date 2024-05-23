@@ -6,7 +6,7 @@ async function main() {
     data: {
       email : "admin@gmail.com",
       username: "admin",
-      //123456
+      avatar: `https://ui-avatars.com/api/?name=admin`,
       password : "$2a$12$rYT6BJWBuJ28u6POeWjnJ.SlnVv/8yswsQye58OFherUlHiN04AmG",
       type: "admin",
     },
@@ -16,7 +16,7 @@ async function main() {
     data: {
       email : "tutor@gmail.com",
       username: "tutor",
-      //123456
+      avatar: `https://ui-avatars.com/api/?name=tutor`,
       password : "$2a$12$rYT6BJWBuJ28u6POeWjnJ.SlnVv/8yswsQye58OFherUlHiN04AmG",
       type: "tutor",
     },
@@ -26,7 +26,7 @@ async function main() {
     data: {
       email : "pelajar@gmail.com",
       username: "pelajar",
-      //123456
+      avatar: `https://ui-avatars.com/api/?name=pelajar`,
       password : "$2a$12$rYT6BJWBuJ28u6POeWjnJ.SlnVv/8yswsQye58OFherUlHiN04AmG",
       type: "pelajar",
     },

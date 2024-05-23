@@ -1,9 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import axios from "axios";
-import Image from "next/image"; // Importing Image from next/image
 
 interface KelasItemProps {
   title: string;
@@ -12,20 +11,6 @@ interface KelasItemProps {
 }
 
 const KelasItem: React.FC<KelasItemProps> = ({ title, jadwal, tutorNama }) => {
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`https://ui-avatars.com/api/?name=${tutorNama}`);
-        setAvatarUrl(response.request.responseURL);
-      } catch (error) {
-        console.error("Error fetching avatar:", error);
-      }
-    };
-
-    fetchData();
-  }, [tutorNama]);
 
   return (
     <div className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700'>
@@ -44,7 +29,7 @@ const KelasItem: React.FC<KelasItemProps> = ({ title, jadwal, tutorNama }) => {
         </Button>
       </div>
       <p className='font-semibold'>{tutorNama}</p>
-      <image src={avatarUrl} alt="avatar tutor" width={40} height={40}></image>
+      <img src={`https://ui-avatars.com/api/?name=${tutorNama}`} alt="avatar tutor" width={40} height={40}></img>
     </div>
   );
 };

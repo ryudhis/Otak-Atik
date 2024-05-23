@@ -10,6 +10,7 @@ export async function POST(req) {
       data: {
         email: data.email,
         username: data.username,
+        avatar: `https://ui-avatars.com/api/?name=${data.username}`,
         password: hashedPassword,
         type: data.type,
       },
