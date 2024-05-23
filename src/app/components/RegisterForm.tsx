@@ -116,6 +116,7 @@ const Registerform = () => {
           >
             Pelajar
           </button>
+          
           <button
             type="button"
             onClick={() => handleTypeSelection("tutor")}

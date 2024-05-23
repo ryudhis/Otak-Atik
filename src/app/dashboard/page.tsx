@@ -6,7 +6,6 @@ import Star from "@svg/star.svg";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
 export interface Kelas {
@@ -101,7 +100,7 @@ const Dashboard = () => {
           const decodedToken = jwtDecode<CustomJwtPayload>(token);
           const userId = decodedToken.id;
 
-          const response = await axios.get(`/api/account/${userId}`);
+          const response = await axiosConfig.get(`/api/account/${userId}`);
           setUserData(response.data.data);
         }
       } catch (error) {
