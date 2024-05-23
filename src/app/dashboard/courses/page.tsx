@@ -16,6 +16,7 @@ export interface Kelas {
 
 export interface OwnerItem {
   username: string;
+  avatar: string;
 }
 
 export interface UserData {
@@ -76,6 +77,7 @@ const Dashboard = () => {
             title={kelas.nama}
             jadwal={kelas.jadwal[0]}
             tutorNama={kelas.owner.username}
+            avatar={kelas.owner.avatar}
           />
         ))}
       </div>
