@@ -18,6 +18,7 @@ export interface Kelas {
 
 export interface OwnerItem {
   username: string;
+  avatar: string;
 }
 
 export interface userData {
@@ -30,6 +31,7 @@ export interface userData {
 export interface account {
   id: number;
   username: string;
+  avatar: string;
 }
 
 interface CustomJwtPayload extends JwtPayload {
@@ -122,7 +124,6 @@ const Dashboard = () => {
               <Button
                 onClick={() => {
                   switchKelas("prev");
-                  console.log(userData);
                 }}
                 alternateStyle="text-white bg-tertiary border-secondary border-[2px] py-1 px-3"
               >
@@ -148,7 +149,7 @@ const Dashboard = () => {
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex gap-1 items-center justify-center">
-                        <Image src={tech} alt="" width={20} />
+                        <img src={item.owner.avatar} alt="" />
                         <h1>{item.owner.username}</h1>
                       </div>
                       <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mr-4">
@@ -194,7 +195,7 @@ const Dashboard = () => {
           ) : userData?.kelasFavorite?.length === 0 ? (
             <h1 className="text-center">Tidak ada kelas favorit</h1>
           ) : (
-            <div className="overflow-y-auto max-h-full flex flex-col gap-2">
+            <div className="overflow-y-auto max-h-full flex flex-col gap-2 pr-2">
               {kelas
                 .filter((item) => userData?.kelasFavorite.includes(item.id))
                 .map((item: any) => (
@@ -203,7 +204,7 @@ const Dashboard = () => {
                     className="flex justify-between items-center gap-4"
                   >
                     <div className="flex gap-1 items-center">
-                      <Image src={tech} alt="" width={32} />
+                      <img src={item.owner.avatar} alt="" />
                       <h1>{item.owner.username}</h1>
                     </div>
                     <h1>{item.nama}</h1>
@@ -231,8 +232,8 @@ const Dashboard = () => {
                     userData?.kelasDiambil.some((kelas) => kelas.id === item.id)
                   )
                   .map((item: any) => (
-                    <div key={item.id} className="flex gap-3">
-                      <Image src={tech} alt="" width={32} />
+                    <div key={item.id} className="flex gap-3 items-center">
+                      <img className="w-8 h-8" src={item.owner.avatar} alt="" />
                       <div className="flex flex-col">
                         <h1 className="text-base font-semibold">{item.nama}</h1>
                         <h1 className="text-sm">12 Mei 2024</h1>
@@ -254,7 +255,7 @@ const Dashboard = () => {
               .filter((item) => userData?.tutorFavorite.includes(item.id))
               .map((item) => (
                 <div key={item.id} className="flex flex-col gap-1">
-                  <Image src={tech} alt="" width={32} />
+                  <img className="w-8" src={item.avatar} alt="" />
                   <h1 className="text-sm">{item.username}</h1>
                 </div>
               ))
