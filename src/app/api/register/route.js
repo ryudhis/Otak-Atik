@@ -10,7 +10,7 @@ export async function POST(req) {
       data: {
         email: data.email,
         username: data.username,
-        avatar: `https://ui-avatars.com/api/?name=${data.username}`,
+        avatar: `https://ui-avatars.com/api/?name=${data.username}&size=32&rounded=true&background=random`,
         password: hashedPassword,
         type: data.type,
       },
