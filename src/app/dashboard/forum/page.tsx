@@ -2,6 +2,9 @@ import React from "react";
 import Button from "@components/Button";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
+import Like from "@svg/Like.svg";
+import Comments from "@svg/Comments.svg";
+import Dislike from "@svg/Dislike.svg";
 
 const Forum = () => {
   return (
@@ -22,14 +25,64 @@ const Forum = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
-          <Image src={tech} alt="" width={32} />
-          <h1>Jerome Bell</h1>
-          <h1>1 Jam yang lalu</h1>
+      <div className="mt-8 flex flex-col">
+        <div className="py-4 border-b-2 border-primary">
+          <div className="flex gap-4">
+            <Image src={tech} alt="" width={32} />
+            <h1 className="font-bold">Jerome Bell</h1>
+            <h1>1 Jam yang lalu</h1>
+          </div>
+          <p className="text-lg">Aku adalah anak gembala</p>
+          <div className="flex gap-6">
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Like} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Dislike} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Comments} alt="" />
+            </Button>
+          </div>
         </div>
-        <p>Aku adalah anak gembala</p>
-        <div></div>
+        <div className="py-4 border-b-2 border-primary">
+          <div className="flex gap-4">
+            <Image src={tech} alt="" width={32} />
+            <h1 className="font-bold">Jerome Bell</h1>
+            <h1>1 Jam yang lalu</h1>
+          </div>
+          <p className="text-lg">Aku adalah anak gembala</p>
+          <div className="flex gap-6">
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Like} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Dislike} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Comments} alt="" />
+            </Button>
+          </div>
+        </div>
+        <div className="py-4 border-b-2 border-primary">
+          <div className="flex gap-4">
+            <Image src={tech} alt="" width={32} />
+            <h1 className="font-bold">Jerome Bell</h1>
+            <h1>1 Jam yang lalu</h1>
+          </div>
+          <p className="text-lg">Aku adalah anak gembala</p>
+          <div className="flex gap-6">
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Like} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Dislike} alt="" />
+            </Button>
+            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+              <Image src={Comments} alt="" />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
