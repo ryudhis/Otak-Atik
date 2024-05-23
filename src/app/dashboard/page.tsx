@@ -187,83 +187,85 @@ const Dashboard = () => {
         </div>
         <div className="p-6 w-[600px] h-80 border-2 border-primary rounded-3xl flex flex-col gap-8">
           <h1 className="text-3xl font-bold">Kelas Favorit</h1>
-          {isLoading && (
+          {isLoading ? (
             <h1 className="text-center animate-pulse my-auto">
               Loading Kelas Favorit...
             </h1>
-          )}
-          {userData?.kelasFavorite?.length === 0 && (
+          ) : userData?.kelasFavorite?.length === 0 ? (
             <h1 className="text-center">Tidak ada kelas favorit</h1>
-          )}
-          <div className="overflow-y-auto max-h-full flex flex-col gap-2">
-            {kelas
-              .filter((item) => userData?.kelasFavorite.includes(item.id))
-              .map((item: any) => (
-                <div
-                  key={item.id}
-                  className="flex justify-between items-center gap-4"
-                >
-                  <div className="flex gap-1 items-center">
-                    <Image src={tech} alt="" width={32} />
-                    <h1>{item.owner.username}</h1>
+          ) : (
+            <div className="overflow-y-auto max-h-full flex flex-col gap-2">
+              {kelas
+                .filter((item) => userData?.kelasFavorite.includes(item.id))
+                .map((item: any) => (
+                  <div
+                    key={item.id}
+                    className="flex justify-between items-center gap-4"
+                  >
+                    <div className="flex gap-1 items-center">
+                      <Image src={tech} alt="" width={32} />
+                      <h1>{item.owner.username}</h1>
+                    </div>
+                    <h1>{item.nama}</h1>
                   </div>
-                  <h1>{item.nama}</h1>
-                </div>
-              ))}
-          </div>
+                ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="p-6 w-[420px] h-[568px] border-2 border-primary rounded-3xl flex flex-col gap-6">
+        <div className="p-6 w-[420px] h-[588px] border-2 border-primary rounded-3xl flex flex-col gap-6">
           <h1 className="text-2xl font-bold">Performa Saya</h1>
           <h1 className="text-lg font-semibold">Kelas diikuti</h1>
-          {isLoading && (
-            <h1 className="text-center animate-pulse my-auto">
-              Loading Kelas Diikuti...
-            </h1>
-          )}
-          {userData?.kelasDiambil?.length === 0 && (
-            <h1 className="text-center">Tidak ada kelas diikuti</h1>
-          )}
-          <div className="flex flex-col gap-2 overflow-y-auto max-h-full">
-            {kelas
-              .filter((item) =>
-                userData?.kelasDiambil.some((kelas) => kelas.id === item.id)
-              )
-              .map((item: any) => (
-                <div key={item.id} className="flex gap-3">
-                  <Image src={tech} alt="" width={32} />
-                  <div className="flex flex-col">
-                    <h1 className="text-base font-semibold">{item.nama}</h1>
-                    <h1 className="text-sm">12 Mei 2024</h1>
-                  </div>
-                </div>
-              ))}
+          <div className="min-h-[300px] max-h-[300px]">
+            {isLoading ? (
+              <h1 className="text-center animate-pulse my-auto">
+                Loading Kelas Diikuti...
+              </h1>
+            ) : userData?.kelasDiambil?.length === 0 ? (
+              <h1 className="text-center">Tidak ada kelas diikuti</h1>
+            ) : (
+              <div className="flex flex-col gap-2 overflow-y-auto max-h-full">
+                {kelas
+                  .filter((item) =>
+                    userData?.kelasDiambil.some((kelas) => kelas.id === item.id)
+                  )
+                  .map((item: any) => (
+                    <div key={item.id} className="flex gap-3">
+                      <Image src={tech} alt="" width={32} />
+                      <div className="flex flex-col">
+                        <h1 className="text-base font-semibold">{item.nama}</h1>
+                        <h1 className="text-sm">12 Mei 2024</h1>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
           <h1 className="text-lg font-semibold">Tutor Favorit</h1>
-          {isLoading && (
+          {isLoading ? (
             <h1 className="text-center animate-pulse my-auto">
               Loading Tutor Favorit...
             </h1>
-          )}
-          {userData?.tutorFavorite?.length === 0 && (
+          ) : userData?.tutorFavorite?.length === 0 ? (
             <h1 className="text-center">Tidak ada tutor favorit</h1>
+          ) : (
+            account
+              .filter((item) => userData?.tutorFavorite.includes(item.id))
+              .map((item) => (
+                <div key={item.id} className="flex flex-col gap-1">
+                  <Image src={tech} alt="" width={32} />
+                  <h1 className="text-sm">{item.username}</h1>
+                </div>
+              ))
           )}
-          {account
-            .filter((item) => userData?.tutorFavorite.includes(item.id))
-            .map((item) => (
-              <div key={item.id} className="flex gap-4">
-                <Image src={tech} alt="" width={32}></Image>
-                <h1 className="text-sm">{item.username}</h1>
-              </div>
-            ))}
           {/* <h1 className="text-lg font-semibold">Materi Favorit</h1>
           <div className="flex gap-4">
             <Image src={tech} alt="" width={32}></Image>
             <Image src={tech} alt="" width={32}></Image>
           </div> */}
         </div>
-        <div className="bg-primary p-6 w-[420px] h-[140px] rounded-3xl flex justify-between">
+        <div className="bg-primary p-6 w-[420px] h-[120px] rounded-3xl flex justify-between">
           <div className="flex flex-col justify-center items-center">
             <h1 className="text-xl font-bold">Kelas Selanjutnya:</h1>
             <h1 className="text-xl font-semibold">React Expert</h1>
