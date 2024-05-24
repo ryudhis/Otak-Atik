@@ -7,6 +7,11 @@ import Like from "@svg/Like.svg";
 import Comments from "@svg/Comments.svg";
 import Dislike from "@svg/Dislike.svg";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export interface forumItem {
   id: number;
@@ -32,12 +37,57 @@ export interface ownerItem {
   avatar: string;
 }
 
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+}
+
+export interface userData {
+  id: number;
+}
+
+const formSchema = z.object({
+  content: z.string().min(1).max(255),
+});
+
 const DetailForum = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [diskusi, setDiskusi] = useState<forumItem>();
+  const [userData, setUserData] = useState<userData>();
   const [commentBoxVisible, setCommentBoxVisible] = useState(false);
+
+  const {
+    content,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      content: "",
+    },
+  });
+
+  const postComment = async (values: any) => {
+    const data = {
+      forumDiskusiId: id,
+      poster: userData?.id,
+      content: content,
+    };
+    try {
+      const response = await axiosConfig.post("api/commentForum", data);
+      if (response.data.status !== 400) {
+        alert("Berhasil Komentar");
+        router.push("/login");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert("Gagal Daftar");
+    }
+    reset();
+  };
 
   const toggleCommentBox = () => {
     setCommentBoxVisible((prev) => !prev);
@@ -59,6 +109,25 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getDiskusi();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          const decodedToken = jwtDecode<CustomJwtPayload>(token);
+          const userId = decodedToken.id;
+
+          const response = await axiosConfig.get(`/api/account/${userId}`);
+          setUserData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -104,19 +173,32 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                 : `hidden`
             }
           >
-            <textarea
-              placeholder="Komentar disini..."
-              className="w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            ></textarea>
-            <div className="flex justify-start items-center gap-3 p-3">
-              <Button
-                onClick={() => toggleCommentBox()}
-                alternateStyle="secondary"
-              >
-                Batal
-              </Button>
-              <Button alternateStyle="primary">Komen</Button>
-            </div>
+            <form onSubmit={handleSubmit(postComment)}>
+              <input
+                type="text"
+                placeholder="Komentar disini..."
+                {...content("comment", { required: true })}
+                className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                  errors.content ? "border-red-500" : ""
+                }`}
+              />
+              {errors.content && (
+                <span className="text-red-600 text-sm">
+                  This field is required
+                </span>
+              )}
+              <div className="flex justify-start items-center gap-3 p-3">
+                <Button
+                  onClick={() => toggleCommentBox()}
+                  alternateStyle="secondary"
+                >
+                  Batal
+                </Button>
+                <Button type="submit" alternateStyle="primary">
+                  Komen
+                </Button>
+              </div>
+            </form>
           </div>
           <div>
             <h1 className="text-2xl font-bold">
@@ -125,7 +207,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
             <div className="mt-6 flex flex-col gap-6">
               {diskusi?.comment.map((item) => (
                 <div key={item.id} className="flex gap-4">
-                  <img src={item.owner.avatar} alt="" />
+                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
                   <div className="flex flex-col gap-4">
                     <h1 className="font-bold">{item.owner.username}</h1>
                     <p>{item.content}</p>

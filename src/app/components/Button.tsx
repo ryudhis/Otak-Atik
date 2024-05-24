@@ -4,12 +4,14 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   alternateStyle?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   alternateStyle,
+  type,
 }) => {
   const style =
     alternateStyle === "primary"
@@ -19,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
       : "hover:text-tertiary text-secondary bg-tertiary border-secondary border-[2px] py-1 px-3";
   return (
     <button
+      type={type ? type : "button"}
       onClick={onClick}
       className={` bg-secondary font-bold py-2 px-4 rounded-lg hover:bg-secondaryhover hover:scale-105 active:bg-secondary active:scale-100 transition-all duration-200 ease-in-out ${style}`}
     >
