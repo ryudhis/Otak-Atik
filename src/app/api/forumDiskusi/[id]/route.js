@@ -9,6 +9,7 @@ export async function GET(req) {
       },
       include: {
         owner: true,
+        comment: { include: { owner: true } },
       },
     });
 

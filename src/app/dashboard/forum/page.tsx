@@ -17,6 +17,15 @@ export interface forumItem {
   postedAt: string;
   kategori: string;
   owner: ownerItem;
+  comments: commentItem[];
+}
+
+export interface commentItem {
+  id: number;
+  content: string;
+  ownerId: number;
+  postedAt: string;
+  owner: ownerItem;
 }
 
 export interface ownerItem {
@@ -26,6 +35,7 @@ export interface ownerItem {
 
 const Forum = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [diskusi, setDiskusi] = useState<forumItem[]>([]);
   const getAllDiskusi = async () => {
     try {
@@ -37,6 +47,8 @@ const Forum = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,34 +72,40 @@ const Forum = () => {
           />
         </div>
       </div>
-      <div className="mt-8 flex flex-col">
-        {diskusi.map((item: forumItem) => (
-          <Link key={item.id} href={`/dashboard/forum/${item.id}`}>
-            <div className="py-4 border-b-2 border-primary">
-              <div className="flex gap-4">
-                <img src={item.owner.avatar} alt="" />
-                <h1 className="font-bold">{item.owner.username}</h1>
-                <h1>{item.postedAt}</h1>
+      {isLoading ? (
+        <div className="mt-6 py-4 h-full flex flex-col gap-8 items-center justify-center">
+          <p className="text-center">Loading diskusi...</p>
+        </div>
+      ) : (
+        <div className="mt-8 flex flex-col">
+          {diskusi.map((item: forumItem) => (
+            <Link key={item.id} href={`/dashboard/forum/${item.id}`}>
+              <div className="py-4 border-b-2 border-primary flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <img src={item.owner.avatar} alt="" />
+                  <h1 className="font-bold">{item.owner.username}</h1>
+                  <h1>{item.postedAt}</h1>
+                </div>
+                <p className="text-lg font-bold">{item.title}</p>
+                <div className="flex gap-6">
+                  <Button alternateStyle="ghost">
+                    <Image src={Like} alt="" />
+                  </Button>
+                  <Button alternateStyle="ghost">
+                    <Image src={Dislike} alt="" />
+                  </Button>
+                  <Button
+                    onClick={() => router.push(`/dashboard/forum/${item.id}`)}
+                    alternateStyle="ghost"
+                  >
+                    <Image src={Comments} alt="" />
+                  </Button>
+                </div>
               </div>
-              <p className="text-lg">{item.title}</p>
-              <div className="flex gap-6">
-                <Button alternateStyle="ghost">
-                  <Image src={Like} alt="" />
-                </Button>
-                <Button alternateStyle="ghost">
-                  <Image src={Dislike} alt="" />
-                </Button>
-                <Button
-                  onClick={() => router.push(`/dashboard/forum/${item.id}`)}
-                  alternateStyle="ghost"
-                >
-                  <Image src={Comments} alt="" />
-                </Button>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

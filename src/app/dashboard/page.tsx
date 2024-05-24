@@ -174,13 +174,13 @@ const Dashboard = () => {
           ) : (
             <div className="flex gap-5">
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
             </div>
           )}

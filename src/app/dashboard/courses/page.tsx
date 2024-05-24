@@ -3,7 +3,7 @@
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import {jwtDecode, JwtPayload } from "jwt-decode";
+import  { jwtDecode, JwtPayload } from "jwt-decode";
 import KelasItem from "@/app/components/KelasItem";
 
 export interface Kelas {
@@ -23,13 +23,14 @@ export interface UserData {
   id: number;
   kelasDiambil: Kelas[];
   kelasDiampu: Kelas[];
+  type: string;
 }
 
 interface CustomJwtPayload extends JwtPayload {
   id: string;
 }
 
-const Dashboard = () => {
+const Courses = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<UserData | null>(null);
 
@@ -56,22 +57,28 @@ const Dashboard = () => {
   }, []);
 
   if (isLoading) {
-    return <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
-      <h1>Loading...</h1>
-    </div>;
+    return (
+      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
+        <h1 className="font-bold text-secondary">Loading...</h1>
+      </div>
+    );
   }
 
   if (!userData) {
-    return <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
-      <h1>Error loading user data</h1>
-    </div>;
+    return (
+      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
+        <h1>Error loading user data</h1>
+      </div>
+    );
   }
 
+  const classesToDisplay = userData.type === "pelajar" ? userData.kelasDiambil : userData.kelasDiampu;
+
   return (
-    <div className="bg-tertiary p-28 h-screen flex flex-col">
+    <div className="bg-tertiary p-28 h-screen flex flex-col relative">
       <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
-      <div className="flex flex-col gap-4">
-        {userData.kelasDiambil.map((kelas) => (
+      <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
+        {classesToDisplay.map((kelas) => (
           <KelasItem
             key={kelas.id}
             title={kelas.nama}
@@ -85,4 +92,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Courses;

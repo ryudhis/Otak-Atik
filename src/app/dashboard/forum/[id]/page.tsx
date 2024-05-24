@@ -16,6 +16,15 @@ export interface forumItem {
   postedAt: string;
   kategori: string;
   owner: ownerItem;
+  comment: commentItem[];
+}
+
+export interface commentItem {
+  id: number;
+  content: string;
+  ownerId: number;
+  postedAt: string;
+  owner: ownerItem;
 }
 
 export interface ownerItem {
@@ -26,18 +35,25 @@ export interface ownerItem {
 const DetailForum = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [diskusi, setDiskusi] = useState<forumItem>();
+  const [commentBoxVisible, setCommentBoxVisible] = useState(false);
+
+  const toggleCommentBox = () => {
+    setCommentBoxVisible((prev) => !prev);
+  };
   const getDiskusi = async () => {
     try {
       const response = await axiosConfig.get(`api/forumDiskusi/${id}`);
       if (response.data.status !== 400) {
-        console.log(response.data.data);
         setDiskusi(response.data.data);
       } else {
         alert(response.data.message);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,39 +66,76 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
       <Button onClick={() => router.back()} alternateStyle="secondary">
         &lt;
       </Button>
-      <div className="mt-6 py-4 border-b-2 border-primary flex flex-col gap-8">
-        <div className="flex gap-4">
-          <img src={diskusi?.owner.avatar} alt="" />
-          <h1 className="font-bold">{diskusi?.owner.username}</h1>
-          <h1>{diskusi?.postedAt}</h1>
+      {isLoading ? (
+        <div className="mt-6 py-4  flex flex-col gap-8">
+          <div className="flex gap-4">
+            <img src={diskusi?.owner.avatar} alt="" />
+            <h1 className="font-bold">{diskusi?.owner.username}</h1>
+            <h1>{diskusi?.postedAt}</h1>
+          </div>
+          <p className="text-center">Loading Konten...</p>
         </div>
-        <p className="text-xl font-bold">{diskusi?.title}</p>
-        <p className="text-lg">{diskusi?.content}</p>
-        <div className="flex gap-6">
-          <Button alternateStyle="ghost">
-            <Image src={Like} alt="" />
-          </Button>
-          <Button alternateStyle="ghost">
-            <Image src={Dislike} alt="" />
-          </Button>
-          <Button
-            onClick={() => router.push(`/dashboard/forum/${diskusi?.id}`)}
-            alternateStyle="ghost"
+      ) : (
+        <div className="mt-6 py-4 flex flex-col gap-8">
+          <div className="border-b-2 border-primary flex flex-col gap-8">
+            <div className="flex gap-4">
+              <img src={diskusi?.owner.avatar} alt="" />
+              <h1 className="font-bold">{diskusi?.owner.username}</h1>
+              <h1>{diskusi?.postedAt}</h1>
+            </div>
+            <p className="text-xl font-bold">{diskusi?.title}</p>
+            <p className="text-lg">{diskusi?.content}</p>
+            <div className="flex gap-6">
+              <Button alternateStyle="ghost">
+                <Image src={Like} alt="" />
+              </Button>
+              <Button alternateStyle="ghost">
+                <Image src={Dislike} alt="" />
+              </Button>
+              <Button onClick={() => toggleCommentBox()} alternateStyle="ghost">
+                <Image src={Comments} alt="" />
+              </Button>
+            </div>
+          </div>
+          <div
+            className={
+              commentBoxVisible
+                ? `w-full rounded-md border-2 border-primary shadow-md`
+                : `hidden`
+            }
           >
-            <Image src={Comments} alt="" />
-          </Button>
-        </div>
-        <div className="w-full rounded-md border-2 border-primary shadow-md">
-          <textarea
-            placeholder="Komentar disini..."
-            className="w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          ></textarea>
-          <div className="flex justify-start items-center gap-3 p-3">
-            <Button alternateStyle="secondary">Batal</Button>
-            <Button alternateStyle="primary">Komen</Button>
+            <textarea
+              placeholder="Komentar disini..."
+              className="w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            ></textarea>
+            <div className="flex justify-start items-center gap-3 p-3">
+              <Button
+                onClick={() => toggleCommentBox()}
+                alternateStyle="secondary"
+              >
+                Batal
+              </Button>
+              <Button alternateStyle="primary">Komen</Button>
+            </div>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">
+              Komentar({diskusi?.comment ? diskusi.comment.length : 0})
+            </h1>
+            <div className="mt-6 flex flex-col gap-6">
+              {diskusi?.comment.map((item) => (
+                <div key={item.id} className="flex gap-4">
+                  <img src={item.owner.avatar} alt="" />
+                  <div className="flex flex-col gap-4">
+                    <h1 className="font-bold">{item.owner.username}</h1>
+                    <p>{item.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
