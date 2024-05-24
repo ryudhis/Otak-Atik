@@ -2,7 +2,11 @@ import prisma from "@/utils/prisma";
 
 export async function GET() {
   try {
-    const forumDiskusi = await prisma.forumDiskusi.findMany();
+    const forumDiskusi = await prisma.forumDiskusi.findMany({
+      include: {
+        owner: true,
+      },
+    });
 
     return Response.json({
       status: 200,

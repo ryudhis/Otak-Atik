@@ -4,10 +4,13 @@ export async function GET(req) {
   try {
     const id = req.url.split("/forumDiskusi/")[1];
     const forumDiskusi = await prisma.forumDiskusi.findUnique({
-        where: {
-          id,
-        },
-      });
+      where: {
+        id,
+      },
+      include: {
+        owner: true,
+      },
+    });
 
     return Response.json({
       status: 200,
