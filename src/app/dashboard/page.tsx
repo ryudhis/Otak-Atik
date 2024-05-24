@@ -124,13 +124,13 @@ const Dashboard = () => {
                 onClick={() => {
                   switchKelas("prev");
                 }}
-                alternateStyle="text-white bg-tertiary border-secondary border-[2px] py-1 px-3"
+                alternateStyle="secondary"
               >
                 &lt;
               </Button>
               <Button
                 onClick={() => switchKelas("next")}
-                alternateStyle="py-1 px-3 border-secondary border-[2px]"
+                alternateStyle="primary"
               >
                 &gt;
               </Button>
@@ -151,7 +151,7 @@ const Dashboard = () => {
                         <img src={item.owner.avatar} alt="" />
                         <h1>{item.owner.username}</h1>
                       </div>
-                      <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mr-4">
+                      <Button alternateStyle="ghost">
                         <Image src={Star} alt="" />
                       </Button>
                     </div>
