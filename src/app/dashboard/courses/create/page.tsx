@@ -36,8 +36,8 @@ const CreateClassForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       judul: "",
-      materi: ["a",], // Default value for materi
-      spesifikasi: ["a",], // Default value for spesifikasi
+      materi: ["",], // Default value for materi
+      spesifikasi: ["",], // Default value for spesifikasi
       metode: [],
       jadwal: "",
       durasi: "1",
