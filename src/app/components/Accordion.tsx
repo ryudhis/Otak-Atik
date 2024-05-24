@@ -6,12 +6,12 @@ const Accordion = ({ title, answer }) => {
     return(
         <div>
             <button onClick={() => setAccordionOpen(!accordionOpen)}
-            className="flex justify-between w-full">
+            className="flex justify-between w-full text-xl mb-1">
                 <span>{title}</span>
                 {accordionOpen ? <span>-</span> : <span>+</span>}
             </button>
             <div
-                className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                className={`mb-2 grid overflow-hidden transition-all duration-300 ease-in-out text-slate-300 text-m ${
                     accordionOpen
                     ? "grid-rows-[1fr] opacity-100"
                     : "grid-rows-[0fr] opacity-0"
