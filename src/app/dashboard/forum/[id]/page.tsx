@@ -16,7 +16,7 @@ export interface forumItem {
   postedAt: string;
   kategori: string;
   owner: ownerItem;
-  comments: commentItem[];
+  comment: commentItem[];
 }
 
 export interface commentItem {
@@ -120,10 +120,10 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
           </div>
           <div>
             <h1 className="text-2xl font-bold">
-              Komentar({diskusi?.comments ? diskusi.comments.length : 0})
+              Komentar({diskusi?.comment ? diskusi.comment.length : 0})
             </h1>
-            {/* <div className="mt-6 flex flex-col gap-6">
-              {diskusi?.comments.map((item) => (
+            <div className="mt-6 flex flex-col gap-6">
+              {diskusi?.comment.map((item) => (
                 <div key={item.id} className="flex gap-4">
                   <img src={item.owner.avatar} alt="" />
                   <div className="flex flex-col gap-4">
@@ -132,7 +132,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                   </div>
                 </div>
               ))}
-            </div> */}
+            </div>
           </div>
         </div>
       )}
