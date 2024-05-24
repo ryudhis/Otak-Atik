@@ -26,7 +26,7 @@ export interface ownerItem {
 
 const Forum = () => {
   const router = useRouter();
-  const [diskusi, setDiskusi] = useState([]);
+  const [diskusi, setDiskusi] = useState<forumItem[]>([]);
   const getAllDiskusi = async () => {
     try {
       const response = await axiosConfig.get("api/forumDiskusi");
@@ -49,12 +49,10 @@ const Forum = () => {
       <div className="flex justify-between">
         <div className="flex gap-6 justify-center">
           <h1 className="text-2xl font-bold">Forum Diskusi</h1>
-          <Button alternateStyle="text-tertiary">Buat Diskusi</Button>
+          <Button alternateStyle="primary">Buat Diskusi</Button>
         </div>
         <div className="flex gap-6">
-          <Button alternateStyle="bg-tertiary border-2 border-secondary text-secondary hover:text-tertiary">
-            Pilih Topik
-          </Button>
+          <Button alternateStyle="secondary">Pilih Topik</Button>
           <input
             className="bg-primary rounded-xl min-w-40 px-6 placeholder:font-bold"
             placeholder="Cari judul diskusi"
@@ -73,15 +71,15 @@ const Forum = () => {
               </div>
               <p className="text-lg">{item.title}</p>
               <div className="flex gap-6">
-                <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+                <Button alternateStyle="ghost">
                   <Image src={Like} alt="" />
                 </Button>
-                <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+                <Button alternateStyle="ghost">
                   <Image src={Dislike} alt="" />
                 </Button>
                 <Button
                   onClick={() => router.push(`/dashboard/forum/${item.id}`)}
-                  alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4"
+                  alternateStyle="ghost"
                 >
                   <Image src={Comments} alt="" />
                 </Button>

@@ -5,7 +5,7 @@ export async function GET(req) {
     const id = req.url.split("/forumDiskusi/")[1];
     const forumDiskusi = await prisma.forumDiskusi.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
       include: {
         owner: true,
