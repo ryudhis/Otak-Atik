@@ -2,12 +2,12 @@ import prisma from "@/utils/prisma";
 
 export async function GET() {
   try {
-    const comment = await prisma.comment.findMany();
+    const commentForum = await prisma.commentForum.findMany();
 
     return Response.json({
       status: 200,
       message: "Berhasil ambil semua data!",
-      data: comment,
+      data: commentForum,
     });
   } catch (error) {
     console.log(error);
@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     const data = await req.json();
-    const comment = await prisma.comment.create({
+    const commentForum = await prisma.commentForum.create({
       data: {
         content: data.content,
         postedAt: data.postedAt,
@@ -38,7 +38,7 @@ export async function POST(req) {
     return Response.json({
       status: 200,
       message: "Berhasil buat data!",
-      data: comment,
+      data: commentForum,
     });
   } catch (error) {
     console.log(error);

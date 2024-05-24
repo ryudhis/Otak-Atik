@@ -36,8 +36,8 @@ const CreateClassForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       judul: "",
-      materi: ["",], // Default value for materi
-      spesifikasi: ["",], // Default value for spesifikasi
+      materi: [""], // Default value for materi
+      spesifikasi: [""], // Default value for spesifikasi
       metode: [],
       jadwal: "",
       durasi: "1",
@@ -45,6 +45,14 @@ const CreateClassForm = () => {
     },
   });
 
+  const removeMateri = (index: number) => {
+    materiFields.length > 1 && removeMateriField(index);
+  };
+
+  const removeSpesifikasi = (index: number) => {
+    spesifikasiFields.length > 1 && removeSpesifikasiField(index);
+  };
+  
   const { fields: materiFields, append: appendMateri } = useFieldArray({
     control,
     name: "materi",
@@ -96,44 +104,61 @@ const CreateClassForm = () => {
 
         <div>
         <label className='text-white'>Materi</label>
-          {materiFields.map((item, index) => (
-            <div key={item.id} className='flex space-x-2'>
-              <input
-                type='text'
-                {...register(`materi.${index}`)}
-                defaultValue={item.title} // Assuming you have a `title` property in your materi objects
-                className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
-              />
-            </div>
-          ))}
+        {materiFields.map((item, index) => (
+          <div key={item.id} className='flex space-x-2'>
+            <input
+              type='text'
+              {...register(`materi.${index}` as const)}
+              className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+            />
+          </div>
+        ))}
+        <button
+          type='button'
+          onClick={() => appendMateri("a")}
+          className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+        >
+          Add Materi
+        </button>
+        {materiFields.length > 0 && (
           <button
             type='button'
-            onClick={() => appendMateri("")}
+            onClick={removeMateri}
             className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
           >
-            Add Materi
+            Delete Materi
           </button>
-        </div>
+        )}
+      </div>
 
-        <div>
-          <label className='text-white'>Spesifikasi</label>
-          {spesifikasiFields.map((item, index) => (
-            <div key={item.id} className='flex space-x-2'>
-              <input
-                type='text'
-                {...register(`spesifikasi.${index}` as const)}
-                className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
-              />
-            </div>
-          ))}
+<div>
+        <label className='text-white'>Spesifikasi</label>
+        {spesifikasiFields.map((item, index) => (
+          <div key={item.id} className='flex space-x-2'>
+            <input
+              type='text'
+              {...register(`spesifikasi.${index}` as const)}
+              className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+            />
+          </div>
+        ))}
+        <button
+          type='button'
+          onClick={() => appendSpesifikasi("a")}
+          className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+        >
+          Add Spesifikasi
+        </button>
+        {spesifikasiFields.length > 0 && (
           <button
             type='button'
-            onClick={() => appendSpesifikasi("")}
+            onClick={removeSpesifikasi}
             className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
           >
-            Add Spesifikasi
+            Delete Spesifikasi
           </button>
-        </div>
+        )}
+      </div>
 
         <div>
           <label className='text-white'>Metode</label>
