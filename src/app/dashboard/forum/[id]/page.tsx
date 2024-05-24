@@ -12,6 +12,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "react-toastify";
 
 export interface forumItem {
   id: number;
@@ -53,12 +54,13 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const [diskusi, setDiskusi] = useState<forumItem>();
   const [userData, setUserData] = useState<userData>();
   const [commentBoxVisible, setCommentBoxVisible] = useState(false);
 
   const {
-    content,
+    register,
     handleSubmit,
     formState: { errors },
     reset,
@@ -71,22 +73,24 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
 
   const postComment = async (values: any) => {
     const data = {
-      forumDiskusiId: id,
-      poster: userData?.id,
-      content: content,
+      forumDiskusiId: parseInt(id),
+      ownerId: userData?.id,
+      content: values.content,
+      postedAt: "Barusan",
     };
     try {
       const response = await axiosConfig.post("api/commentForum", data);
       if (response.data.status !== 400) {
-        alert("Berhasil Komentar");
-        router.push("/login");
+        toast.success("Berhasil Komentar");
       } else {
         alert(response.data.message);
       }
     } catch (error) {
       alert("Gagal Daftar");
+    } finally {
+      setRefresh(!refresh);
+      reset();
     }
-    reset();
   };
 
   const toggleCommentBox = () => {
@@ -109,7 +113,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getDiskusi();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -177,7 +181,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
               <input
                 type="text"
                 placeholder="Komentar disini..."
-                {...content("comment", { required: true })}
+                {...register("content", { required: true })}
                 className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   errors.content ? "border-red-500" : ""
                 }`}
@@ -209,7 +213,10 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                 <div key={item.id} className="flex gap-4">
                   <img className="w-8 h-8" src={item.owner.avatar} alt="" />
                   <div className="flex flex-col gap-4">
-                    <h1 className="font-bold">{item.owner.username}</h1>
+                    <div className="flex gap-4">
+                      <h1 className="font-bold">{item.owner.username}</h1>
+                      <h1>{item.postedAt}</h1>
+                    </div>
                     <p>{item.content}</p>
                   </div>
                 </div>
