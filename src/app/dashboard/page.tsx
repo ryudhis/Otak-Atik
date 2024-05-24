@@ -6,7 +6,6 @@ import Star from "@svg/star.svg";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 
 export interface Kelas {
@@ -103,7 +102,7 @@ const Dashboard = () => {
           const decodedToken = jwtDecode<CustomJwtPayload>(token);
           const userId = decodedToken.id;
 
-          const response = await axios.get(`/api/account/${userId}`);
+          const response = await axiosConfig.get(`/api/account/${userId}`);
           setUserData(response.data.data);
         }
       } catch (error) {
@@ -125,13 +124,13 @@ const Dashboard = () => {
                 onClick={() => {
                   switchKelas("prev");
                 }}
-                alternateStyle="text-white bg-tertiary border-secondary border-[2px] py-1 px-3"
+                alternateStyle="secondary"
               >
                 &lt;
               </Button>
               <Button
                 onClick={() => switchKelas("next")}
-                alternateStyle="py-1 px-3 border-secondary border-[2px]"
+                alternateStyle="primary"
               >
                 &gt;
               </Button>
@@ -152,7 +151,7 @@ const Dashboard = () => {
                         <img src={item.owner.avatar} alt="" />
                         <h1>{item.owner.username}</h1>
                       </div>
-                      <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mr-4">
+                      <Button alternateStyle="ghost">
                         <Image src={Star} alt="" />
                       </Button>
                     </div>
@@ -175,13 +174,13 @@ const Dashboard = () => {
           ) : (
             <div className="flex gap-5">
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
               <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading class..</h1>
+                <h1 className="text-center animate-pulse">Loading kelas..</h1>
               </div>
             </div>
           )}

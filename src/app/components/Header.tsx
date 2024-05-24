@@ -12,14 +12,14 @@ const Header = () => {
   return (
     <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-tertiary z-10">
       <div className="flex gap-6">
-        <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
+        <Button alternateStyle="ghost">
           <Image src={HelpCenter} alt="help center" />
         </Button>
-        <Button alternateStyle="bg-transparent hover:bg-transparent active:bg-transparent">
+        <Button alternateStyle="ghost">
           <Image src={Notification} alt="notification" />
         </Button>
         <Button
-          alternateStyle="text-tertiary"
+          alternateStyle="primary"
           onClick={() => {
             cookies.remove("token");
             window.location.reload();
