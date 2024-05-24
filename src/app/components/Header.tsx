@@ -13,7 +13,9 @@ const Header = () => {
     <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-tertiary z-10">
       <div className="flex gap-6">
         <Button alternateStyle="ghost">
-          <Image src={HelpCenter} alt="help center" />
+          <Link href="/dashboard/faq">
+            <Image src={HelpCenter} alt="help center" />
+          </Link>
         </Button>
         <Button alternateStyle="ghost">
           <Image src={Notification} alt="notification" />
