@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import axiosConfig from "../../utils/axios";
+import axios from "@utils/axios"
 import Cookies from "js-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,8 +12,8 @@ import PasswordIcon from "@img/login/password.png";
 import Image from "next/image";
 
 const formSchema = z.object({
-  username: z.string().min(6).max(50),
-  password: z.string().min(6).max(50),
+  username: z.string().min(4).max(50),
+  password: z.string().min(4).max(50),
 });
 
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const LoginForm = () => {
 
   const signIn = async (values: any) => {
     try {
-      const response = await axiosConfig.post("api/login", values);
+      const response = await axios.post("api/login", values);
       if (response.data.status !== 400) {
         Cookies.set("token", response.data.token, { expires: 1 });
         alert("Berhasil Login");

@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axiosConfig from "../../utils/axios";
-import Cookies from "js-cookie";
+import axios from "@utils/axios"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -13,7 +12,7 @@ import Image from "next/image";
 
 const formSchema = z.object({
   email: z.string().min(6).max(50),
-  username: z.string().min(6).max(50),
+  username: z.string().min(4).max(50),
   password: z.string().min(6).max(50),
   type: z.string(),
 });
@@ -40,7 +39,7 @@ const Registerform = () => {
 
   const registerAccount = async (values: any) => {
     try {
-      const response = await axiosConfig.post("api/register", values);
+      const response = await axios.post("api/register", values);
       if (response.data.status !== 400) {
         alert("Berhasil Daftar");
         router.push("/login");
