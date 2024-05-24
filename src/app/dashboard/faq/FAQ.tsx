@@ -3,7 +3,7 @@ import Accordion from "@/app/components/Accordion";
 
 const FAQ = () => {
   return (
-    <div className="p-4 bg-gray-200 rounded-lg">
+    <div className="p-4 rounded-lg">
       <Accordion
         title="Kelas virtual menggunakan apa?"
         answer="Kelas virtual akan menggunakan Google Meet."
