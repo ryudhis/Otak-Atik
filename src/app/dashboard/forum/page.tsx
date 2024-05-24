@@ -1,12 +1,49 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Button from "@components/Button";
 import Image from "next/image";
-import tech from "@svg/tech.svg";
 import Like from "@svg/Like.svg";
 import Comments from "@svg/Comments.svg";
 import Dislike from "@svg/Dislike.svg";
+import axiosConfig from "@utils/axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+export interface forumItem {
+  id: number;
+  title: string;
+  content: string;
+  ownerId: number;
+  postedAt: string;
+  kategori: string;
+  owner: ownerItem;
+}
+
+export interface ownerItem {
+  username: string;
+  avatar: string;
+}
 
 const Forum = () => {
+  const router = useRouter();
+  const [diskusi, setDiskusi] = useState([]);
+  const getAllDiskusi = async () => {
+    try {
+      const response = await axiosConfig.get("api/forumDiskusi");
+      if (response.data.status !== 400) {
+        setDiskusi(response.data.data);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllDiskusi();
+  }, []);
+
   return (
     <div className="bg-tertiary p-28 h-screen">
       <div className="flex justify-between">
@@ -26,63 +63,32 @@ const Forum = () => {
         </div>
       </div>
       <div className="mt-8 flex flex-col">
-        <div className="py-4 border-b-2 border-primary">
-          <div className="flex gap-4">
-            <Image src={tech} alt="" width={32} />
-            <h1 className="font-bold">Jerome Bell</h1>
-            <h1>1 Jam yang lalu</h1>
-          </div>
-          <p className="text-lg">Aku adalah anak gembala</p>
-          <div className="flex gap-6">
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Like} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Dislike} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Comments} alt="" />
-            </Button>
-          </div>
-        </div>
-        <div className="py-4 border-b-2 border-primary">
-          <div className="flex gap-4">
-            <Image src={tech} alt="" width={32} />
-            <h1 className="font-bold">Jerome Bell</h1>
-            <h1>1 Jam yang lalu</h1>
-          </div>
-          <p className="text-lg">Aku adalah anak gembala</p>
-          <div className="flex gap-6">
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Like} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Dislike} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Comments} alt="" />
-            </Button>
-          </div>
-        </div>
-        <div className="py-4 border-b-2 border-primary">
-          <div className="flex gap-4">
-            <Image src={tech} alt="" width={32} />
-            <h1 className="font-bold">Jerome Bell</h1>
-            <h1>1 Jam yang lalu</h1>
-          </div>
-          <p className="text-lg">Aku adalah anak gembala</p>
-          <div className="flex gap-6">
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Like} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Dislike} alt="" />
-            </Button>
-            <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
-              <Image src={Comments} alt="" />
-            </Button>
-          </div>
-        </div>
+        {diskusi.map((item: forumItem) => (
+          <Link key={item.id} href={`/dashboard/forum/${item.id}`}>
+            <div className="py-4 border-b-2 border-primary">
+              <div className="flex gap-4">
+                <img src={item.owner.avatar} alt="" />
+                <h1 className="font-bold">{item.owner.username}</h1>
+                <h1>{item.postedAt}</h1>
+              </div>
+              <p className="text-lg">{item.title}</p>
+              <div className="flex gap-6">
+                <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+                  <Image src={Like} alt="" />
+                </Button>
+                <Button alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4">
+                  <Image src={Dislike} alt="" />
+                </Button>
+                <Button
+                  onClick={() => router.push(`/dashboard/forum/${item.id}`)}
+                  alternateStyle="px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4"
+                >
+                  <Image src={Comments} alt="" />
+                </Button>
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
