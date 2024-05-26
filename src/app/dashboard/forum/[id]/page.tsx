@@ -12,7 +12,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 export interface forumItem {
   id: number;
@@ -86,7 +86,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
         alert(response.data.message);
       }
     } catch (error) {
-      alert("Gagal Daftar");
+      alert("Gagal Komentar");
     } finally {
       setRefresh(!refresh);
       reset();
@@ -96,6 +96,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   const toggleCommentBox = () => {
     setCommentBoxVisible((prev) => !prev);
   };
+
   const getDiskusi = async () => {
     try {
       const response = await axiosConfig.get(`api/forumDiskusi/${id}`);
@@ -113,6 +114,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getDiskusi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   useEffect(() => {
@@ -178,8 +180,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
             }
           >
             <form onSubmit={handleSubmit(postComment)}>
-              <input
-                type="text"
+              <textarea
                 placeholder="Komentar disini..."
                 {...register("content", { required: true })}
                 className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${

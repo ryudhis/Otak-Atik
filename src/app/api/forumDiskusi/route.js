@@ -30,7 +30,7 @@ export async function POST(req) {
         postedAt: data.postedAt,
         owner: {
           connect: {
-            id: data.ownerId,
+            id: parseInt(data.ownerId),
           },
         },
       },
