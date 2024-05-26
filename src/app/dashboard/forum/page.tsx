@@ -123,6 +123,9 @@ const Forum = () => {
                     <img src={item.owner.avatar} alt="" />
                     <h1 className="font-bold">{item.owner.username}</h1>
                     <h1>{item.postedAt}</h1>
+                    <div className="border-2 border-secondary p-1.5 rounded-3xl">
+                      {item.kategori}
+                    </div>
                   </div>
                   <p className="text-lg font-bold">{item.title}</p>
                   <div className="flex gap-6">
