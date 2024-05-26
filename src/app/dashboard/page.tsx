@@ -42,7 +42,7 @@ const Dashboard = () => {
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<userData>();
-  const listKategori = ["Computer Science", "Science", "Sport"];
+  const listKategori = ["Computer Science", "Science", "Sport", "Marketing"];
   const [currentKelas, setCurrentKelas] = useState("Computer Science");
 
   const switchKelas = (direction: string) => {
