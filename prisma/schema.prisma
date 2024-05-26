@@ -18,7 +18,7 @@ model Account {
   type          String
   avatar        String
   kelasDiampu   kelas[]
-  kelasDiambil  kelas[]        @relation("kelasDiambil") 
+  kelasDiambil  kelas[]        @relation("kelasDiambil")
   diskusi       forumDiskusi[]
   kelasFavorite Int[]
   tutorFavorite Int[]
@@ -27,17 +27,18 @@ model Account {
 }
 
 model kelas {
-  id           Int            @id @unique @default(sequence())
-  nama         String
-  kategori     String
-  materi       String[]
-  spesifikasi  String[]
-  metode       String[]
-  jadwal       String[]
-  owner        Account        @relation(fields: [ownerId], references: [id])
-  ownerId      Int
-  siswa        Account[]      @relation("kelasDiambil")
-  commentKelas commentKelas[]
+  id          Int            @id @unique @default(sequence())
+  nama        String
+  kategori    String
+  materi      String[]
+  spesifikasi String[]
+  metode      String[]
+  jadwal      String
+  harga       Int
+  owner       Account        @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  siswa       Account[]      @relation("kelasDiambil")
+  comment     commentKelas[]
 }
 
 model forumDiskusi {

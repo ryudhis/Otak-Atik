@@ -11,7 +11,7 @@ export interface Kelas {
   id: number;
   owner: OwnerItem;
   kategori: string;
-  jadwal: string[];
+  jadwal: string;
 }
 
 export interface OwnerItem {
@@ -82,7 +82,7 @@ const Courses = () => {
           <KelasItem
             key={kelas.id}
             title={kelas.nama}
-            jadwal={kelas.jadwal[0]}
+            jadwal={kelas.jadwal}
             tutorNama={kelas.owner.username}
             avatar={kelas.owner.avatar}
           />

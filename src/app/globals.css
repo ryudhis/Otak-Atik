@@ -30,4 +30,17 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .rounded-checkbox {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: transparent;
+    border-radius: 50%;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    @apply border-secondary border-[2px]
+  }
 }
