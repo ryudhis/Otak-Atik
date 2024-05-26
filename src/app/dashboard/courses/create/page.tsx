@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@utils/axios";
 import Cookies from "js-cookie";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
+import Button from "@/app/components/Button";
 
 const formSchema = z.object({
-  judul: z.string().min(1, "Judul is required"),
+  nama: z.string().min(1, "nama is required"),
   materi: z.array(
     z.object({
       name: z.string().min(1, "Materi name is required"),
@@ -33,8 +35,19 @@ const formSchema = z.object({
   harga: z.string(),
 });
 
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+}
+
+export interface UserData {
+  id: number;
+  type: string;
+}
+
 const CreateClassForm = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState<UserData | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -44,7 +57,7 @@ const CreateClassForm = () => {
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      judul: "",
+      nama: "",
       materi: [{ name: "" }],
       spesifikasi: [{ name: "" }],
       metode: [],
@@ -74,213 +87,262 @@ const CreateClassForm = () => {
   });
 
   const createClass = async (values: any) => {
-    try {
-      const token = Cookies.get("token");
-      const response = await axios.post("api/create-class", values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const data = {
+      ...values,
+      ownerId: userData?.id,
+      materi: values.materi.map((item: any) => {
+        return item.name;
+      }),
+      spesifikasi: values.spesifikasi.map((item: any) => {
+        return item.name;
+      }),
+    };
+
+    console.log(data);
+
+    axios
+      .post("api/kelas", data)
+      .then(function (response) {
+        if (response.data.status != 400) {
+          alert("berhasil Submit");
+        }
+      })
+      .catch(function (error) {
+        alert("Gagal Submit");
+        console.log(error);
       });
-      if (response.status === 201) {
-        alert("Class created successfully");
-        router.push("/dashboard/classes");
-      } else {
-        alert("Failed to create class");
-      }
-    } catch (error) {
-      alert("Failed to create class");
-      console.error(error);
-    }
+
     reset();
   };
 
-  return (
-    <div className='bg-tertiary w-[90%] p-28 mb-40 h-screen flex flex-col'>
-      <h2 className='text-3xl font-bold mb-4 text-white'>Buat Kelas</h2>
-      <form onSubmit={handleSubmit(createClass)} className='space-y-6'>
-        <div>
-          <label className='text-white font-bold text-md'>Judul</label>
-          <input
-            type='text'
-            placeholder='Tulis judul kelas anda'
-            {...register("judul")}
-            className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-              errors.judul ? "border-red-500" : ""
-            }`}
-          />
-          {errors.judul && (
-            <span className='text-red-600 text-sm'>{errors.judul.message}</span>
-          )}
-        </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          const decodedToken = jwtDecode<CustomJwtPayload>(token);
+          const userId = decodedToken.id;
 
-        <div className='flex flex-col gap-3'>
-          <label className='text-white font-bold text-md'>Materi</label>
-          {materiFields.map((item, index) => (
-            <div key={item.id} className='flex space-x-2'>
-              <input
-                type='text'
-                placeholder='Materi kelas'
-                {...register(`materi.${index}.name`)}
-                className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
-              />
-            </div>
-          ))}
-          <div className='flex gap-5'>
-            <button
-              type='button'
-              onClick={() => appendMateri({ name: "" })}
-              className='mt-2 w-[150px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
-            >
-              Tambah Materi
-            </button>
-            {materiFields.length > 1 && (
+          const response = await axios.get(`/api/account/${userId}`);
+          if (response.data.data.type === "pelajar") {
+            router.push("/dashboard/courses");
+          } else {
+            setUserData(response.data.data);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+      }
+    };
+
+    fetchData();
+  }, [router]);
+
+  return (
+    <div className='bg-tertiary w-[90%] p-28 mb-40 h-screen'>
+      <Button
+        onClick={() => {
+          router.push("/dashboard/courses");
+        }}
+        alternateStyle='w-[10px] secondary'
+      >
+        &lt;
+      </Button>
+      <div className='flex flex-col mt-[10px]'>
+        <h2 className='text-3xl font-bold mb-4 text-white'>Buat Kelas</h2>
+        <form onSubmit={handleSubmit(createClass)} className='space-y-6'>
+          <div>
+            <label className='font-bold text-md'>Nama</label>
+            <input
+              type='text'
+              placeholder='Tulis nama kelas anda'
+              {...register("nama")}
+              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                errors.nama ? "border-red-500" : ""
+              }`}
+            />
+            {errors.nama && (
+              <span className='text-red-600 text-sm'>
+                {errors.nama.message}
+              </span>
+            )}
+          </div>
+
+          <div className='flex flex-col gap-3'>
+            <label className='font-bold text-md'>Materi</label>
+            {materiFields.map((item, index) => (
+              <div key={item.id} className='flex space-x-2'>
+                <input
+                  type='text'
+                  placeholder='Materi kelas'
+                  {...register(`materi.${index}.name`)}
+                  className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+                />
+              </div>
+            ))}
+            <div className='flex gap-5'>
               <button
                 type='button'
-                onClick={() => removeMateri(materiFields.length - 1)}
+                onClick={() => appendMateri({ name: "" })}
                 className='mt-2 w-[150px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
               >
-                Delete Materi
+                Tambah Materi
               </button>
-            )}
-          </div>
-        </div>
-
-        <div className='flex flex-col gap-3'>
-          <label className='text-white font-bold text-md'>Spesifikasi</label>
-          {spesifikasiFields.map((item, index) => (
-            <div key={item.id} className='flex space-x-2'>
-              <input
-                type='text'
-                placeholder='Spesifikasi'
-                {...register(`spesifikasi.${index}.name` as const)}
-                className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
-              />
+              {materiFields.length > 1 && (
+                <button
+                  type='button'
+                  onClick={() => removeMateri(materiFields.length - 1)}
+                  className='mt-2 w-[150px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                >
+                  Delete Materi
+                </button>
+              )}
             </div>
-          ))}
-          <div className='flex gap-5'>
-            <button
-              type='button'
-              onClick={() => appendSpesifikasi({ name: "" })}
-              className='mt-2 w-[180px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
-            >
-              Tambah Spesifikasi
-            </button>
-            {spesifikasiFields.length > 1 && (
+          </div>
+
+          <div className='flex flex-col gap-3'>
+            <label className='font-bold text-md'>Spesifikasi</label>
+            {spesifikasiFields.map((item, index) => (
+              <div key={item.id} className='flex space-x-2'>
+                <input
+                  type='text'
+                  placeholder='Spesifikasi'
+                  {...register(`spesifikasi.${index}.name` as const)}
+                  className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+                />
+              </div>
+            ))}
+            <div className='flex gap-5'>
               <button
                 type='button'
-                onClick={() => removeSpesifikasi(spesifikasiFields.length - 1)}
-                className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                onClick={() => appendSpesifikasi({ name: "" })}
+                className='mt-2 w-[180px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
               >
-                Delete Spesifikasi
+                Tambah Spesifikasi
               </button>
+              {spesifikasiFields.length > 1 && (
+                <button
+                  type='button'
+                  onClick={() =>
+                    removeSpesifikasi(spesifikasiFields.length - 1)
+                  }
+                  className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                >
+                  Delete Spesifikasi
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className='font-bold text-md'>Metode</label>
+            <div className='flex space-x-4'>
+              <label className='font-bold text-md'>
+                <input
+                  type='checkbox'
+                  value='Modul'
+                  {...register("metode")}
+                  className='mr-2 rounded-checkbox checked:bg-secondary'
+                />
+                Modul
+              </label>
+              <label className='font-bold text-md'>
+                <input
+                  type='checkbox'
+                  value='Diskusi Kelas'
+                  {...register("metode")}
+                  className='mr-2 rounded-checkbox checked:bg-secondary'
+                />
+                Diskusi Kelas
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label className='font-bold text-md'>Jadwal</label>
+            <div className='flex gap-5 w-[30%]'>
+              <input
+                type='date'
+                {...register("jadwal")}
+                className={`text-secondary font-semibold  mt-1 block w-full px-3 py-2 border bg-transparent border-secondary rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
+                  errors.jadwal ? "border-red-500" : ""
+                }`}
+              />
+
+              <select
+                {...register("durasi", { required: true })}
+                className={`text-secondary font-semibold mt-1 block w-full px-3 py-2 border bg-transparent border-secondary rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
+                  errors.durasi ? "border-red-500" : ""
+                }`}
+              >
+                <option value=''>Pilih Jam</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+              </select>
+            </div>
+            <div className='flex gap-5'>
+              {errors.jadwal && (
+                <span className='text-red-600 text-sm'>
+                  Jadwal belum dipilih
+                </span>
+              )}
+              {errors.durasi && (
+                <span className='text-red-600 text-sm'>Jam belum dipilih</span>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className='font-bold text-md'>Kategori</label>
+            <select
+              {...register("kategori")}
+              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                errors.kategori ? "border-red-500" : ""
+              }`}
+            >
+              <option value=''>Pilih Kategori</option>
+              <option value='General'>General</option>
+              <option value='Computer Science'>Computer Science</option>
+              <option value='Science'>Science</option>
+              <option value='Sport'>Sport</option>
+              <option value='Marketing'>Marketing</option>
+            </select>
+            {`*Kategori yang kosong akan ditambahkan ke kategori General`}
+            <br></br>
+            {errors.kategori && (
+              <span className='text-red-600 text-sm'>
+                Kategori belum dipilih
+              </span>
             )}
           </div>
-        </div>
 
-        <div>
-          <label className='text-white font-bold text-md'>Metode</label>
-          <div className='flex space-x-4'>
-            <label className='text-white font-bold text-md'>
-              <input
-                type='checkbox'
-                value='Modul'
-                {...register("metode")}
-                className='mr-2 rounded-checkbox checked:bg-secondary'
-              />
-              Modul
-            </label>
-            <label className='text-white font-bold text-md'>
-              <input
-                type='checkbox'
-                value='Diskusi Kelas'
-                {...register("metode")}
-                className='mr-2 rounded-checkbox checked:bg-secondary'
-              />
-              Diskusi Kelas
-            </label>
+          <div>
+            <label className='font-bold text-md'>Harga {`(Rp)`}</label>
+            <input
+              type='text'
+              placeholder='Rp'
+              {...register("harga")}
+              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                errors.harga ? "border-red-500" : ""
+              }`}
+            />
+            {errors.harga && (
+              <span className='text-red-600 text-sm'>
+                {errors.harga.message}
+              </span>
+            )}
           </div>
-        </div>
 
-        <label className='text-white font-bold text-md'>Jadwal</label>
-        <div>
-          <input
-            type='date'
-            {...register("jadwal")}
-            className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-              errors.jadwal ? "border-red-500" : ""
-            }`}
-          />
-          {errors.jadwal && (
-            <span className='text-red-600 text-sm'>
-              {errors.jadwal.message}
-            </span>
-          )}
-        </div>
-
-        <div>
-          <label className='text-white font-bold text-md'>Durasi</label>
-          <select
-            {...register("durasi", { required: true })}
-            className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-              errors.durasi ? "border-red-500" : ""
-            }`}
+          <button
+            type='submit'
+            className='w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
           >
-            <option value=''>Pilih Durasi</option>
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-          </select>
-          {errors.durasi && (
-            <span className='text-red-600 text-sm'>
-              {errors.durasi.message}
-            </span>
-          )}
-        </div>
-
-        <div>
-          <label className='text-white font-bold text-md'>Kategori</label>
-          <select
-            {...register("kategori")}
-            className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-              errors.kategori ? "border-red-500" : ""
-            }`}
-          >
-            <option value=''>Pilih Kategori</option>
-            <option value='General'>General</option>
-            <option value='Computer Science'>Computer Science</option>
-            <option value='Science'>Science</option>
-            <option value='Sport'>Sport</option>
-            <option value='Marketing'>Marketing</option>
-          </select>
-          {errors.kategori && (
-            <span className='text-red-600 text-sm'>
-              {errors.kategori.message}
-            </span>
-          )}
-        </div>
-
-        <div>
-          <label className='text-white font-bold text-md'>Harga {`(Rp)`}</label>
-          <input
-            type='text'
-            placeholder='Rp'
-            {...register("harga")}
-            className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-              errors.harga ? "border-red-500" : ""
-            }`}
-          />
-          {errors.harga && (
-            <span className='text-red-600 text-sm'>{errors.harga.message}</span>
-          )}
-        </div>
-
-        <button
-          type='submit'
-          className='w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-        >
-          Create Class
-        </button>
-      </form>
+            Buat Kelas
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
