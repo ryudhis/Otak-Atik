@@ -35,7 +35,7 @@ model kelas {
   metode      String[]
   jadwal      String
   harga       Int
-  owner       Account        @relation(fields: [ownerId], references: [id])
+  owner       Account        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId     Int
   siswa       Account[]      @relation("kelasDiambil")
   comment     commentKelas[]
@@ -50,13 +50,15 @@ model forumDiskusi {
   content  String
   postedAt String
   comment  commentForum[]
+  like     String[]
+  dislike  String[]
 }
 
 model commentForum {
   id             Int          @id @unique @default(sequence())
   owner          Account      @relation(fields: [ownerId], references: [id])
   ownerId        Int
-  forumDiskusi   forumDiskusi @relation(fields: [forumDiskusiId], references: [id])
+  forumDiskusi   forumDiskusi @relation(fields: [forumDiskusiId], references: [id], onDelete: Cascade)
   forumDiskusiId Int
   content        String
   postedAt       String
@@ -64,9 +66,9 @@ model commentForum {
 
 model commentKelas {
   id       Int     @id @unique @default(sequence())
-  owner    Account @relation(fields: [ownerId], references: [id])
+  owner    Account @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId  Int
-  kelas    kelas   @relation(fields: [kelasId], references: [id])
+  kelas    kelas   @relation(fields: [kelasId], references: [id], onDelete: Cascade)
   kelasId  Int
   content  String
   postedAt String
