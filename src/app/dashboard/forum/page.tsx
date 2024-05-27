@@ -8,6 +8,13 @@ import Dislike from "@svg/Dislike.svg";
 import axiosConfig from "@utils/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Liked from "@svg/SolidLike.svg";
+import Disliked from "@svg/SolidDislike.svg";
 
 export interface forumItem {
   id: number;
@@ -18,6 +25,8 @@ export interface forumItem {
   kategori: string;
   owner: ownerItem;
   comments: commentItem[];
+  like: string[];
+  dislike: string[];
 }
 
 export interface commentItem {
@@ -33,8 +42,13 @@ export interface ownerItem {
   avatar: string;
 }
 
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+}
+
 const Forum = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState<ownerItem>();
   const [isLoading, setIsLoading] = useState(true);
   const [diskusi, setDiskusi] = useState<forumItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,6 +77,44 @@ const Forum = () => {
     }
   };
 
+  const toggleLike = async (forumId: number) => {
+    const data = {
+      forumId: forumId,
+      username: userData?.username,
+    };
+    try {
+      const response = await axiosConfig.post("api/forumDiskusi/like", data);
+      if (response.data.status !== 400) {
+        setDiskusi(response.data.data);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const toggleDislike = async (forumId: number) => {
+    const data = {
+      forumId: forumId,
+      username: userData?.username,
+    };
+    try {
+      const response = await axiosConfig.post("api/forumDiskusi/dislike", data);
+      if (response.data.status !== 400) {
+        setDiskusi(response.data.data);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const filteredDiskusi = diskusi
     .filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -73,6 +125,25 @@ const Forum = () => {
 
   useEffect(() => {
     getAllDiskusi();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          const decodedToken = jwtDecode<CustomJwtPayload>(token);
+          const userId = decodedToken.id;
+
+          const response = await axiosConfig.get(`/api/account/${userId}`);
+          setUserData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -129,12 +200,40 @@ const Forum = () => {
                   </div>
                   <p className="text-lg font-bold">{item.title}</p>
                   <div className="flex gap-6">
-                    <Button alternateStyle="ghost">
-                      <Image src={Like} alt="" />
-                    </Button>
-                    <Button alternateStyle="ghost">
-                      <Image src={Dislike} alt="" />
-                    </Button>
+                    {userData &&
+                    userData.username &&
+                    item.like.includes(userData.username) ? (
+                      <Button
+                        onClick={() => toggleLike(item.id)}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Liked} alt="" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => toggleLike(item.id)}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Like} alt="" />
+                      </Button>
+                    )}
+                    {userData &&
+                    userData.username &&
+                    item.dislike.includes(userData.username) ? (
+                      <Button
+                        onClick={() => toggleDislike(item.id)}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Disliked} alt="" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => toggleDislike(item.id)}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Dislike} alt="" />
+                      </Button>
+                    )}
                     <Button
                       onClick={() => router.push(`/dashboard/forum/${item.id}`)}
                       alternateStyle="ghost"
