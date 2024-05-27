@@ -82,12 +82,38 @@ const Forum = () => {
       forumId: forumId,
       username: userData?.username,
     };
+    setDiskusi((prevDiskusi) =>
+      prevDiskusi.map((item) =>
+        item.id === forumId
+          ? {
+              ...item,
+              like: item.like.includes(userData?.username ?? "")
+                ? item.like.filter((like) => like !== userData?.username)
+                : ([...item.like, userData?.username].filter(
+                    Boolean
+                  ) as string[]),
+              dislike: item.dislike.filter(
+                (dislike) => dislike !== userData?.username
+              ),
+            }
+          : item
+      )
+    );
     try {
-      const response = await axiosConfig.post("api/forumDiskusi/like", data);
-      if (response.data.status !== 400) {
-        setDiskusi(response.data.data);
-      } else {
+      const response = await axiosConfig.patch("api/forumDiskusi/like", data);
+      if (response.data.status === 400) {
         alert(response.data.message);
+        // Revert the UI back to its previous state
+        setDiskusi((prevDiskusi) =>
+          prevDiskusi.map((item) =>
+            item.id === forumId
+              ? {
+                  ...item,
+                  like: item.like.filter((like) => like !== userData?.username),
+                }
+              : item
+          )
+        );
       }
     } catch (error) {
       console.log(error);
@@ -101,12 +127,43 @@ const Forum = () => {
       forumId: forumId,
       username: userData?.username,
     };
+    setDiskusi((prevDiskusi) =>
+      prevDiskusi.map((item) =>
+        item.id === forumId
+          ? {
+              ...item,
+              dislike: item.dislike.includes(userData?.username ?? "")
+                ? item.dislike.filter(
+                    (dislike) => dislike !== userData?.username
+                  )
+                : ([...item.dislike, userData?.username].filter(
+                    Boolean
+                  ) as string[]),
+              like: item.like.filter((like) => like !== userData?.username),
+            }
+          : item
+      )
+    );
     try {
-      const response = await axiosConfig.post("api/forumDiskusi/dislike", data);
-      if (response.data.status !== 400) {
-        setDiskusi(response.data.data);
-      } else {
+      const response = await axiosConfig.patch(
+        "api/forumDiskusi/dislike",
+        data
+      );
+      if (response.data.status === 400) {
         alert(response.data.message);
+        // Revert the UI back to its previous state
+        setDiskusi((prevDiskusi) =>
+          prevDiskusi.map((item) =>
+            item.id === forumId
+              ? {
+                  ...item,
+                  dislike: item.dislike.filter(
+                    (dislike) => dislike !== userData?.username
+                  ),
+                }
+              : item
+          )
+        );
       }
     } catch (error) {
       console.log(error);
@@ -188,61 +245,79 @@ const Forum = () => {
         <div className="mt-8 flex flex-col">
           {filteredDiskusi.length > 0 ? (
             filteredDiskusi.map((item: forumItem) => (
-              <Link key={item.id} href={`/dashboard/forum/${item.id}`}>
-                <div className="py-4 border-b-2 border-primary flex flex-col gap-4">
-                  <div className="flex gap-4">
-                    <img className="w-8 h-8" src={item.owner.avatar} alt="" />
-                    <h1 className="font-bold">{item.owner.username}</h1>
-                    <h1>{item.postedAt}</h1>
-                    <div className="border-2 border-secondary p-1.5 rounded-3xl">
-                      {item.kategori}
-                    </div>
-                  </div>
-                  <p className="text-lg font-bold">{item.title}</p>
-                  <div className="flex gap-6">
-                    {userData &&
-                    userData.username &&
-                    item.like.includes(userData.username) ? (
-                      <Button
-                        onClick={() => toggleLike(item.id)}
-                        alternateStyle="ghost"
-                      >
-                        <Image src={Liked} alt="" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => toggleLike(item.id)}
-                        alternateStyle="ghost"
-                      >
-                        <Image src={Like} alt="" />
-                      </Button>
-                    )}
-                    {userData &&
-                    userData.username &&
-                    item.dislike.includes(userData.username) ? (
-                      <Button
-                        onClick={() => toggleDislike(item.id)}
-                        alternateStyle="ghost"
-                      >
-                        <Image src={Disliked} alt="" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => toggleDislike(item.id)}
-                        alternateStyle="ghost"
-                      >
-                        <Image src={Dislike} alt="" />
-                      </Button>
-                    )}
-                    <Button
-                      onClick={() => router.push(`/dashboard/forum/${item.id}`)}
-                      alternateStyle="ghost"
-                    >
-                      <Image src={Comments} alt="" />
-                    </Button>
+              <div
+                key={item.id}
+                className="py-4 border-b-2 border-primary flex flex-col gap-4"
+              >
+                <div className="flex gap-4">
+                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
+                  <h1 className="font-bold">{item.owner.username}</h1>
+                  <h1>{item.postedAt}</h1>
+                  <div className="border-2 border-secondary p-1.5 rounded-3xl">
+                    {item.kategori}
                   </div>
                 </div>
-              </Link>
+                <Link href={`/dashboard/forum/${item.id}`}>
+                  <p className="text-lg font-bold">{item.title}</p>
+                </Link>
+                <div className="flex gap-6">
+                  {userData &&
+                  userData.username &&
+                  item.like.includes(userData.username) ? (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike(item.id);
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Liked} alt="" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike(item.id);
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Like} alt="" />
+                    </Button>
+                  )}
+                  {userData &&
+                  userData.username &&
+                  item.dislike.includes(userData.username) ? (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleDislike(item.id);
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Disliked} alt="" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleDislike(item.id);
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Dislike} alt="" />
+                    </Button>
+                  )}
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/dashboard/forum/${item.id}`);
+                    }}
+                    alternateStyle="ghost"
+                  >
+                    <Image src={Comments} alt="" />
+                  </Button>
+                </div>
+              </div>
             ))
           ) : (
             <p className="mt-20 text-center">
