@@ -120,7 +120,7 @@ const Forum = () => {
               <Link key={item.id} href={`/dashboard/forum/${item.id}`}>
                 <div className="py-4 border-b-2 border-primary flex flex-col gap-4">
                   <div className="flex gap-4">
-                    <img src={item.owner.avatar} alt="" />
+                    <img className="w-8 h-8" src={item.owner.avatar} alt="" />
                     <h1 className="font-bold">{item.owner.username}</h1>
                     <h1>{item.postedAt}</h1>
                     <div className="border-2 border-secondary p-1.5 rounded-3xl">
