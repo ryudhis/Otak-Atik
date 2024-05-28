@@ -4,21 +4,25 @@ export async function PATCH(req) {
   try {
     const data = await req.json();
 
-    const dataForum= await prisma.forumDiskusi.findUnique({
-        where: {
-          id: data.forumId,
-        },
-      });
+    const dataForum = await prisma.forumDiskusi.findUnique({
+      where: {
+        id: data.forumId,
+      },
+    });
 
-      if(dataForum.dislike.includes(data.username)){
-        dataForum.dislike = dataForum.dislike.filter((data)=>{data!=data.username})
-      }
-      
-      if(dataForum.like.includes(data.username)){
-        dataForum.like = dataForum.like.filter((data)=>{data!=data.username});
-      }else{
-        dataForum.like = [data.username, ...dataForum.like];
-      }
+    if (dataForum.dislike.includes(data.username)) {
+      dataForum.dislike = dataForum.dislike.filter((data) => {
+        data != data.username;
+      });
+    }
+
+    if (dataForum.like.includes(data.username)) {
+      dataForum.like = dataForum.like.filter((data) => {
+        data != data.username;
+      });
+    } else {
+      dataForum.like = [data.username, ...dataForum.like];
+    }
 
     const forumDiskusi = await prisma.forumDiskusi.update({
       where: {

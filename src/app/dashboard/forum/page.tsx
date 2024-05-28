@@ -24,7 +24,7 @@ export interface forumItem {
   postedAt: string;
   kategori: string;
   owner: ownerItem;
-  comments: commentItem[];
+  comment: commentItem[];
   like: string[];
   dislike: string[];
 }
@@ -103,7 +103,6 @@ const Forum = () => {
       const response = await axiosConfig.patch("api/forumDiskusi/like", data);
       if (response.data.status === 400) {
         alert(response.data.message);
-        // Revert the UI back to its previous state
         setDiskusi((prevDiskusi) =>
           prevDiskusi.map((item) =>
             item.id === forumId
@@ -151,7 +150,6 @@ const Forum = () => {
       );
       if (response.data.status === 400) {
         alert(response.data.message);
-        // Revert the UI back to its previous state
         setDiskusi((prevDiskusi) =>
           prevDiskusi.map((item) =>
             item.id === forumId
@@ -204,7 +202,7 @@ const Forum = () => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen">
+    <div className="bg-tertiary p-28 h-full">
       <div className="flex justify-between">
         <div className="flex gap-6 justify-center">
           <h1 className="text-2xl font-bold">Forum Diskusi</h1>
@@ -260,7 +258,7 @@ const Forum = () => {
                 <Link href={`/dashboard/forum/${item.id}`}>
                   <p className="text-lg font-bold">{item.title}</p>
                 </Link>
-                <div className="flex gap-6">
+                <div className="flex items-center gap-6">
                   {userData &&
                   userData.username &&
                   item.like.includes(userData.username) ? (
@@ -307,15 +305,20 @@ const Forum = () => {
                       <Image src={Dislike} alt="" />
                     </Button>
                   )}
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push(`/dashboard/forum/${item.id}`);
-                    }}
-                    alternateStyle="ghost"
-                  >
-                    <Image src={Comments} alt="" />
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/dashboard/forum/${item.id}`);
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Comments} alt="" />
+                    </Button>
+                    <p className="font-semibold">
+                      {item.comment ? item.comment.length : 0}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))

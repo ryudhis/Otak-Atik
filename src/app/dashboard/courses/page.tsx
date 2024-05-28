@@ -63,15 +63,15 @@ const Courses = () => {
 
   if (isLoading) {
     return (
-      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
-        <h1 className='font-bold text-secondary'>Loading...</h1>
+      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
+        <h1 className="font-bold text-secondary">Loading...</h1>
       </div>
     );
   }
 
   if (!userData) {
     return (
-      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
+      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
         <h1>Error loading user data</h1>
       </div>
     );
@@ -81,9 +81,9 @@ const Courses = () => {
     userData.type === "pelajar" ? userData.kelasDiambil : userData.kelasDiampu;
 
   return (
-    <div className='bg-tertiary p-28 h-screen flex flex-col'>
-      <h1 className='font-bold text-2xl mb-4'>Kelas Aktif</h1>
-      <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
+    <div className="bg-tertiary p-28 h-screen flex flex-col">
+      <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
+      <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
         {classesToDisplay.map((kelas) => (
           <KelasItem
             key={kelas.id}
@@ -97,9 +97,9 @@ const Courses = () => {
       {userData.type !== "pelajar" && (
         <Button
           onClick={() => router.push("/dashboard/courses/create")}
-          alternateStyle='absolute'
+          alternateStyle="absolute"
         >
-          <Image width={60} height={60} src={addButton} alt='add logo' />
+          <Image width={60} height={60} src={addButton} alt="add logo" />
         </Button>
       )}
     </div>
