@@ -10,7 +10,6 @@ import { z } from "zod";
 import UsernameIcon from "@img/login/username.png";
 import PasswordIcon from "@img/login/password.png";
 import Image from "next/image";
-import { toast } from "react-toastify";
 
 const formSchema = z.object({
   username: z.string().min(4).max(50),
@@ -37,13 +36,13 @@ const LoginForm = () => {
       const response = await axios.post("api/login", values);
       if (response.data.status !== 400) {
         Cookies.set("token", response.data.token, { expires: 1 });
+        alert("Berhasil Login");
         router.push("/dashboard");
-        toast.success("Berhasil Login");
       } else {
-        toast.error("Gagal Login")
+        alert(response.data.message);
       }
     } catch (error) {
-      toast.error("Gagal Login")
+      alert("Gagal Login");
     }
     reset();
   };

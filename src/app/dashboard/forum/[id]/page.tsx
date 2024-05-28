@@ -91,7 +91,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
         alert(response.data.message);
       }
     } catch (error) {
-      toast.error("Gagal Komentar");
+      alert("Gagal Komentar");
     } finally {
       setRefresh(!refresh);
       reset();

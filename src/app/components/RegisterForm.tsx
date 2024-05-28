@@ -9,7 +9,6 @@ import { z } from "zod";
 import UsernameIcon from "@img/login/username.png";
 import PasswordIcon from "@img/login/password.png";
 import Image from "next/image";
-import { toast } from "react-toastify";
 
 const formSchema = z.object({
   email: z.string().min(6).max(50),
@@ -42,13 +41,13 @@ const Registerform = () => {
     try {
       const response = await axios.post("api/register", values);
       if (response.data.status !== 400) {
-        toast.success("Berhasil Daftar");
+        alert("Berhasil Daftar");
         router.push("/login");
       } else {
         alert(response.data.message);
       }
     } catch (error) {
-      toast.error("Gagal Daftar");
+      alert("Gagal Daftar");
     }
     reset();
   };

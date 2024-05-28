@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
@@ -63,15 +63,24 @@ const Courses = () => {
 
   if (isLoading) {
     return (
+<<<<<<< HEAD
       <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
         <h1 className="font-bold text-secondary">Loading...</h1>
+=======
+      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
+        <h1 className='font-bold text-secondary'>Loading...</h1>
+>>>>>>> parent of 175511a (add time info, fix toast)
       </div>
     );
   }
 
   if (!userData) {
     return (
+<<<<<<< HEAD
       <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
+=======
+      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
+>>>>>>> parent of 175511a (add time info, fix toast)
         <h1>Error loading user data</h1>
       </div>
     );
@@ -81,9 +90,15 @@ const Courses = () => {
     userData.type === "pelajar" ? userData.kelasDiambil : userData.kelasDiampu;
 
   return (
+<<<<<<< HEAD
     <div className="bg-tertiary p-28 h-screen flex flex-col">
       <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
       <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
+=======
+    <div className='bg-tertiary p-28 h-screen flex flex-col'>
+      <h1 className='font-bold text-2xl mb-4'>Kelas Aktif</h1>
+      <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
+>>>>>>> parent of 175511a (add time info, fix toast)
         {classesToDisplay.map((kelas) => (
           <KelasItem
             key={kelas.id}

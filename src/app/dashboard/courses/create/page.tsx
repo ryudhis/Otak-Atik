@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import Button from "@/app/components/Button";
-import { toast } from "react-toastify";
 
 const formSchema = z.object({
   nama: z.string().min(1, "nama is required"),
@@ -87,35 +86,9 @@ const CreateClassForm = () => {
     name: "spesifikasi",
   });
 
-  const formatDate = (jadwal: string) => {
-    const dateObject = new Date(jadwal);
-
-    const dayOptions = { weekday: "long" as const };
-    const dayName = new Intl.DateTimeFormat("id-ID", dayOptions).format(
-      dateObject
-    );
-
-    const dateOptions = {
-      day: "2-digit" as const,
-      month: "long" as const,
-      year: "numeric" as const,
-    };
-
-    const formattedDate = new Intl.DateTimeFormat("id-ID", dateOptions).format(
-      dateObject
-    );
-
-    const finalFormattedDate = `${dayName}, ${formattedDate}`;
-
-    return finalFormattedDate;
-  };
-
   const createClass = async (values: any) => {
-    const formatedDate = formatDate(values.jadwal)
-
     const data = {
       ...values,
-      jadwal: formatedDate,
       ownerId: userData?.id,
       materi: values.materi.map((item: any) => {
         return item.name;
@@ -131,11 +104,11 @@ const CreateClassForm = () => {
       .post("api/kelas", data)
       .then(function (response) {
         if (response.data.status != 400) {
-          toast.success("berhasil Submit");
+          alert("berhasil Submit");
         }
       })
       .catch(function (error) {
-        toast.error("Gagal Submit");
+        alert("Gagal Submit");
         console.log(error);
       });
 
@@ -212,7 +185,7 @@ const CreateClassForm = () => {
               <button
                 type='button'
                 onClick={() => appendMateri({ name: "" })}
-                className='mt-2 w-[180px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                className='mt-2 w-[150px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
               >
                 Tambah Materi
               </button>
@@ -220,7 +193,7 @@ const CreateClassForm = () => {
                 <button
                   type='button'
                   onClick={() => removeMateri(materiFields.length - 1)}
-                  className='mt-2 w-[180px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                  className='mt-2 w-[150px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
                 >
                   Delete Materi
                 </button>
@@ -244,7 +217,7 @@ const CreateClassForm = () => {
               <button
                 type='button'
                 onClick={() => appendSpesifikasi({ name: "" })}
-                className='mt-2 w-[200px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                className='mt-2 w-[180px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
               >
                 Tambah Spesifikasi
               </button>
