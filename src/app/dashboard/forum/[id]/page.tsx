@@ -4,6 +4,8 @@ import Button from "@components/Button";
 import axiosConfig from "@utils/axios";
 import Image from "next/image";
 import Like from "@svg/Like.svg";
+import Liked from "@svg/SolidLike.svg";
+import Disliked from "@svg/SolidDislike.svg";
 import Comments from "@svg/Comments.svg";
 import Dislike from "@svg/Dislike.svg";
 import { useRouter } from "next/navigation";
@@ -23,6 +25,8 @@ export interface forumItem {
   kategori: string;
   owner: ownerItem;
   comment: commentItem[];
+  like: string[];
+  dislike: string[];
 }
 
 export interface commentItem {
@@ -44,6 +48,7 @@ interface CustomJwtPayload extends JwtPayload {
 
 export interface userData {
   id: number;
+  username: string;
 }
 
 const formSchema = z.object({
@@ -112,6 +117,105 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const toggleLike = async () => {
+    const data = {
+      forumId: parseInt(id),
+      username: userData?.username,
+    };
+    setDiskusi((prevDiskusi) => {
+      if (prevDiskusi) {
+        return {
+          ...prevDiskusi,
+          like: prevDiskusi.like.includes(userData?.username ?? "")
+            ? prevDiskusi.like.filter((like) => like !== userData?.username)
+            : ([...prevDiskusi.like, userData?.username].filter(
+                Boolean
+              ) as string[]),
+          dislike: prevDiskusi.dislike.filter(
+            (dislike) => dislike !== userData?.username
+          ),
+        };
+      }
+    });
+    try {
+      const response = await axiosConfig.patch("api/forumDiskusi/like", data);
+      if (response.data.status === 400) {
+        alert(response.data.message);
+        setDiskusi((prevDiskusi) => {
+          if (prevDiskusi) {
+            return {
+              ...prevDiskusi,
+              like: prevDiskusi.like.includes(userData?.username ?? "")
+                ? prevDiskusi.like.filter((like) => like !== userData?.username)
+                : ([...prevDiskusi.like, userData?.username].filter(
+                    Boolean
+                  ) as string[]),
+              dislike: prevDiskusi.dislike.filter(
+                (dislike) => dislike !== userData?.username
+              ),
+            };
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const toggleDislike = async () => {
+    const data = {
+      forumId: parseInt(id),
+      username: userData?.username,
+    };
+    setDiskusi((prevDiskusi) => {
+      if (prevDiskusi) {
+        return {
+          ...prevDiskusi,
+          dislike: prevDiskusi.dislike.includes(userData?.username ?? "")
+            ? prevDiskusi.dislike.filter(
+                (dislike) => dislike !== userData?.username
+              )
+            : ([...prevDiskusi.dislike, userData?.username].filter(
+                Boolean
+              ) as string[]),
+          like: prevDiskusi.like.filter((like) => like !== userData?.username),
+        };
+      }
+    });
+    try {
+      const response = await axiosConfig.patch(
+        "api/forumDiskusi/dislike",
+        data
+      );
+      if (response.data.status === 400) {
+        alert(response.data.message);
+        setDiskusi((prevDiskusi) => {
+          if (prevDiskusi) {
+            return {
+              ...prevDiskusi,
+              dislike: prevDiskusi.dislike.includes(userData?.username ?? "")
+                ? prevDiskusi.dislike.filter(
+                    (dislike) => dislike !== userData?.username
+                  )
+                : ([...prevDiskusi.dislike, userData?.username].filter(
+                    Boolean
+                  ) as string[]),
+              like: prevDiskusi.like.filter(
+                (like) => like !== userData?.username
+              ),
+            };
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     getDiskusi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,38 +241,75 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className='bg-tertiary p-28 h-screen'>
-      <Button onClick={() => router.back()} alternateStyle='secondary'>
+    <div className="bg-tertiary p-28 h-full">
+      <Button onClick={() => router.back()} alternateStyle="secondary">
         &lt;
       </Button>
       {isLoading ? (
-        <div className='mt-6 py-4  flex flex-col gap-8'>
-          <div className='flex gap-4'>
-            <img src={diskusi?.owner.avatar} alt='' />
-            <h1 className='font-bold'>{diskusi?.owner.username}</h1>
-            <h1>{diskusi?.postedAt}</h1>
-          </div>
-          <p className='text-center'>Loading Konten...</p>
+        <div className="mt-64 h-full">
+          <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
+            Loading diskusi...
+          </h1>
         </div>
       ) : (
-        <div className='mt-6 py-4 flex flex-col gap-8'>
-          <div className='border-b-2 border-primary flex flex-col gap-8'>
-            <div className='flex gap-4'>
-              <img src={diskusi?.owner.avatar} alt='' />
-              <h1 className='font-bold'>{diskusi?.owner.username}</h1>
+        <div className="mt-6 py-4 flex flex-col gap-8">
+          <div className="border-b-2 border-primary flex flex-col gap-8">
+            <div className="flex gap-4">
+              <img src={diskusi?.owner.avatar} alt="" />
+              <h1 className="font-bold">{diskusi?.owner.username}</h1>
               <h1>{diskusi?.postedAt}</h1>
             </div>
-            <p className='text-xl font-bold'>{diskusi?.title}</p>
-            <p className='text-lg'>{diskusi?.content}</p>
-            <div className='flex gap-6'>
-              <Button alternateStyle='ghost'>
-                <Image src={Like} alt='' />
-              </Button>
-              <Button alternateStyle='ghost'>
-                <Image src={Dislike} alt='' />
-              </Button>
-              <Button onClick={() => toggleCommentBox()} alternateStyle='ghost'>
-                <Image src={Comments} alt='' />
+            <p className="text-xl font-bold">{diskusi?.title}</p>
+            <p className="text-lg">{diskusi?.content}</p>
+            <div className="flex gap-6">
+              {userData &&
+              userData.username &&
+              diskusi?.like.includes(userData.username) ? (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike();
+                  }}
+                  alternateStyle="ghost"
+                >
+                  <Image src={Liked} alt="" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike();
+                  }}
+                  alternateStyle="ghost"
+                >
+                  <Image src={Like} alt="" />
+                </Button>
+              )}
+              {userData &&
+              userData.username &&
+              diskusi?.dislike.includes(userData.username) ? (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleDislike();
+                  }}
+                  alternateStyle="ghost"
+                >
+                  <Image src={Disliked} alt="" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleDislike();
+                  }}
+                  alternateStyle="ghost"
+                >
+                  <Image src={Dislike} alt="" />
+                </Button>
+              )}
+              <Button onClick={() => toggleCommentBox()} alternateStyle="ghost">
+                <Image src={Comments} alt="" />
               </Button>
             </div>
           </div>
@@ -181,41 +322,41 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
           >
             <form onSubmit={handleSubmit(postComment)}>
               <textarea
-                placeholder='Komentar disini...'
+                placeholder="Komentar disini..."
                 {...register("content", { required: true })}
                 className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   errors.content ? "border-red-500" : ""
                 }`}
               />
               {errors.content && (
-                <span className='text-red-600 text-sm'>
+                <span className="text-red-600 text-sm">
                   This field is required
                 </span>
               )}
-              <div className='flex justify-start items-center gap-3 p-3'>
+              <div className="flex justify-start items-center gap-3 p-3">
                 <Button
                   onClick={() => toggleCommentBox()}
-                  alternateStyle='secondary'
+                  alternateStyle="secondary"
                 >
                   Batal
                 </Button>
-                <Button type='submit' alternateStyle='primary'>
+                <Button type="submit" alternateStyle="primary">
                   Komen
                 </Button>
               </div>
             </form>
           </div>
           <div>
-            <h1 className='text-2xl font-bold'>
+            <h1 className="text-2xl font-bold">
               Komentar({diskusi?.comment ? diskusi.comment.length : 0})
             </h1>
-            <div className='mt-6 flex flex-col gap-6'>
+            <div className="mt-6 flex flex-col gap-6">
               {diskusi?.comment.map((item) => (
-                <div key={item.id} className='flex gap-4'>
-                  <img className='w-8 h-8' src={item.owner.avatar} alt='' />
-                  <div className='flex flex-col gap-4'>
-                    <div className='flex gap-4'>
-                      <h1 className='font-bold'>{item.owner.username}</h1>
+                <div key={item.id} className="flex gap-4">
+                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-4">
+                      <h1 className="font-bold">{item.owner.username}</h1>
                       <h1>{item.postedAt}</h1>
                     </div>
                     <p>{item.content}</p>

@@ -114,7 +114,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen flex justify-between">
+    <div className="bg-tertiary p-28 h-full flex justify-between">
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-12 min-w-[600px] max-w-[600px] min-h-[380px] max-h-[380px]">
           <div className="flex justify-between">
@@ -166,23 +166,15 @@ const Dashboard = () => {
               {kelas.filter((item) => item.kategori === currentKelas).length ===
                 0 &&
                 !isLoading && (
-                  <h1 className="text-center">
+                  <h1 className="text-center mx-auto">
                     Tidak ada kelas pada kategori {currentKelas}
                   </h1>
                 )}
             </div>
           ) : (
-            <div className="flex gap-5">
-              <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading kelas..</h1>
-              </div>
-              <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading kelas..</h1>
-              </div>
-              <div className="p-6 w-56 h-80 border-2 border-primary rounded-3xl animate-pulse flex justify-center items-center">
-                <h1 className="text-center animate-pulse">Loading kelas..</h1>
-              </div>
-            </div>
+            <h1 className="text-center animate-pulse">
+              Loading kelas kategori {currentKelas}...
+            </h1>
           )}
         </div>
         <div className="p-6 w-[600px] h-80 border-2 border-primary rounded-3xl flex flex-col gap-8">
@@ -259,11 +251,6 @@ const Dashboard = () => {
                 </div>
               ))
           )}
-          {/* <h1 className="text-lg font-semibold">Materi Favorit</h1>
-          <div className="flex gap-4">
-            <Image src={tech} alt="" width={32}></Image>
-            <Image src={tech} alt="" width={32}></Image>
-          </div> */}
         </div>
         <div className="bg-primary p-6 w-[420px] h-[120px] rounded-3xl flex justify-between">
           <div className="flex flex-col justify-center items-center">
