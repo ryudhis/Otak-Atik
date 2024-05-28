@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
@@ -61,60 +61,36 @@ const Courses = () => {
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return (
-<<<<<<< HEAD
-      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
-        <h1 className="font-bold text-secondary">Loading...</h1>
-=======
-      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
-        <h1 className='font-bold text-secondary'>Loading...</h1>
->>>>>>> parent of 175511a (add time info, fix toast)
-      </div>
-    );
-  }
-
-  if (!userData) {
-    return (
-<<<<<<< HEAD
-      <div className="bg-tertiary p-28 h-screen flex justify-center items-center">
-=======
-      <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
->>>>>>> parent of 175511a (add time info, fix toast)
-        <h1>Error loading user data</h1>
-      </div>
-    );
-  }
-
-  const classesToDisplay =
-    userData.type === "pelajar" ? userData.kelasDiambil : userData.kelasDiampu;
+  const classesToDisplay = userData?.type === "pelajar" ? userData?.kelasDiambil : userData?.kelasDiampu;
 
   return (
-<<<<<<< HEAD
-    <div className="bg-tertiary p-28 h-screen flex flex-col">
-      <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
-      <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
-=======
     <div className='bg-tertiary p-28 h-screen flex flex-col'>
       <h1 className='font-bold text-2xl mb-4'>Kelas Aktif</h1>
-      <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
->>>>>>> parent of 175511a (add time info, fix toast)
-        {classesToDisplay.map((kelas) => (
-          <KelasItem
-            key={kelas.id}
-            title={kelas.nama}
-            jadwal={kelas.jadwal}
-            tutorNama={kelas.owner.username}
-            avatar={kelas.owner.avatar}
-          />
-        ))}
-      </div>
-      {userData.type !== "pelajar" && (
+      {isLoading && !userData ? (
+        <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
+          <h1 className='text-center text-secondary font-bold text-2xl animate-pulse'>
+            Loading kelas...
+          </h1>
+        </div>
+      ) : (
+        <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
+          {classesToDisplay?.map((kelas) => (
+            <KelasItem
+              key={kelas.id}
+              title={kelas.nama}
+              jadwal={kelas.jadwal}
+              tutorNama={kelas.owner.username}
+              avatar={kelas.owner.avatar}
+            />
+          ))}
+        </div>
+      )}
+      {userData?.type !== "pelajar" && (
         <Button
           onClick={() => router.push("/dashboard/courses/create")}
-          alternateStyle="absolute"
+          alternateStyle='absolute'
         >
-          <Image width={60} height={60} src={addButton} alt="add logo" />
+          <Image width={60} height={60} src={addButton} alt='add logo' />
         </Button>
       )}
     </div>
