@@ -216,6 +216,34 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  function postedAt(date?: string) {
+    if (!date) {
+      return "Unknown";
+    }
+
+    const now = new Date();
+    const posted = new Date(date);
+    const diff = now.getTime() - posted.getTime();
+    const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    const diffMinutes = Math.floor(diff / (1000 * 60));
+    const diffSeconds = Math.floor(diff / 1000);
+
+    if (diffDays > 0) {
+      return `${diffDays} days ago`;
+    }
+    if (diffHours > 0) {
+      return `${diffHours} hours ago`;
+    }
+    if (diffMinutes > 0) {
+      return `${diffMinutes} minutes ago`;
+    }
+    if (diffSeconds > 0) {
+      return `${diffSeconds} seconds ago`;
+    }
+    return "just now";
+  }
+
   useEffect(() => {
     getDiskusi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -257,7 +285,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
             <div className="flex gap-4">
               <img src={diskusi?.owner.avatar} alt="" />
               <h1 className="font-bold">{diskusi?.owner.username}</h1>
-              <h1>{diskusi?.postedAt}</h1>
+              <h1>{postedAt(diskusi?.postedAt)}</h1>
             </div>
             <p className="text-xl font-bold">{diskusi?.title}</p>
             <p className="text-lg">{diskusi?.content}</p>
