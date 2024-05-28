@@ -246,13 +246,10 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
         &lt;
       </Button>
       {isLoading ? (
-        <div className="mt-6 py-4  flex flex-col gap-8">
-          <div className="flex gap-4">
-            <img src={diskusi?.owner.avatar} alt="" />
-            <h1 className="font-bold">{diskusi?.owner.username}</h1>
-            <h1>{diskusi?.postedAt}</h1>
-          </div>
-          <p className="text-center">Loading Konten...</p>
+        <div className="mt-64 h-full">
+          <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
+            Loading diskusi...
+          </h1>
         </div>
       ) : (
         <div className="mt-6 py-4 flex flex-col gap-8">

@@ -236,8 +236,10 @@ const Forum = () => {
         </div>
       </div>
       {isLoading ? (
-        <div className="mt-6 py-4 h-full flex flex-col gap-8 items-center justify-center">
-          <p className="text-center">Loading diskusi...</p>
+        <div className="-mt-32 h-screen flex flex-col items-center justify-center">
+          <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
+            Loading diskusi...
+          </h1>
         </div>
       ) : (
         <div className="mt-8 flex flex-col">
@@ -248,10 +250,12 @@ const Forum = () => {
                 className="py-4 border-b-2 border-primary flex flex-col gap-4"
               >
                 <div className="flex gap-4">
-                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
-                  <h1 className="font-bold">{item.owner.username}</h1>
-                  <h1>{item.postedAt}</h1>
-                  <div className="border-2 border-secondary p-1.5 rounded-3xl">
+                  <div className="basis-full flex gap-4">
+                    <img className="w-8 h-8" src={item.owner.avatar} alt="" />
+                    <h1 className="font-bold">{item.owner.username}</h1>
+                    <h1>{item.postedAt}</h1>
+                  </div>
+                  <div className="basis-44 border-2 text-center border-secondary p-1.5 rounded-3xl">
                     {item.kategori}
                   </div>
                 </div>
