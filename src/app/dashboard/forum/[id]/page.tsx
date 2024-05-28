@@ -12,7 +12,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export interface forumItem {
   id: number;
@@ -137,38 +137,38 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen">
-      <Button onClick={() => router.back()} alternateStyle="secondary">
+    <div className='bg-tertiary p-28 h-screen'>
+      <Button onClick={() => router.back()} alternateStyle='secondary'>
         &lt;
       </Button>
       {isLoading ? (
-        <div className="mt-6 py-4  flex flex-col gap-8">
-          <div className="flex gap-4">
-            <img src={diskusi?.owner.avatar} alt="" />
-            <h1 className="font-bold">{diskusi?.owner.username}</h1>
+        <div className='mt-6 py-4  flex flex-col gap-8'>
+          <div className='flex gap-4'>
+            <img src={diskusi?.owner.avatar} alt='' />
+            <h1 className='font-bold'>{diskusi?.owner.username}</h1>
             <h1>{diskusi?.postedAt}</h1>
           </div>
-          <p className="text-center">Loading Konten...</p>
+          <p className='text-center'>Loading Konten...</p>
         </div>
       ) : (
-        <div className="mt-6 py-4 flex flex-col gap-8">
-          <div className="border-b-2 border-primary flex flex-col gap-8">
-            <div className="flex gap-4">
-              <img src={diskusi?.owner.avatar} alt="" />
-              <h1 className="font-bold">{diskusi?.owner.username}</h1>
+        <div className='mt-6 py-4 flex flex-col gap-8'>
+          <div className='border-b-2 border-primary flex flex-col gap-8'>
+            <div className='flex gap-4'>
+              <img src={diskusi?.owner.avatar} alt='' />
+              <h1 className='font-bold'>{diskusi?.owner.username}</h1>
               <h1>{diskusi?.postedAt}</h1>
             </div>
-            <p className="text-xl font-bold">{diskusi?.title}</p>
-            <p className="text-lg">{diskusi?.content}</p>
-            <div className="flex gap-6">
-              <Button alternateStyle="ghost">
-                <Image src={Like} alt="" />
+            <p className='text-xl font-bold'>{diskusi?.title}</p>
+            <p className='text-lg'>{diskusi?.content}</p>
+            <div className='flex gap-6'>
+              <Button alternateStyle='ghost'>
+                <Image src={Like} alt='' />
               </Button>
-              <Button alternateStyle="ghost">
-                <Image src={Dislike} alt="" />
+              <Button alternateStyle='ghost'>
+                <Image src={Dislike} alt='' />
               </Button>
-              <Button onClick={() => toggleCommentBox()} alternateStyle="ghost">
-                <Image src={Comments} alt="" />
+              <Button onClick={() => toggleCommentBox()} alternateStyle='ghost'>
+                <Image src={Comments} alt='' />
               </Button>
             </div>
           </div>
@@ -181,41 +181,41 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
           >
             <form onSubmit={handleSubmit(postComment)}>
               <textarea
-                placeholder="Komentar disini..."
+                placeholder='Komentar disini...'
                 {...register("content", { required: true })}
                 className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                   errors.content ? "border-red-500" : ""
                 }`}
               />
               {errors.content && (
-                <span className="text-red-600 text-sm">
+                <span className='text-red-600 text-sm'>
                   This field is required
                 </span>
               )}
-              <div className="flex justify-start items-center gap-3 p-3">
+              <div className='flex justify-start items-center gap-3 p-3'>
                 <Button
                   onClick={() => toggleCommentBox()}
-                  alternateStyle="secondary"
+                  alternateStyle='secondary'
                 >
                   Batal
                 </Button>
-                <Button type="submit" alternateStyle="primary">
+                <Button type='submit' alternateStyle='primary'>
                   Komen
                 </Button>
               </div>
             </form>
           </div>
           <div>
-            <h1 className="text-2xl font-bold">
+            <h1 className='text-2xl font-bold'>
               Komentar({diskusi?.comment ? diskusi.comment.length : 0})
             </h1>
-            <div className="mt-6 flex flex-col gap-6">
+            <div className='mt-6 flex flex-col gap-6'>
               {diskusi?.comment.map((item) => (
-                <div key={item.id} className="flex gap-4">
-                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-4">
-                      <h1 className="font-bold">{item.owner.username}</h1>
+                <div key={item.id} className='flex gap-4'>
+                  <img className='w-8 h-8' src={item.owner.avatar} alt='' />
+                  <div className='flex flex-col gap-4'>
+                    <div className='flex gap-4'>
+                      <h1 className='font-bold'>{item.owner.username}</h1>
                       <h1>{item.postedAt}</h1>
                     </div>
                     <p>{item.content}</p>

@@ -4,7 +4,7 @@ export async function GET() {
   try {
     const forumDiskusi = await prisma.forumDiskusi.findMany({
       include: {
-        owner: true,
+        owner: true, comment: true,
       },
     });
 
