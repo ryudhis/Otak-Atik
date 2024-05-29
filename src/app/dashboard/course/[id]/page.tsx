@@ -3,11 +3,8 @@ import React, { useEffect, useState } from "react";
 import Button from "@components/Button";
 import axiosConfig from "@utils/axios";
 import Image from "next/image";
-import Like from "@svg/Like.svg";
-import Liked from "@svg/SolidLike.svg";
-import Disliked from "@svg/SolidDislike.svg";
+import Star from "@svg/star.svg";
 import Comments from "@svg/Comments.svg";
-import Dislike from "@svg/Dislike.svg";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
@@ -192,7 +189,12 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
           ) : (
             <>
               <div className='border-b-2 border-primary flex flex-col gap-8'>
-                <h1>{kelas?.nama}</h1>
+                <div className="flex items-center justify-between">
+                  <h1 className='text-3xl font-bold'>{kelas?.nama}</h1>
+                  <Button alternateStyle='ghost'>
+                    <Image src={Star} alt='' />
+                  </Button>
+                </div>
                 <div className='flex gap-6'>
                   <Button
                     onClick={() => toggleCommentBox()}
