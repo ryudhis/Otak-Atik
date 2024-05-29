@@ -54,14 +54,14 @@ const Sidebar = () => {
             alt="forum image"
           />
         </Link>
-        <Link href="/dashboard/setting">
+        <Link href="/dashboard/profile">
           <Image
             className={
-              pathname === "/dashboard/setting"
+              pathname === "/dashboard/profile"
                 ? `scale-110`
                 : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
             }
-            src={pathname === "/dashboard/setting" ? settingSolid : setting}
+            src={pathname === "/dashboard/profile" ? settingSolid : setting}
             alt="setting image"
           />
         </Link>

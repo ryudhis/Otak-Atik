@@ -56,10 +56,10 @@ const CreateForum = () => {
       if (response.data.status !== 400) {
         toast.success("Berhasil Buat Dikusi");
       } else {
-        alert(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
-      alert("Gagal Membuat Diskusi");
+      toast.error("Gagal Membuat Diskusi");
     } finally {
       reset();
     }
