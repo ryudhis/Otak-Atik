@@ -1,7 +1,7 @@
 "use client";
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button";
+import Button from "@components/Button";
 import Star from "@svg/star.svg";
 import Image from "next/image";
 import tech from "@svg/tech.svg";
