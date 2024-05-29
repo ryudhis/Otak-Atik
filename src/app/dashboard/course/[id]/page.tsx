@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import KelasContent from "@/app/components/KelasContent";
 import Button from "@components/Button";
 import axiosConfig from "@utils/axios";
 import Image from "next/image";
@@ -182,7 +183,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
         </div>
       ) : (
         <div className='mt-6 py-4 flex flex-col gap-8'>
-          {kelas === null ? (
+          {kelas ? (
             <h1 className='text-center text-red-500 font-bold text-2xl'>
               Kelas Tidak Ditemukan
             </h1>
@@ -194,6 +195,9 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                   <Button alternateStyle='ghost'>
                     <Image src={Star} alt='' />
                   </Button>
+                </div>
+                <div>
+                    <KelasContent title={"Materi"} subtitle={"Materi yang akan dibahas"} content={kelas.materi}/>
                 </div>
                 <div className='flex gap-6'>
                   <Button
