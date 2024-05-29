@@ -50,7 +50,7 @@ export async function PATCH(req) {
 
     const account = await prisma.account.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data,
     });

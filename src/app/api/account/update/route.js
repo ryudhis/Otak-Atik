@@ -6,7 +6,7 @@ export async function PATCH(req) {
 
     const account = await prisma.account.update({
       where: {
-        id: parseInt(data.ownerId),
+        id: parseInt(data.id),
       },
       data,
     });
