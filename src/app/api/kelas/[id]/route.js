@@ -5,7 +5,7 @@ export async function GET(req) {
     const id = req.url.split("/kelas/")[1];
     const kelas = await prisma.kelas.findUnique({
         where: {
-          id,
+          id: parseInt(id),
         },
       });
 

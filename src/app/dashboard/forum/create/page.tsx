@@ -41,12 +41,15 @@ const CreateForum = () => {
     },
   });
   const postDiskusi = async (values: any) => {
+    const date = new Date();
+    const isoDateString = date.toISOString();
+
     const data = {
       ownerId: userData?.id,
       title: values.title,
       content: values.content,
       kategori: values.kategori,
-      postedAt: "Barusan",
+      postedAt: isoDateString,
     };
     try {
       const response = await axiosConfig.post("api/forumDiskusi", data);

@@ -10,9 +10,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import Liked from "@svg/SolidLike.svg";
 import Disliked from "@svg/SolidDislike.svg";
 

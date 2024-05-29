@@ -29,6 +29,7 @@ export async function POST(req) {
         spesifikasi: data.spesifikasi,
         metode: data.metode,
         jadwal: data.jadwal,
+        durasi: data.durasi,
         harga: parseInt(data.harga),
         owner: {
             connect: {id: data.ownerId}
