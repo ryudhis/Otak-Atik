@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'box-kelas': '-4px 4px 2px 0px rgba(0, 0, 0, 0.25)',
+      },
       colors: {
         primary: "#282C45",
         secondary: "#ED993B",

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "@components/Button";
@@ -269,7 +270,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-full">
+    <div className="bg-tertiary p-28 h-screen">
       <Button onClick={() => router.back()} alternateStyle="secondary">
         &lt;
       </Button>

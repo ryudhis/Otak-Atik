@@ -8,7 +8,7 @@ export async function GET(req) {
         id: parseInt(id),
       },
       include: {
-        kelasDiampu: {include : {owner: true}}, kelasDiambil: {include : {owner: true}}, diskusi: true, commentForum: true, commentKelas: true,
+        kelasDiampu: {include : {owner: true, siswa: true}}, kelasDiambil: {include : {owner: true}}, diskusi: true, commentForum: true, commentKelas: true,
       }
     });
 

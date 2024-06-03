@@ -7,6 +7,15 @@ export async function GET(req) {
         where: {
           id: parseInt(id),
         },
+        include: {
+          siswa: true,
+          owner: true,
+          comment: {
+            include : {
+              owner:true,
+            }
+          },
+        }
       });
 
     return Response.json({

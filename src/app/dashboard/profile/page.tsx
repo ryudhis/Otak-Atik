@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
@@ -140,13 +141,13 @@ const Profile = () => {
   };
 
   return isLoading ? (
-    <div className="-mt-32 h-screen flex flex-col items-center justify-center">
+    <div className="h-screen flex flex-col items-center justify-center">
       <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
         Loading profile...
       </h1>
     </div>
   ) : (
-    <div className="bg-tertiary p-28 h-full justify-between">
+    <div className="bg-tertiary p-28 h-screen justify-between">
       <div className="flex gap-4 items-center">
         <img className="w-20" src={userData?.avatar} alt="" />
         <div className="flex flex-col">

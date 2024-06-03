@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
@@ -61,7 +61,10 @@ const Courses = () => {
     fetchData();
   }, []);
 
-  const classesToDisplay = userData?.type === "pelajar" ? userData?.kelasDiambil : userData?.kelasDiampu;
+  const classesToDisplay =
+    userData?.type === "pelajar"
+      ? userData?.kelasDiambil
+      : userData?.kelasDiampu;
 
   return (
     <div className='bg-tertiary p-28 h-screen flex flex-col'>
@@ -73,25 +76,27 @@ const Courses = () => {
           </h1>
         </div>
       ) : (
-        <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
-          {classesToDisplay?.map((kelas) => (
-            <KelasItem
-              key={kelas.id}
-              title={kelas.nama}
-              jadwal={kelas.jadwal}
-              tutorNama={kelas.owner.username}
-              avatar={kelas.owner.avatar}
-            />
-          ))}
-        </div>
-      )}
-      {userData?.type !== "pelajar" && (
-        <Button
-          onClick={() => router.push("/dashboard/courses/create")}
-          alternateStyle='absolute'
-        >
-          <Image width={60} height={60} src={addButton} alt='add logo' />
-        </Button>
+        <>
+          <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
+            {classesToDisplay?.map((kelas) => (
+              <KelasItem
+                key={kelas.id}
+                title={kelas.nama}
+                jadwal={kelas.jadwal}
+                tutorNama={kelas.owner.username}
+                avatar={kelas.owner.avatar}
+              />
+            ))}
+          </div>
+          {userData?.type !== "pelajar" && (
+            <Button
+              onClick={() => router.push("/dashboard/courses/create")}
+              alternateStyle='absolute'
+            >
+              <Image width={60} height={60} src={addButton} alt='add logo' />
+            </Button>
+          )}
+        </>
       )}
     </div>
   );

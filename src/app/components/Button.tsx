@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
       : alternateStyle === "absolute"
       ? "px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4 absolute bottom-5 right-16"
       : alternateStyle === "ghost"
-      ? "px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4"
+      ? "px-0 py-0 bg-transparent hover:bg-transparent active:bg-transparent -mx-4 flex"
       : alternateStyle === "text"
       ? "hover:bg-transparent text-secondary bg-tertiary"
       : "hover:text-tertiary text-secondary bg-tertiary border-secondary border-[2px] py-1 px-3";

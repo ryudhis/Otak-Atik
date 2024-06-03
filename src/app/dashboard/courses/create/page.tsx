@@ -165,10 +165,10 @@ const CreateClassForm = () => {
   }, [router]);
 
   return (
-    <div className='bg-tertiary w-[90%] p-28 mb-40 h-screen'>
+    <div className='bg-tertiary w-[90%] p-28'>
       <Button
         onClick={() => {
-          router.push("/dashboard/courses");
+          router.back();
         }}
         alternateStyle='w-[10px] secondary'
       >
