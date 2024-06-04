@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import Logo from "@img/logo.png";
 
 export interface forumItem {
   id: number;
@@ -275,9 +276,10 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
         &lt;
       </Button>
       {isLoading ? (
-        <div className="mt-64 h-full">
+        <div className="-mt-52 h-screen flex flex-col justify-center items-center w-full gap-4">
+          <Image className="scale-110" src={Logo} alt="Logo" />
           <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
-            Loading diskusi...
+            Loading konten...
           </h1>
         </div>
       ) : (
