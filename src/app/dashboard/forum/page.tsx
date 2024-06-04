@@ -173,7 +173,8 @@ const Forum = () => {
     )
     .filter((item) =>
       selectedKategori ? item.kategori === selectedKategori : true
-    );
+    )
+    .reverse();
 
   function postedAt(date?: string) {
     if (!date) {
