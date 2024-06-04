@@ -294,50 +294,62 @@ const Forum = () => {
                   {userData &&
                   userData.username &&
                   item.like.includes(userData.username) ? (
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleLike(item.id);
-                      }}
-                      alternateStyle="ghost"
-                    >
-                      <Image src={Liked} alt="" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleLike(item.id);
+                        }}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Liked} alt="" />
+                      </Button>
+                      <p className="font-semibold">{item.like.length}</p>
+                    </div>
                   ) : (
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleLike(item.id);
-                      }}
-                      alternateStyle="ghost"
-                    >
-                      <Image src={Like} alt="" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleLike(item.id);
+                        }}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Like} alt="" />
+                      </Button>
+                      <p className="font-semibold">{item.like.length}</p>
+                    </div>
                   )}
                   {userData &&
                   userData.username &&
                   item.dislike.includes(userData.username) ? (
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleDislike(item.id);
-                      }}
-                      alternateStyle="ghost"
-                    >
-                      <Image src={Disliked} alt="" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleDislike(item.id);
+                        }}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Disliked} alt="" />
+                      </Button>
+                      <p className="font-semibold">{item.dislike.length}</p>
+                    </div>
                   ) : (
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleDislike(item.id);
-                      }}
-                      alternateStyle="ghost"
-                    >
-                      <Image src={Dislike} alt="" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleDislike(item.id);
+                        }}
+                        alternateStyle="ghost"
+                      >
+                        <Image src={Dislike} alt="" />
+                      </Button>
+                      <p className="font-semibold">{item.dislike.length}</p>
+                    </div>
                   )}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
