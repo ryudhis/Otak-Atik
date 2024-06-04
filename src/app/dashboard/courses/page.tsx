@@ -9,6 +9,7 @@ import KelasItem from "@/app/components/KelasItem";
 import Image from "next/image";
 import addButton from "@img/courses/add.png";
 import Button from "@/app/components/Button";
+import Logo from "@img/logo.png";
 
 export interface Kelas {
   nama: string;
@@ -67,17 +68,18 @@ const Courses = () => {
       : userData?.kelasDiampu;
 
   return (
-    <div className='bg-tertiary p-28 h-screen flex flex-col'>
-      <h1 className='font-bold text-2xl mb-4'>Kelas Aktif</h1>
+    <div className="bg-tertiary p-28 h-screen flex flex-col">
+      <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
       {isLoading && !userData ? (
-        <div className='bg-tertiary p-28 h-screen flex justify-center items-center'>
-          <h1 className='text-center text-secondary font-bold text-2xl animate-pulse'>
+        <div className="h-screen flex flex-col justify-center items-center w-full gap-4">
+          <Image className="scale-110" src={Logo} alt="Logo" />
+          <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
             Loading kelas...
           </h1>
         </div>
       ) : (
         <>
-          <div className='flex flex-col gap-4 h-[80vh] overflow-auto'>
+          <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
             {classesToDisplay?.map((kelas) => (
               <KelasItem
                 key={kelas.id}
@@ -91,9 +93,9 @@ const Courses = () => {
           {userData?.type !== "pelajar" && (
             <Button
               onClick={() => router.push("/dashboard/courses/create")}
-              alternateStyle='absolute'
+              alternateStyle="absolute"
             >
-              <Image width={60} height={60} src={addButton} alt='add logo' />
+              <Image width={60} height={60} src={addButton} alt="add logo" />
             </Button>
           )}
         </>

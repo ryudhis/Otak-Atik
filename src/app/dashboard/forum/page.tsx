@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import Liked from "@svg/SolidLike.svg";
 import Disliked from "@svg/SolidDislike.svg";
+import Logo from "@img/logo.png";
 
 export interface forumItem {
   id: number;
@@ -262,7 +263,8 @@ const Forum = () => {
         </div>
       </div>
       {isLoading ? (
-        <div className="-mt-32 h-screen flex flex-col items-center justify-center">
+        <div className="-mt-32 h-screen flex flex-col justify-center items-center w-full gap-4">
+          <Image className="scale-110" src={Logo} alt="Logo" />
           <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
             Loading diskusi...
           </h1>

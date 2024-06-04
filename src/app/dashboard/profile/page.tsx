@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import Logo from "@img/logo.png";
 
 interface CustomJwtPayload extends JwtPayload {
   id: string;
@@ -141,7 +143,8 @@ const Profile = () => {
   };
 
   return isLoading ? (
-    <div className="h-screen flex flex-col items-center justify-center">
+    <div className="h-screen flex flex-col justify-center items-center w-full gap-4">
+      <Image className="scale-110" src={Logo} alt="Logo" />
       <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
         Loading profile...
       </h1>
