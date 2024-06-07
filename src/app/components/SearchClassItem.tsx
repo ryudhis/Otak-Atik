@@ -12,7 +12,7 @@ interface KelasItemProps {
   avatar: string;
 }
 
-const SearchKelasItem: React.FC<KelasItemProps> = ({
+const SearchClassItem: React.FC<KelasItemProps> = ({
   id,
   title,
   jadwal,
@@ -38,4 +38,4 @@ const SearchKelasItem: React.FC<KelasItemProps> = ({
   );
 };
 
-export default SearchKelasItem;
+export default SearchClassItem;

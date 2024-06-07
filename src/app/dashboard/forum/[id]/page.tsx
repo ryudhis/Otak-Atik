@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import Logo from "@img/logo.png";
+import ForumCommentItem from "@/app/components/ForumCommentItem";
 
 export interface forumItem {
   id: number;
@@ -62,8 +63,8 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
-  const [diskusi, setDiskusi] = useState<forumItem>();
-  const [userData, setUserData] = useState<userData>();
+  const [diskusi, setDiskusi] = useState<forumItem | undefined>(undefined);
+  const [userData, setUserData] = useState<userData | undefined>(undefined);
   const [commentBoxVisible, setCommentBoxVisible] = useState(false);
 
   const {
@@ -138,6 +139,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
           ),
         };
       }
+      return prevDiskusi; // Add this return statement
     });
     try {
       const response = await axiosConfig.patch("api/forumDiskusi/like", data);
@@ -157,6 +159,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
               ),
             };
           }
+          return prevDiskusi;
         });
       }
     } catch (error) {
@@ -185,6 +188,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
           like: prevDiskusi.like.filter((like) => like !== userData?.username),
         };
       }
+      return prevDiskusi;
     });
     try {
       const response = await axiosConfig.patch(
@@ -209,6 +213,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
               ),
             };
           }
+          return prevDiskusi;
         });
       }
     } catch (error) {
@@ -284,118 +289,112 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
         </div>
       ) : (
         <div className="mt-6 py-4 flex flex-col gap-8">
-          <div className="border-b-2 border-primary flex flex-col gap-8">
-            <div className="flex gap-4">
-              <img src={diskusi?.owner.avatar} alt="" />
-              <h1 className="font-bold">{diskusi?.owner.username}</h1>
-              <h1>{postedAt(diskusi?.postedAt)}</h1>
-            </div>
-            <p className="text-xl font-bold">{diskusi?.title}</p>
-            <p className="text-lg">{diskusi?.content}</p>
-            <div className="flex gap-6">
-              {userData &&
-              userData.username &&
-              diskusi?.like.includes(userData.username) ? (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleLike();
-                  }}
-                  alternateStyle="ghost"
-                >
-                  <Image src={Liked} alt="" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleLike();
-                  }}
-                  alternateStyle="ghost"
-                >
-                  <Image src={Like} alt="" />
-                </Button>
-              )}
-              {userData &&
-              userData.username &&
-              diskusi?.dislike.includes(userData.username) ? (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleDislike();
-                  }}
-                  alternateStyle="ghost"
-                >
-                  <Image src={Disliked} alt="" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleDislike();
-                  }}
-                  alternateStyle="ghost"
-                >
-                  <Image src={Dislike} alt="" />
-                </Button>
-              )}
-              <Button onClick={() => toggleCommentBox()} alternateStyle="ghost">
-                <Image src={Comments} alt="" />
-              </Button>
-            </div>
-          </div>
-          <div
-            className={
-              commentBoxVisible
-                ? `w-full rounded-md border-2 border-primary shadow-md`
-                : `hidden`
-            }
-          >
-            <form onSubmit={handleSubmit(postComment)}>
-              <textarea
-                placeholder="Komentar disini..."
-                {...register("content", { required: true })}
-                className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                  errors.content ? "border-red-500" : ""
-                }`}
-              />
-              {errors.content && (
-                <span className="text-red-600 text-sm">
-                  This field is required
-                </span>
-              )}
-              <div className="flex justify-start items-center gap-3 p-3">
-                <Button
-                  onClick={() => toggleCommentBox()}
-                  alternateStyle="secondary"
-                >
-                  Batal
-                </Button>
-                <Button type="submit" alternateStyle="primary">
-                  Komen
-                </Button>
-              </div>
-            </form>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">
-              Komentar({diskusi?.comment ? diskusi.comment.length : 0})
-            </h1>
-            <div className="mt-6 flex flex-col gap-6">
-              {diskusi?.comment.map((item) => (
-                <div key={item.id} className="flex gap-4">
-                  <img className="w-8 h-8" src={item.owner.avatar} alt="" />
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-4">
-                      <h1 className="font-bold">{item.owner.username}</h1>
-                      <h1>{item.postedAt}</h1>
-                    </div>
-                    <p>{item.content}</p>
-                  </div>
+          {diskusi && (
+            <>
+              <div className="border-b-2 border-primary flex flex-col gap-8">
+                <div className="flex gap-4">
+                  <img src={diskusi.owner.avatar} alt="" />
+                  <h1 className="font-bold">{diskusi.owner.username}</h1>
+                  <h1>{postedAt(diskusi.postedAt)}</h1>
                 </div>
-              ))}
-            </div>
-          </div>
+                <p className="text-xl font-bold">{diskusi.title}</p>
+                <p className="text-lg">{diskusi.content}</p>
+                <div className="flex gap-6">
+                  {userData &&
+                  userData.username &&
+                  diskusi.like.includes(userData.username) ? (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike();
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Liked} alt="" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike();
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Like} alt="" />
+                    </Button>
+                  )}
+                  {userData &&
+                  userData.username &&
+                  diskusi.dislike.includes(userData.username) ? (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleDislike();
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Disliked} alt="" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleDislike();
+                      }}
+                      alternateStyle="ghost"
+                    >
+                      <Image src={Dislike} alt="" />
+                    </Button>
+                  )}
+                  <Button
+                    onClick={() => toggleCommentBox()}
+                    alternateStyle="ghost"
+                  >
+                    <Image src={Comments} alt="" />
+                  </Button>
+                </div>
+              </div>
+              <div
+                className={
+                  commentBoxVisible
+                    ? `w-full rounded-md border-2 border-primary shadow-md`
+                    : `hidden`
+                }
+              >
+                <form onSubmit={handleSubmit(postComment)}>
+                  <textarea
+                    placeholder="Komentar disini..."
+                    {...register("content", { required: true })}
+                    className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      errors.content ? "border-red-500" : ""
+                    }`}
+                  />
+                  {errors.content && (
+                    <span className="text-red-600 text-sm">
+                      This field is required
+                    </span>
+                  )}
+                  <div className="flex justify-start items-center gap-3 p-3">
+                    <Button
+                      onClick={() => toggleCommentBox()}
+                      alternateStyle="secondary"
+                    >
+                      Batal
+                    </Button>
+                    <Button type="submit" alternateStyle="primary">
+                      Komen
+                    </Button>
+                  </div>
+                </form>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold">
+                  Komentar({diskusi.comment ? diskusi.comment.length : 0})
+                </h1>
+                <ForumCommentItem diskusi={diskusi} />
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

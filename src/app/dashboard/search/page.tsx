@@ -7,7 +7,7 @@ import Image from "next/image";
 import addButton from "@img/courses/add.png";
 import Button from "@/app/components/Button";
 import Logo from "@img/logo.png";
-import SearchKelasItem from "@/app/components/SearchClassItem";
+import SearchClassItem from "@/app/components/SearchClassItem";
 
 export interface Kelas {
   nama: string;
@@ -109,7 +109,7 @@ const Search = () => {
         <>
           <div className="mt-8 flex flex-col gap-4 h-[80vh] overflow-auto">
             {filteredKelas.map((kelas) => (
-              <SearchKelasItem
+              <SearchClassItem
                 key={kelas.id}
                 id={kelas.id}
                 title={kelas.nama}
