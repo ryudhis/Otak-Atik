@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
+import CommentItem from "@/app/components/CommentItem";
 
 export interface kelasItem {
   id: number;
@@ -80,11 +81,14 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
   });
 
   const postComment = async (values: any) => {
+    const date = new Date();
+    const isoDateString = date.toISOString();
+
     const data = {
       kelasId: parseInt(id),
       ownerId: userData?.id,
       content: values.content,
-      postedAt: "Barusan",
+      postedAt: isoDateString,
     };
     try {
       const response = await axiosConfig.post("api/commentKelas", data);
@@ -389,28 +393,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       : 0}
                     )
                   </h1>
-                  {kelas?.comment && kelas.comment.length > 0 && (
-                    <div className='mt-6 flex flex-col gap-6'>
-                      {kelas.comment.map((item) => (
-                        <div key={item.id} className='flex gap-4'>
-                          <img
-                            className='w-8 h-8'
-                            src={item.owner.avatar}
-                            alt=''
-                          />
-                          <div className='flex flex-col gap-4'>
-                            <div className='flex gap-4'>
-                              <h1 className='font-bold'>
-                                {item.owner.username}
-                              </h1>
-                              <h1>{item.postedAt}</h1>
-                            </div>
-                            <p>{item.content}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <CommentItem comments={kelas.comment} postedAt={postedAt}/>
                 </div>
               </>
             ) : (

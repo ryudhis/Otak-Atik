@@ -36,6 +36,7 @@ model kelas {
   jadwal      String
   durasi      String
   modul       String?
+  linkMeet    String?
   harga       Int
   owner       Account        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId     Int
