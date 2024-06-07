@@ -17,6 +17,7 @@ export interface Kelas {
   owner: OwnerItem;
   kategori: string;
   jadwal: string;
+  modul: string;
 }
 
 export interface OwnerItem {
@@ -85,6 +86,7 @@ const Courses = () => {
                 key={kelas.id}
                 title={kelas.nama}
                 jadwal={kelas.jadwal}
+                modul={kelas.modul}
                 tutorNama={kelas.owner.username}
                 avatar={kelas.owner.avatar}
               />

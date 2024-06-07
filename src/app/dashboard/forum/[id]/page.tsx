@@ -80,11 +80,14 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   });
 
   const postComment = async (values: any) => {
+    const date = new Date();
+    const isoDateString = date.toISOString();
+
     const data = {
       forumDiskusiId: parseInt(id),
       ownerId: userData?.id,
       content: values.content,
-      postedAt: "Barusan",
+      postedAt: isoDateString,
     };
     try {
       const response = await axiosConfig.post("api/commentForum", data);
