@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import axiosConfig from "@utils/axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Button from "@components/Button";
-import Star from "@svg/star.svg";
 import Image from "next/image";
-import tech from "@svg/tech.svg";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import KelasTutor from "../components/KelasTutor";
 import Logo from "@img/logo.png";
+import HighlightClassItem from "../components/HighlightClassItem";
+import FavouriteClassItem from "../components/FavouriteClassItem";
 
 export interface Kelas {
   nama: string;
@@ -47,7 +47,7 @@ const Dashboard = () => {
   const [kelas, setKelas] = useState<Kelas[]>([]);
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<userData>();
+  const [userData, setUserData] = useState<userData>({} as userData);
   const listKategori = ["Computer Science", "Science", "Sport", "Marketing"];
   const [currentKelas, setCurrentKelas] = useState("Computer Science");
 
@@ -180,34 +180,7 @@ const Dashboard = () => {
           </div>
           {!isLoading ? (
             <div className="flex gap-5">
-              {kelas
-                .filter((item) => item.kategori === currentKelas)
-                .slice(0, 3)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-6 w-56 h-72 border-2 border-primary rounded-3xl flex flex-col gap-8 cursor-pointer"
-                    onClick={() => {
-                      router.push(`/dashboard/course/${item.id}`);
-                    }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex gap-1 items-center justify-center">
-                        <img src={item.owner.avatar} alt="" />
-                        <h1>{item.owner.username}</h1>
-                      </div>
-                      <Button alternateStyle="ghost">
-                        <Image src={Star} alt="" />
-                      </Button>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-4">
-                      <Image src={tech} alt="" />
-                      <h1 className="text-lg font-bold text-center">
-                        {item.nama}
-                      </h1>
-                    </div>
-                  </div>
-                ))}
+              <HighlightClassItem kelas={kelas} currentKelas={currentKelas} />
               {kelas.filter((item) => item.kategori === currentKelas).length ===
                 0 &&
                 !isLoading && (
@@ -231,22 +204,7 @@ const Dashboard = () => {
           ) : userData?.kelasFavorite?.length === 0 ? (
             <h1 className="text-center">Tidak ada kelas favorit</h1>
           ) : (
-            <div className="overflow-y-auto max-h-full flex flex-col gap-2 pr-2">
-              {kelas
-                .filter((item) => userData?.kelasFavorite.includes(item.id))
-                .map((item: any) => (
-                  <div
-                    key={item.id}
-                    className="flex justify-between items-center gap-4"
-                  >
-                    <div className="flex gap-1 items-center">
-                      <img src={item.owner.avatar} alt="" />
-                      <h1>{item.owner.username}</h1>
-                    </div>
-                    <h1>{item.nama}</h1>
-                  </div>
-                ))}
-            </div>
+            <FavouriteClassItem kelas={kelas} userData={userData} />
           )}
         </div>
       </div>
