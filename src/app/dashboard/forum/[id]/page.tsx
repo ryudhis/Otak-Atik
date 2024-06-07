@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import Logo from "@img/logo.png";
-import ForumCommentItem from "@/app/components/ForumCommentItem";
+import CommentItem from "@/app/components/CommentItem";
 
 export interface forumItem {
   id: number;
@@ -394,7 +394,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                 <h1 className="text-2xl font-bold">
                   Komentar({diskusi.comment ? diskusi.comment.length : 0})
                 </h1>
-                <ForumCommentItem diskusi={diskusi} />
+                <CommentItem comments={diskusi.comment} postedAt={postedAt} />
               </div>
             </>
           )}
