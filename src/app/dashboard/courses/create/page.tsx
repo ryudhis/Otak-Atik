@@ -34,6 +34,7 @@ const formSchema = z.object({
     "General",
   ]),
   harga: z.string(),
+  file: z.any(),
 });
 
 interface CustomJwtPayload extends JwtPayload {
@@ -66,6 +67,7 @@ const CreateClassForm = () => {
       durasi: "",
       harga: "",
       kategori: "",
+      file: null,
     },
   });
 
@@ -111,33 +113,38 @@ const CreateClassForm = () => {
   };
 
   const createClass = async (values: any) => {
-    const formatedDate = formatDate(values.jadwal)
+    const formattedDate = formatDate(values.jadwal);
 
     const data = {
       ...values,
-      jadwal: formatedDate,
+      jadwal: formattedDate,
       ownerId: userData?.id,
-      materi: values.materi.map((item: any) => {
-        return item.name;
-      }),
-      spesifikasi: values.spesifikasi.map((item: any) => {
-        return item.name;
-      }),
+      materi: values.materi.map((item: any) => item.name),
+      spesifikasi: values.spesifikasi.map((item: any) => item.name),
     };
 
-    axios
-      .post("api/kelas", data)
-      .then(function (response) {
-        if (response.data.status != 400) {
-          toast.success("Berhasil Submit");
-        }
-      })
-      .catch(function (error) {
-        toast.error("Gagal Submit");
-        console.log(error);
+    const formData = new FormData();
+    formData.append("file", values.file[0]);
+    formData.append("data", JSON.stringify(data));
+
+    try {
+      const response = await axios.post("/api/kelas", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-    reset();
+      console.log(response.data);
+      if (response.data.status === 200) {
+        toast.success("Berhasil Submit");
+        reset();
+      } else {
+        toast.error("Gagal Submit");
+      }
+    } catch (error) {
+      toast.error("Gagal Submit");
+      console.error("Error:", error);
+    }
   };
 
   useEffect(() => {
@@ -357,6 +364,20 @@ const CreateClassForm = () => {
               <span className='text-red-600 text-sm'>
                 {errors.harga.message}
               </span>
+            )}
+          </div>
+
+          <div>
+            <label className='font-bold text-md'>Upload File</label>
+            <input
+              type='file'
+              {...register("file", { required: true })}
+              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                errors.file ? "border-red-500" : ""
+              }`}
+            />
+            {errors.file && (
+              <span className='text-red-600 text-sm'>File is required</span>
             )}
           </div>
 
