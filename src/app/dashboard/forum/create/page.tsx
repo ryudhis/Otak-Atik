@@ -40,6 +40,7 @@ const CreateForum = () => {
       kategori: "",
     },
   });
+  
   const postDiskusi = async (values: any) => {
     const date = new Date();
     const isoDateString = date.toISOString();

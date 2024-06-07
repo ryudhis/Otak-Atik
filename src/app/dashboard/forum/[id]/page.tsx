@@ -79,11 +79,14 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   });
 
   const postComment = async (values: any) => {
+    const date = new Date();
+    const isoDateString = date.toISOString();
+
     const data = {
       forumDiskusiId: parseInt(id),
       ownerId: userData?.id,
       content: values.content,
-      postedAt: "Barusan",
+      postedAt: isoDateString,
     };
     try {
       const response = await axiosConfig.post("api/commentForum", data);
@@ -388,7 +391,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                   <div className="flex flex-col gap-4">
                     <div className="flex gap-4">
                       <h1 className="font-bold">{item.owner.username}</h1>
-                      <h1>{item.postedAt}</h1>
+                      <h1>{postedAt(item.postedAt)}</h1>
                     </div>
                     <p>{item.content}</p>
                   </div>
