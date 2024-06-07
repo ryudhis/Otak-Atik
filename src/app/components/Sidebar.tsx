@@ -10,6 +10,8 @@ import messageSolid from "@svg/message.svg";
 import message from "@svg/message-2.svg";
 import settingSolid from "@svg/settings.svg";
 import setting from "@svg/settings-2.svg";
+import search from "@svg/Search.svg";
+import solidSearch from "@svg/SolidSearch.svg";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -29,6 +31,17 @@ const Sidebar = () => {
                 : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
             }
             src={pathname === "/dashboard" ? menuSolid : menu}
+            alt="menu image"
+          />
+        </Link>
+        <Link href="/dashboard/search">
+          <Image
+            className={
+              pathname === "/dashboard/search"
+                ? `scale-110`
+                : `scale-100 hover:scale-110 active:scale-100 transition-all duration-200 ease-in-out`
+            }
+            src={pathname === "/dashboard/search" ? solidSearch : search}
             alt="menu image"
           />
         </Link>
