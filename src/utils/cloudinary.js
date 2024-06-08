@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -28,4 +28,17 @@ async function uploadToCloudinary(buffer) {
   });
 }
 
-export default uploadToCloudinary;
+async function deleteFromCloudinary(publicId) {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
+
+export { uploadToCloudinary, deleteFromCloudinary };
+

@@ -368,7 +368,7 @@ const CreateClassForm = () => {
           </div>
 
           <div>
-            <label className='font-bold text-md'>Upload File</label>
+            <label className='font-bold text-md'>Upload Modul (PDF)</label>
             <input
               type='file'
               {...register("file", { required: true })}
@@ -377,7 +377,7 @@ const CreateClassForm = () => {
               }`}
             />
             {errors.file && (
-              <span className='text-red-600 text-sm'>File is required</span>
+              <span className='text-red-600 text-sm'>Modul is required</span>
             )}
           </div>
 

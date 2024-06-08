@@ -26,6 +26,7 @@ export interface kelasItem {
   metode: string[];
   jadwal: string;
   durasi: string;
+  modul: string;
   harga: number;
   owner: ownerItem;
   comment: commentItem[];
@@ -52,11 +53,8 @@ interface CustomJwtPayload extends JwtPayload {
 export interface userData {
   id: number;
   username: string;
+  type: string; // Add type here
 }
-
-const formSchema = z.object({
-  content: z.string().min(1).max(255),
-});
 
 const DetailKelas = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -68,15 +66,22 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
   const [commentBoxVisible, setCommentBoxVisible] = useState(false);
   const [checkoutVisible, setCheckoutVisible] = useState(false);
 
+  const formSchema = z.object({
+    content: commentBoxVisible ? z.string().min(1).max(255) : z.string().optional(),
+    file: z.any(),
+  });
+  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    resetField,
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
+      file: null,
     },
   });
 
@@ -101,8 +106,39 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
       toast.error("Gagal Komentar");
     } finally {
       setRefresh(!refresh);
-      reset();
+      resetField("content");
       setCommentBoxVisible(false);
+    }
+  };
+
+  const uploadModul = async (values: any) => {
+    console.log(values.file);
+
+    const formData = new FormData();
+    formData.append("file", values.file[0]);
+
+    try {
+      const response = await axiosConfig.patch(
+        `/api/kelas/updateModul/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+      if (response.data.status === 200) {
+        toast.success("Berhasil Upload");
+        resetField("file");
+        setRefresh(!refresh);
+      } else {
+        toast.error("Gagal Upload");
+      }
+    } catch (error) {
+      toast.error("Gagal Upload");
+      console.error("Error:", error);
     }
   };
 
@@ -181,6 +217,14 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
     return "just now";
   }
 
+  function formatHarga(harga: number) {
+    if (isNaN(harga)) {
+      throw new Error("Invalid number string");
+    }
+
+    return harga.toLocaleString("de-DE");
+  }
+
   useEffect(() => {
     getKelas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -253,7 +297,9 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
 
                   <div className='font-semibold text-xl'>
                     <p>Harga :</p>
-                    <p className='text-secondary'>{`Rp. ${kelas.harga}`}</p>
+                    <p className='text-secondary'>{`Rp. ${formatHarga(
+                      kelas.harga
+                    )}`}</p>
                   </div>
                 </div>
 
@@ -275,7 +321,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
       </div>
 
       <div
-        className={ 
+        className={
           !checkoutVisible ? "bg-tertiary p-[60px] mt-5 px-36" : "hidden"
         }
       >
@@ -321,15 +367,46 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                     <p className='text-secondary font-semibold text-md border-x-[2px] border-primary p-5 mb-4'>
                       {kelas.jadwal}
                     </p>
-                    {kelas.siswa.some((siswa) => siswa.id === userData?.id) ? (
-                      <p className="font-bold text-xl text-secondary mb-4">Kamu Sudah Daftar</p>
+                    {userData?.type === "pelajar" ? (
+                      kelas.siswa.some((siswa) => siswa.id === userData?.id) ? (
+                        <p className='font-bold text-xl text-secondary mb-4'>
+                          Kamu Sudah Daftar
+                        </p>
+                      ) : (
+                        <Button
+                          onClick={toggleCheckoutBox}
+                          alternateStyle='primary'
+                        >
+                          Daftar Kelas
+                        </Button>
+                      )
                     ) : (
-                      <Button
-                        onClick={toggleCheckoutBox}
-                        alternateStyle='primary'
+                      <form
+                        onSubmit={handleSubmit(uploadModul)}
+                        className='flex flex-col gap-4'
                       >
-                        Daftar Kelas
-                      </Button>
+                        <label htmlFor='file' className='font-bold text-lg'>
+                          {kelas.modul
+                            ? "Ganti Modul (PDF)"
+                            : "Upload Modul (PDF)"}
+                        </label>
+                        <input
+                          id='file'
+                          type='file'
+                          {...register("file", { required: true })}
+                          className={`w-full p-2 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                            errors.file ? "border-red-500" : ""
+                          }`}
+                        />
+                        {errors.file && (
+                          <span className='text-red-600 text-sm'>
+                            This field is required
+                          </span>
+                        )}
+                        <Button type='submit' alternateStyle='primary'>
+                          {kelas.modul ? "Ganti" : "Upload"}
+                        </Button>
+                      </form>
                     )}
                   </div>
                   <div>
@@ -393,7 +470,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       : 0}
                     )
                   </h1>
-                  <CommentItem comments={kelas.comment} postedAt={postedAt}/>
+                  <CommentItem comments={kelas.comment} postedAt={postedAt} />
                 </div>
               </>
             ) : (
