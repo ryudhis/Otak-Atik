@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "@img/logo.png";
 import SearchClassItem from "@/app/components/SearchClassItem";
@@ -28,7 +27,6 @@ export interface UserData {
 }
 
 const Search = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [kelas, setKelas] = useState<Kelas[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -71,7 +69,7 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen flex flex-col">
+    <div className="bg-tertiary p-28 h-screen flex flex-col overflow-auto">
       <div className="flex justify-between">
         <h1 className="font-bold text-2xl mb-4">Cari Kelas</h1>
         <div className="flex gap-6">

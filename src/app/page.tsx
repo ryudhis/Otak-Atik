@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import Image from "next/image";
-import Logo from "@img/logo.png"
+import Logo from "@img/logo.png";
 
 const Page = () => {
   const router = useRouter();
@@ -18,9 +18,11 @@ const Page = () => {
   }, [router]);
 
   return (
-    <div className='bg-tertiary p-28 h-screen flex flex-col gap-3 justify-center items-center'>
+    <div className="bg-tertiary p-28 h-screen flex flex-col gap-3 justify-center items-center">
       <Image src={Logo} alt="Logo" />
-      <p className='text-white font-semibold'>Please wait...</p>
+      <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
+        Please wait...
+      </h1>
     </div>
   );
 };

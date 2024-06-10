@@ -16,6 +16,10 @@ const HighlightClassItem: React.FC<HighlightClassItemProps> = ({
   currentKelas,
 }) => {
   const router = useRouter();
+  const handleUserClick = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+    e.stopPropagation();
+    router.push(`/dashboard/profile/${id}`);
+  };
   return (
     <>
       {kelas
@@ -30,7 +34,10 @@ const HighlightClassItem: React.FC<HighlightClassItemProps> = ({
             }}
           >
             <div className="flex justify-between items-center">
-              <div className="flex gap-1 items-center justify-center">
+              <div
+                className="flex gap-1 items-center justify-center"
+                onClick={(e) => handleUserClick(e, item.owner.id)}
+              >
                 <img src={item.owner.avatar} alt="" />
                 <h1>{item.owner.username}</h1>
               </div>

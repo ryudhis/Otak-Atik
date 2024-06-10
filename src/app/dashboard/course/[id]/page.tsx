@@ -246,20 +246,20 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
 
     fetchData();
   }, []);
-  
+
   return (
     <>
       <div
-        className={checkoutVisible ? "p-[60px] mt-5 px-36 h-full" : `hidden`}
+        className={checkoutVisible ? "p-[60px] mt-5 px-36 h-screen" : `hidden`}
       >
-        <div className='p-8 px-12 border-solid border-[2px] rounded-xl border-primary shadow-box-kelas mt-5'>
+        <div className="p-8 px-12 border-solid border-[2px] rounded-xl border-primary shadow-box-kelas mt-5">
           {kelas && (
             <>
-              <div className='flex flex-col gap-8'>
-                <div className='flex items-center'>
-                  <h1 className='text-3xl font-bold'>Checkout Kelas</h1>
+              <div className="flex flex-col gap-8">
+                <div className="flex items-center">
+                  <h1 className="text-3xl font-bold">Checkout Kelas</h1>
                 </div>
-                <div className='grid grid-cols-3 gap-8 w-[90%] self-center'>
+                <div className="grid grid-cols-3 gap-8 w-[90%] self-center">
                   <KelasContent
                     title={"Materi"}
                     subtitle={"Materi yang akan dibahas"}
@@ -277,38 +277,38 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                   />
                 </div>
 
-                <div className='flex flex-col gap-5'>
-                  <div className='font-semibold text-xl'>
+                <div className="flex flex-col gap-5">
+                  <div className="font-semibold text-xl">
                     <p>Kelas :</p>
-                    <p className='text-secondary'>{kelas.nama}</p>
+                    <p className="text-secondary">{kelas.nama}</p>
                   </div>
 
-                  <div className='font-semibold text-xl'>
+                  <div className="font-semibold text-xl">
                     <p>Tutor :</p>
-                    <p className='text-secondary'>{kelas.owner.username}</p>
+                    <p className="text-secondary">{kelas.owner.username}</p>
                   </div>
 
-                  <div className='font-semibold text-xl'>
+                  <div className="font-semibold text-xl">
                     <p>Jadwal :</p>
-                    <p className='text-secondary'>{kelas.jadwal}</p>
+                    <p className="text-secondary">{kelas.jadwal}</p>
                   </div>
 
-                  <div className='font-semibold text-xl'>
+                  <div className="font-semibold text-xl">
                     <p>Harga :</p>
-                    <p className='text-secondary'>{`Rp. ${formatHarga(
+                    <p className="text-secondary">{`Rp. ${formatHarga(
                       kelas.harga
                     )}`}</p>
                   </div>
                 </div>
 
-                <div className='grid grid-cols-2 gap-5 self-center '>
+                <div className="grid grid-cols-2 gap-5 self-center ">
                   <Button
                     onClick={() => toggleCheckoutBox()}
-                    alternateStyle='secondary'
+                    alternateStyle="secondary"
                   >
                     Batal
                   </Button>
-                  <Button onClick={checkoutKelas} alternateStyle='primary'>
+                  <Button onClick={checkoutKelas} alternateStyle="primary">
                     Checkout
                   </Button>
                 </div>
@@ -323,12 +323,12 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
           !checkoutVisible ? "bg-tertiary p-[60px] mt-5 px-36" : "hidden"
         }
       >
-        <Button onClick={() => router.back()} alternateStyle='secondary'>
+        <Button onClick={() => router.back()} alternateStyle="secondary">
           &lt;
         </Button>
         {isLoading ? (
-          <div className='mt-[25%] h-screen'>
-            <h1 className='text-center text-secondary font-bold text-2xl animate-pulse'>
+          <div className="mt-[25%] h-screen">
+            <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
               Loading data kelas...
             </h1>
           </div>
@@ -336,14 +336,14 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
           <div className={"mt-6 flex flex-col gap-8"}>
             {kelas ? (
               <>
-                <div className='border-b-2 border-primary flex flex-col gap-8'>
-                  <div className='flex items-center justify-between'>
-                    <h1 className='text-3xl font-bold'>{kelas?.nama}</h1>
-                    <Button alternateStyle='ghost'>
-                      <Image src={Star} alt='' />
+                <div className="border-b-2 border-primary flex flex-col gap-8">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-3xl font-bold">{kelas?.nama}</h1>
+                    <Button alternateStyle="ghost">
+                      <Image src={Star} alt="" />
                     </Button>
                   </div>
-                  <div className='grid grid-cols-3 gap-8 w-[90%] self-center'>
+                  <div className="grid grid-cols-3 gap-8 w-[90%] self-center">
                     <KelasContent
                       title={"Materi"}
                       subtitle={"Materi yang akan dibahas"}
@@ -360,22 +360,22 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       content={[`Meet : ${kelas.durasi} Jam `, ...kelas.metode]}
                     />
                   </div>
-                  <div className='flex flex-col gap-3 items-center'>
-                    <h1 className='font-bold text-2xl'>Jadwal Kelas</h1>
-                    <p className='text-secondary font-semibold text-md border-x-[2px] border-primary p-5 mb-4'>
+                  <div className="flex flex-col gap-3 items-center">
+                    <h1 className="font-bold text-2xl">Jadwal Kelas</h1>
+                    <p className="text-secondary font-semibold text-md border-x-[2px] border-primary p-5 mb-4">
                       {kelas.jadwal}
                     </p>
                     {userData?.type === "pelajar" &&
                       (kelas.siswa.some(
                         (siswa) => siswa.id === userData?.id
                       ) ? (
-                        <p className='font-bold text-xl text-secondary mb-4'>
+                        <p className="font-bold text-xl text-secondary mb-4">
                           Kamu Sudah Daftar
                         </p>
                       ) : (
                         <Button
                           onClick={toggleCheckoutBox}
-                          alternateStyle='primary'
+                          alternateStyle="primary"
                         >
                           Daftar Kelas
                         </Button>
@@ -383,49 +383,49 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                     {kelas.owner.id === userData?.id && (
                       <form
                         onSubmit={handleSubmit(uploadModul)}
-                        className='flex flex-col gap-4'
+                        className="flex flex-col gap-4"
                       >
-                        <label htmlFor='file' className='font-bold text-lg'>
+                        <label htmlFor="file" className="font-bold text-lg">
                           {kelas.modul
                             ? "Ganti Modul (PDF)"
                             : "Upload Modul (PDF)"}
                         </label>
                         <input
-                          id='file'
-                          type='file'
+                          id="file"
+                          type="file"
                           {...register("file", { required: true })}
                           className={`w-full p-2 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                             errors.file ? "border-red-500" : ""
                           }`}
                         />
                         {errors.file && (
-                          <span className='text-red-600 text-sm'>
+                          <span className="text-red-600 text-sm">
                             This field is required
                           </span>
                         )}
-                        <Button type='submit' alternateStyle='primary'>
+                        <Button type="submit" alternateStyle="primary">
                           {kelas.modul ? "Ganti" : "Upload"}
                         </Button>
                       </form>
                     )}
                   </div>
                   <div>
-                    <div className='flex items-center gap-3 mb-4'>
+                    <div className="flex items-center gap-3 mb-4">
                       <img
-                        className='w-10 h-10'
+                        className="w-10 h-10"
                         src={kelas.owner.avatar}
-                        alt='owner avatar'
+                        alt="owner avatar"
                       />
-                      <p className='text-xl font-semibold'>
+                      <p className="text-xl font-semibold">
                         {kelas.owner.username}
                       </p>
                       <Button>Ikuti</Button>
                     </div>
                     <Button
                       onClick={() => toggleCommentBox()}
-                      alternateStyle='ghost'
+                      alternateStyle="ghost"
                     >
-                      <Image src={Comments} alt='' />
+                      <Image src={Comments} alt="" />
                     </Button>
                   </div>
                 </div>
@@ -438,32 +438,32 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                 >
                   <form onSubmit={handleSubmit(postComment)}>
                     <textarea
-                      placeholder='Komentar disini...'
+                      placeholder="Komentar disini..."
                       {...register("content", { required: true })}
                       className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                         errors.content ? "border-red-500" : ""
                       }`}
                     />
                     {errors.content && (
-                      <span className='text-red-600 text-sm'>
+                      <span className="text-red-600 text-sm">
                         This field is required
                       </span>
                     )}
-                    <div className='flex justify-start items-center gap-3 p-3'>
+                    <div className="flex justify-start items-center gap-3 p-3">
                       <Button
                         onClick={() => toggleCommentBox()}
-                        alternateStyle='secondary'
+                        alternateStyle="secondary"
                       >
                         Batal
                       </Button>
-                      <Button type='submit' alternateStyle='primary'>
+                      <Button type="submit" alternateStyle="primary">
                         Komen
                       </Button>
                     </div>
                   </form>
                 </div>
                 <div>
-                  <h1 className='text-2xl font-bold'>
+                  <h1 className="text-2xl font-bold">
                     Komentar(
                     {kelas?.comment && kelas.comment.length > 0
                       ? kelas.comment.length
@@ -474,7 +474,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                 </div>
               </>
             ) : (
-              <h1 className='text-center text-red-500 font-bold text-2xl mt-[25%]'>
+              <h1 className="text-center text-red-500 font-bold text-2xl mt-[25%]">
                 Kelas Tidak Ditemukan
               </h1>
             )}

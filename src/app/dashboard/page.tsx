@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import axiosConfig from "@utils/axios";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@components/Button";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { useRouter } from "next/navigation";
 import KelasTutor from "../components/KelasTutor";
 import Logo from "@img/logo.png";
 import HighlightClassItem from "../components/HighlightClassItem";
@@ -43,7 +42,6 @@ interface CustomJwtPayload extends JwtPayload {
 }
 
 const Dashboard = () => {
-  const router = useRouter();
   const [kelas, setKelas] = useState<Kelas[]>([]);
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);

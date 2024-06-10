@@ -1,8 +1,12 @@
-@import 'react-toastify/dist/ReactToastify.css';
+@import "react-toastify/dist/ReactToastify.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  display: none;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -43,6 +47,6 @@ body {
     -webkit-appearance: none;
     outline: none;
     cursor: pointer;
-    @apply border-secondary border-[2px]
+    @apply border-secondary border-[2px];
   }
 }

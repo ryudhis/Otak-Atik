@@ -69,7 +69,7 @@ const Courses = () => {
       : userData?.kelasDiampu;
 
   return (
-    <div className="bg-tertiary p-28 h-screen flex flex-col">
+    <div className="bg-tertiary p-28 h-screen flex flex-col overflow-auto">
       <h1 className="font-bold text-2xl mb-4">Kelas Aktif</h1>
       {isLoading && !userData ? (
         <div className="h-screen flex flex-col justify-center items-center w-full gap-4">

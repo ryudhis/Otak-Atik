@@ -24,36 +24,40 @@ const KelasItem: React.FC<KelasItemProps> = ({
   const router = useRouter();
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation(); // Stop the event from propagating to the parent div
+    e.stopPropagation();
   };
 
   return (
     <div
-      onClick={()=> router.push(`/dashboard/course/${id}`)}
-      className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80'
+      onClick={() => router.push(`/dashboard/course/${id}`)}
+      className="bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80 cursor-pointer"
     >
-      <div className='grid grid-cols-2 items-center gap-10'>
-        <div className='flex flex-col gap-2'>
-          <p className='font-semibold'>{title}</p>
-          <p className='font-bold text-secondary'>{jadwal}</p>
+      <div className="grid grid-cols-2 items-center gap-10">
+        <div className="flex flex-col gap-2">
+          <p className="font-semibold">{title}</p>
+          <p className="font-bold text-secondary">{jadwal}</p>
         </div>
-        <div className='flex gap-4'>
+        <div className="flex gap-4">
           {modul ? (
             <a href={modul} download>
-              <Button onClick={handleButtonClick} alternateStyle='secondary'>Modul</Button>
+              <Button onClick={handleButtonClick} alternateStyle="secondary">
+                Modul
+              </Button>
             </a>
           ) : (
-            <Button disable alternateStyle='secondary'>
+            <Button disable alternateStyle="secondary">
               Modul
             </Button>
           )}
-          <Button onClick={handleButtonClick} alternateStyle='primary'>Masuk Meet</Button>
+          <Button onClick={handleButtonClick} alternateStyle="primary">
+            Masuk Meet
+          </Button>
         </div>
       </div>
 
-      <div className='flex items-center gap-5'>
-        <p className='font-semibold'>{tutorNama}</p>
-        <img src={avatar} alt='avatar tutor' width={40} height={40}></img>
+      <div className="flex items-center gap-5">
+        <p className="font-semibold">{tutorNama}</p>
+        <img src={avatar} alt="avatar tutor" width={40} height={40}></img>
       </div>
     </div>
   );
