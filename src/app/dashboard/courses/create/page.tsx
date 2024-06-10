@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@utils/axios";
 import Cookies from "js-cookie";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import  { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -27,6 +27,7 @@ const formSchema = z.object({
   jadwal: z.string().min(1, "Jadwal is required"),
   durasi: z.enum(["1", "2", "3"]),
   kategori: z.enum([
+    "",
     "Computer Science",
     "Science",
     "Sport",
@@ -54,6 +55,8 @@ const CreateClassForm = () => {
     register,
     handleSubmit,
     control,
+    getValues,
+    watch,
     formState: { errors },
     reset,
   } = useForm({
@@ -62,7 +65,7 @@ const CreateClassForm = () => {
       nama: "",
       materi: [{ name: "" }],
       spesifikasi: [{ name: "" }],
-      metode: [],
+      metode: [] as Array<"Modul" | "Diskusi Kelas">,
       jadwal: "",
       durasi: "",
       harga: "",
@@ -123,8 +126,12 @@ const CreateClassForm = () => {
       spesifikasi: values.spesifikasi.map((item: any) => item.name),
     };
 
+    console.log(values);
+
     const formData = new FormData();
-    formData.append("file", values.file[0]);
+    if (values.file && values.file.length > 0) {
+      formData.append("file", values.file[0]);
+    }
     formData.append("data", JSON.stringify(data));
 
     try {
@@ -164,12 +171,13 @@ const CreateClassForm = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-      } finally {
       }
     };
 
     fetchData();
   }, [router]);
+
+  const metodeValue = watch("metode");
 
   return (
     <div className='bg-tertiary w-[90%] p-28'>
@@ -343,11 +351,6 @@ const CreateClassForm = () => {
             </select>
             {`*Kategori yang kosong akan ditambahkan ke kategori General`}
             <br></br>
-            {errors.kategori && (
-              <span className='text-red-600 text-sm'>
-                Kategori belum dipilih
-              </span>
-            )}
           </div>
 
           <div>
@@ -367,19 +370,19 @@ const CreateClassForm = () => {
             )}
           </div>
 
-          <div>
-            <label className='font-bold text-md'>Upload Modul (PDF)</label>
-            <input
-              type='file'
-              {...register("file", { required: true })}
-              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
-                errors.file ? "border-red-500" : ""
-              }`}
-            />
-            {errors.file && (
-              <span className='text-red-600 text-sm'>Modul is required</span>
-            )}
-          </div>
+          {metodeValue.includes("Modul") && (
+            <div>
+              <label className='font-bold text-md'>Upload Modul (PDF)</label>
+              <input
+                type='file'
+                {...register("file", { required: false })}
+                className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                  errors.file ? "border-red-500" : ""
+                }`}
+              />
+              {`*Modul dapat di upload nanti`}
+            </div>
+          )}
 
           <button
             type='submit'

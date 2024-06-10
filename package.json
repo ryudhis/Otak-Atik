@@ -21,8 +21,6 @@
     "jose": "^5.3.0",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
-    "multer": "^1.4.5-lts.1",
-    "multiparty": "^4.2.3",
     "next": "14.2.3",
     "prisma": "^5.14.0",
     "react": "^18",

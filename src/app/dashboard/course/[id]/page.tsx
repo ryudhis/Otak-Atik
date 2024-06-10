@@ -335,7 +335,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
             </h1>
           </div>
         ) : (
-          <div className={"mt-6 flex flex-col gap-8"}>
+          <div className={"mt-6 flex flex-col gap-8 h-screen"}>
             {kelas ? (
               <>
                 <div className='border-b-2 border-primary flex flex-col gap-8'>
@@ -474,7 +474,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                 </div>
               </>
             ) : (
-              <h1 className='text-center text-red-500 font-bold text-2xl'>
+              <h1 className='text-center text-red-500 font-bold text-2xl mt-[25%]'>
                 Kelas Tidak Ditemukan
               </h1>
             )}

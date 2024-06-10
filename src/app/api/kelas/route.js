@@ -40,35 +40,40 @@ export async function POST(req) {
     // Parse the form data
     const formData = await req.formData();
     
-    const file = formData.get('file');
+    const fileList = formData.getAll('file');
     const data = JSON.parse(formData.get('data'));
 
-    if (!file) {
-      return NextResponse.json({ status: 400, message: 'File not found' });
+    // Set default value for kategori if it's an empty string
+    const kategori = data.kategori === "" ? "General" : data.kategori;
+
+    // Initialize modulUrl
+    let modulUrl = "";
+
+    if (fileList.length > 0 && fileList[0]) {
+      const file = fileList[0];
+      // Read the file buffer
+      const fileBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(fileBuffer);
+
+      console.log("form data : ", data);
+
+      // Upload to Cloudinary
+      const result = await uploadToCloudinary(buffer);
+      modulUrl = result.secure_url; // Get the uploaded file URL from Cloudinary
     }
-
-    // Read the file buffer
-    const fileBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(fileBuffer);
-
-    console.log("form data : ", data);
-
-    // Upload to Cloudinary
-    const result = await uploadToCloudinary(buffer);
-    const modulUrl = result.secure_url; // Get the uploaded file URL from Cloudinary
 
     // Save the class data along with the modul URL
     const kelas = await prisma.kelas.create({
       data: {
         nama: data.nama,
-        kategori: data.kategori,
+        kategori: kategori,
         materi: data.materi,
         spesifikasi: data.spesifikasi,
         metode: data.metode,
         jadwal: data.jadwal,
         durasi: data.durasi,
         harga: parseInt(data.harga),
-        modul: modulUrl, // Store the Cloudinary file URL in the database
+        modul: modulUrl, // Store the Cloudinary file URL in the database if it exists
         owner: {
           connect: { id: data.ownerId }
         }
