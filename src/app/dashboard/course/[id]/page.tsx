@@ -42,6 +42,7 @@ export interface commentItem {
 }
 
 export interface ownerItem {
+  id: number;
   username: string;
   avatar: string;
 }
@@ -67,10 +68,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
   const [checkoutVisible, setCheckoutVisible] = useState(false);
 
   const formSchema = z.object({
-    content: commentBoxVisible ? z.string().min(1).max(255) : z.string().optional(),
+    content: commentBoxVisible
+      ? z.string().min(1).max(255)
+      : z.string().optional(),
     file: z.any(),
   });
-  
 
   const {
     register,
@@ -112,8 +114,6 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
   };
 
   const uploadModul = async (values: any) => {
-    console.log(values.file);
-
     const formData = new FormData();
     formData.append("file", values.file[0]);
 
@@ -128,7 +128,6 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
         }
       );
 
-      console.log(response.data);
       if (response.data.status === 200) {
         toast.success("Berhasil Upload");
         resetField("file");
@@ -178,7 +177,6 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
       const response = await axiosConfig.get(`api/kelas/${id}`);
       if (response.data.status !== 400) {
         setKelas(response.data.data);
-        console.log(response.data.data);
       } else {
         alert(response.data.message);
       }
@@ -248,7 +246,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
 
     fetchData();
   }, []);
-
+  
   return (
     <>
       <div
@@ -335,7 +333,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
             </h1>
           </div>
         ) : (
-          <div className={"mt-6 flex flex-col gap-8 h-screen"}>
+          <div className={"mt-6 flex flex-col gap-8"}>
             {kelas ? (
               <>
                 <div className='border-b-2 border-primary flex flex-col gap-8'>
@@ -367,8 +365,10 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                     <p className='text-secondary font-semibold text-md border-x-[2px] border-primary p-5 mb-4'>
                       {kelas.jadwal}
                     </p>
-                    {userData?.type === "pelajar" ? (
-                      kelas.siswa.some((siswa) => siswa.id === userData?.id) ? (
+                    {userData?.type === "pelajar" &&
+                      (kelas.siswa.some(
+                        (siswa) => siswa.id === userData?.id
+                      ) ? (
                         <p className='font-bold text-xl text-secondary mb-4'>
                           Kamu Sudah Daftar
                         </p>
@@ -379,8 +379,8 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                         >
                           Daftar Kelas
                         </Button>
-                      )
-                    ) : (
+                      ))}
+                    {kelas.owner.id === userData?.id && (
                       <form
                         onSubmit={handleSubmit(uploadModul)}
                         className='flex flex-col gap-4'

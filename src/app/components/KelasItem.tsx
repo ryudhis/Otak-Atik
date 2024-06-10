@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 
 import React from "react";
 import Button from "./Button";
+import { useRouter } from "next/navigation";
 
 interface KelasItemProps {
+  id: number;
   title: string;
   jadwal: string;
   tutorNama: string;
@@ -13,14 +14,24 @@ interface KelasItemProps {
 }
 
 const KelasItem: React.FC<KelasItemProps> = ({
+  id,
   title,
   jadwal,
   tutorNama,
   avatar,
   modul,
 }) => {
+  const router = useRouter();
+
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); // Stop the event from propagating to the parent div
+  };
+
   return (
-    <div className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700'>
+    <div
+      onClick={()=> router.push(`/dashboard/course/${id}`)}
+      className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80'
+    >
       <div className='grid grid-cols-2 items-center gap-10'>
         <div className='flex flex-col gap-2'>
           <p className='font-semibold'>{title}</p>
@@ -29,12 +40,14 @@ const KelasItem: React.FC<KelasItemProps> = ({
         <div className='flex gap-4'>
           {modul ? (
             <a href={modul} download>
-              <Button alternateStyle='secondary'>Modul</Button>
+              <Button onClick={handleButtonClick} alternateStyle='secondary'>Modul</Button>
             </a>
           ) : (
-            <Button disable alternateStyle='secondary'>Modul</Button>
+            <Button disable alternateStyle='secondary'>
+              Modul
+            </Button>
           )}
-          <Button alternateStyle='primary'>Masuk Meet</Button>
+          <Button onClick={handleButtonClick} alternateStyle='primary'>Masuk Meet</Button>
         </div>
       </div>
 

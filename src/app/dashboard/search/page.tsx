@@ -1,11 +1,9 @@
-"use client";
+"use client"
 
 import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import addButton from "@img/courses/add.png";
-import Button from "@/app/components/Button";
 import Logo from "@img/logo.png";
 import SearchClassItem from "@/app/components/SearchClassItem";
 
@@ -107,18 +105,26 @@ const Search = () => {
         </div>
       ) : (
         <>
-          <div className="mt-8 flex flex-col gap-4 h-[80vh] overflow-auto">
-            {filteredKelas.map((kelas) => (
-              <SearchClassItem
-                key={kelas.id}
-                id={kelas.id}
-                title={kelas.nama}
-                jadwal={kelas.jadwal}
-                tutorNama={kelas.owner.username}
-                avatar={kelas.owner.avatar}
-              />
-            ))}
-          </div>
+          {filteredKelas.length === 0 ? (
+            <div className="mt-8 flex justify-center items-center h-[80vh]">
+              <h1 className="text-secondary font-bold text-xl">
+                Belum ada kelas
+              </h1>
+            </div>
+          ) : (
+            <div className="mt-8 flex flex-col gap-4 h-[80vh] overflow-auto">
+              {filteredKelas.map((kelas) => (
+                <SearchClassItem
+                  key={kelas.id}
+                  id={kelas.id}
+                  title={kelas.nama}
+                  jadwal={kelas.jadwal}
+                  tutorNama={kelas.owner.username}
+                  avatar={kelas.owner.avatar}
+                />
+              ))}
+            </div>
+          )}
         </>
       )}
     </div>

@@ -84,6 +84,7 @@ const Courses = () => {
             {classesToDisplay?.map((kelas) => (
               <KelasItem
                 key={kelas.id}
+                id={kelas.id}
                 title={kelas.nama}
                 jadwal={kelas.jadwal}
                 modul={kelas.modul}

@@ -1,6 +1,6 @@
 import prisma from "@/utils/prisma";
 import { NextResponse } from 'next/server';
-import uploadToCloudinary from "@/utils/cloudinary";
+import { uploadToCloudinary } from "@/utils/cloudinary";
 
 export const config = {
   api: {
