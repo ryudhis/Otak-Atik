@@ -73,6 +73,7 @@ export async function POST(req) {
         jadwal: data.jadwal,
         durasi: data.durasi,
         harga: parseInt(data.harga),
+        linkMeet: data.linkMeet,
         modul: modulUrl, // Store the Cloudinary file URL in the database if it exists
         owner: {
           connect: { id: data.ownerId }

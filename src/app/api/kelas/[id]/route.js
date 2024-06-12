@@ -56,7 +56,7 @@ export async function PATCH(req) {
 
     const kelas = await prisma.kelas.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data,
     });

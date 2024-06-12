@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@utils/axios";
 import Cookies from "js-cookie";
-import  { jwtDecode, JwtPayload } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -36,6 +36,7 @@ const formSchema = z.object({
   ]),
   harga: z.string(),
   file: z.any(),
+  linkMeet: z.string(),
 });
 
 interface CustomJwtPayload extends JwtPayload {
@@ -71,6 +72,7 @@ const CreateClassForm = () => {
       harga: "",
       kategori: "",
       file: null,
+      linkMeet: "",
     },
   });
 
@@ -368,6 +370,19 @@ const CreateClassForm = () => {
                 {errors.harga.message}
               </span>
             )}
+          </div>
+
+          <div>
+            <label className='font-bold text-md'>Link Google Meet</label>
+            <input
+              type='text'
+              placeholder='Link Google Meet anda'
+              {...register("linkMeet")}
+              className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
+                errors.linkMeet ? "border-red-500" : ""
+              }`}
+            />
+            {`*Link meeting dapat diisi nanti`}
           </div>
 
           {metodeValue.includes("Modul") && (

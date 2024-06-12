@@ -18,6 +18,7 @@ export interface Kelas {
   kategori: string;
   jadwal: string;
   modul: string;
+  linkMeet: string;
 }
 
 export interface OwnerItem {
@@ -88,6 +89,7 @@ const Courses = () => {
                 title={kelas.nama}
                 jadwal={kelas.jadwal}
                 modul={kelas.modul}
+                linkMeet={kelas.linkMeet}
                 tutorNama={kelas.owner.username}
                 avatar={kelas.owner.avatar}
               />

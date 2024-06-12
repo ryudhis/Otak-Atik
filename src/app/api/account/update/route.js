@@ -47,6 +47,15 @@ export async function PATCH(req) {
       };
     }
 
+    // Check if updateData includes username attribute
+    if (updateData.hasOwnProperty("username")) {
+      const avatarUrl = `https://ui-avatars.com/api/?name=${updateData.username}&size=32&rounded=true&background=random`;
+      updateData = {
+        ...updateData,
+        avatar: avatarUrl,
+      };
+    }
+
     const updatedAccount = await prisma.account.update({
       where: {
         id: parseInt(id),

@@ -44,6 +44,7 @@ type UpdateData =
     };
 
 const Profile = () => {
+  const [refresh, setRefresh] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<userData>();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,7 +79,7 @@ const Profile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const handleSave = async (data: any) => {
     let updateData: UpdateData = {
@@ -124,6 +125,7 @@ const Profile = () => {
       console.log(error);
     } finally {
       setIsModalOpen(false);
+      setRefresh(!refresh);
     }
   };
 
