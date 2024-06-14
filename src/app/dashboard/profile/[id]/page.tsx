@@ -105,6 +105,7 @@ const DetailUser = ({ params }: { params: { id: string } }) => {
                       id={kelas.id}
                       title={kelas.nama}
                       jadwal={kelas.jadwal}
+                      kategori={kelas.kategori}
                     />
                   ))
                 ) : (
