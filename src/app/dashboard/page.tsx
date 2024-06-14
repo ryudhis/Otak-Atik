@@ -58,7 +58,6 @@ const Dashboard = () => {
     "Business",
     "Music",
     "Video",
-    "wengwong"
   ];
   const [currentKelas, setCurrentKelas] = useState("Computer Science");
 
