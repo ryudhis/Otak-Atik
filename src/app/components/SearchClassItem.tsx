@@ -20,7 +20,7 @@ const SearchClassItem: React.FC<KelasItemProps> = ({
   avatar,
 }) => {
   return (
-    <Link href={`/dashboard/course/${id}`}>
+    <Link href={`/dashboard/courses/${id}`}>
       <div className="bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 cursor-pointer hover:opacity-80 transition">
         <div className="grid grid-cols-2 items-center gap-10">
           <div className="flex flex-col gap-2">

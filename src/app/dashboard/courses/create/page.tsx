@@ -157,7 +157,7 @@ const CreateClassForm = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUserData = async () => {
       try {
         const token = Cookies.get("token");
         if (token) {
@@ -176,13 +176,13 @@ const CreateClassForm = () => {
       }
     };
 
-    fetchData();
+    fetchUserData();
   }, [router]);
 
   const metodeValue = watch("metode");
 
   return (
-    <div className='bg-tertiary w-[90%] p-28'>
+    <div className='bg-tertiary w-[90%] overflow-auto h-screen p-28'>
       <Button
         onClick={() => {
           router.back();

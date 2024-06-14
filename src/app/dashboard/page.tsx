@@ -44,6 +44,7 @@ interface CustomJwtPayload extends JwtPayload {
 }
 
 const Dashboard = () => {
+  const router = useRouter();
   const [kelas, setKelas] = useState<Kelas[]>([]);
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -180,9 +181,12 @@ const Dashboard = () => {
             )}
           </div>
 
-          <div className='flex items-center gap-4 bottom-6 right-6 absolute'>
+          <div
+            onClick={() => router.push(`/dashboard/profile/${userData.id}`)}
+            className='flex items-center gap-4 bottom-6 right-6 absolute hover:opacity-80 cursor-pointer z-10'
+          >
             <p className='font-semibold'>{userData.username}</p>
-            <img src={userData.avatar} alt='avatar tutor'></img>
+            <img width={45} src={userData.avatar} alt='avatar tutor'></img>
           </div>
         </>
       ) : (
@@ -264,19 +268,15 @@ const Dashboard = () => {
               <h1 className='text-center'>Belum ada kelas diikuti</h1>
             ) : (
               <div className='flex flex-col gap-2 overflow-y-auto max-h-full'>
-                {kelas
-                  .filter((item) =>
-                    userData?.kelasDiambil.some((kelas) => kelas.id === item.id)
-                  )
-                  .map((item: any) => (
-                    <div key={item.id} className='flex gap-3 items-center'>
-                      <img className='w-8 h-8' src={item.owner.avatar} alt='' />
-                      <div className='flex flex-col'>
-                        <h1 className='text-base font-semibold'>{item.nama}</h1>
-                        <h1 className='text-sm'>{item.jadwal}</h1>
-                      </div>
+                {userData?.kelasDiambil.map((kelas) => (
+                  <div key={kelas.id} className='flex gap-3 items-center'>
+                    <img className='w-8 h-8' src={kelas.owner.avatar} alt='' />
+                    <div className='flex flex-col'>
+                      <h1 className='text-base font-semibold'>{kelas.nama}</h1>
+                      <h1 className='text-sm'>{kelas.jadwal}</h1>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -288,14 +288,29 @@ const Dashboard = () => {
           ) : userData?.tutorFavorite?.length === 0 ? (
             <h1 className='text-center'>Belum ada tutor favorit</h1>
           ) : (
-            account
-              .filter((item) => userData?.tutorFavorite.includes(item.id))
-              .map((item) => (
-                <div key={item.id} className='flex flex-col gap-1'>
-                  <img className='w-8' src={item.avatar} alt='' />
-                  <h1 className='text-sm'>{item.username}</h1>
-                </div>
-              ))
+            <div className='flex gap-5 overflow-x-auto overflow-y-hidden flex-nowrap'>
+              {account
+                .filter((account) =>
+                  userData?.tutorFavorite.includes(account.id)
+                )
+                .map((tutor) => (
+                  <div
+                    key={tutor.id}
+                    className='flex flex-col items-center'
+                  >
+                    <img
+                      className='w-8 h-8 rounded-full'
+                      src={tutor.avatar}
+                      alt={tutor.username}
+                    />
+                    <h1 className='text-sm'>
+                      {tutor.username.length > 5
+                        ? `${tutor.username.substring(0, 5)}..`
+                        : tutor.username}
+                    </h1>
+                  </div>
+                ))}
+            </div>
           )}
         </div>
 

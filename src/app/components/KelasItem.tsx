@@ -31,7 +31,7 @@ const KelasItem: React.FC<KelasItemProps> = ({
 
   return (
     <div
-      onClick={() => router.push(`/dashboard/course/${id}`)}
+      onClick={() => router.push(`/dashboard/courses/${id}`)}
       className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80 cursor-pointer'
     >
       <div className='grid grid-cols-2 items-center gap-10'>

@@ -47,11 +47,11 @@ const HighlightClassItem: React.FC<HighlightClassItemProps> = ({
             key={item.id}
             className='p-6 w-56 h-72 border-2 border-primary rounded-3xl flex flex-col gap-8 cursor-pointer'
             onClick={() => {
-              router.push(`/dashboard/course/${item.id}`);
+              router.push(`/dashboard/courses/${item.id}`);
             }}
           >
             <div className="flex justify-between items-center">
-              <div onClick={(e)=>{handleUserClick(e, userData.id)}} className="flex gap-1 items-center justify-center hover:opacity-80">
+              <div onClick={(e)=>{handleUserClick(e, item.owner.id)}} className="flex gap-1 items-center justify-center hover:opacity-80">
                 <img src={item.owner.avatar} alt="" />
                 <h1>{item.owner.username}</h1>
               </div>

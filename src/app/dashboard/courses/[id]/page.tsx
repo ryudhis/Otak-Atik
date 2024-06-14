@@ -249,7 +249,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const fetchData = async () => {
+  const fetchUserData = async () => {
     try {
       const token = Cookies.get("token");
       if (token) {
@@ -303,8 +303,8 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
   }
 
   useEffect(() => {
-    fetchData();
     getKelas();
+    fetchUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
@@ -489,7 +489,10 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                           onSubmit={handleSubmit(tambahLink)}
                           className='flex flex-col gap-4'
                         >
-                          <label htmlFor='linkMeet' className='font-bold text-lg'>
+                          <label
+                            htmlFor='linkMeet'
+                            className='font-bold text-lg'
+                          >
                             Link Meet
                           </label>
                           <input
