@@ -24,36 +24,40 @@ interface CustomJwtPayload extends JwtPayload {
 
 const Header = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<userData | null>(null);
 
-useEffect(() => {
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const token = Cookies.get("token");
-      if (token) {
-        const decodedToken = jwtDecode<CustomJwtPayload>(token);
-        const userId = decodedToken.id;
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          const decodedToken = jwtDecode<CustomJwtPayload>(token);
+          const userId = decodedToken.id;
 
-        const response = await axiosConfig.get(`/api/account/${userId}`);
-        setUserData(response.data.data);
+          const response = await axiosConfig.get(`/api/account/${userId}`);
+          setUserData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
 
-  fetchData();
-}, []);
+    fetchData();
+  }, []);
 
   return (
     <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10">
       <div className="flex items-center gap-6 bg-tertiary rounded-full p-3">
-        <img src={userData?.avatar} alt="avatar"/>
-        <p>{userData?.username}</p>
+        {!isLoading && (
+          <>
+            <img src={userData?.avatar} alt="avatar" />
+            <p>{userData?.username}</p>
+          </>
+        )}
         <Button
           onClick={() => {
             router.push("/dashboard/faq");
