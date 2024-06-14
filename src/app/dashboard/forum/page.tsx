@@ -52,7 +52,10 @@ const Forum = () => {
     "Computer Science",
     "Science",
     "Sport",
-    "Marketing",
+    "Design",
+    "Business",
+    "Music",
+    "Video",
   ];
 
   const getAllDiskusi = async () => {

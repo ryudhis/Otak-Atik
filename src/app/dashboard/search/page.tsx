@@ -37,7 +37,10 @@ const Search = () => {
     "Computer Science",
     "Science",
     "Sport",
-    "Marketing",
+    "Design",
+    "Business",
+    "Music",
+    "Video",
   ];
 
   const getAllKelas = async () => {

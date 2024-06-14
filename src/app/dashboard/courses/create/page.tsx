@@ -349,7 +349,10 @@ const CreateClassForm = () => {
               <option value='Computer Science'>Computer Science</option>
               <option value='Science'>Science</option>
               <option value='Sport'>Sport</option>
-              <option value='Marketing'>Marketing</option>
+              <option value='Business'>Business</option>
+              <option value='Design'>Design</option>
+              <option value='Music'>Music</option>
+              <option value='Video'>Video</option>
             </select>
             {`*Kategori yang kosong akan ditambahkan ke kategori General`}
             <br></br>

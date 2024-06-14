@@ -135,12 +135,15 @@ const CreateForum = () => {
               errors.kategori ? "border-red-500" : ""
             }`}
           >
-            <option value="">Pilih Kategori</option>
-            <option value="General">General</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Science">Science</option>
-            <option value="Sport">Sport</option>
-            <option value="Marketing">Marketing</option>
+              <option value=''>Pilih Kategori</option>
+              <option value='General'>General</option>
+              <option value='Computer Science'>Computer Science</option>
+              <option value='Science'>Science</option>
+              <option value='Sport'>Sport</option>
+              <option value='Business'>Business</option>
+              <option value='Design'>Design</option>
+              <option value='Music'>Music</option>
+              <option value='Video'>Video</option>
           </select>
           {errors.kategori && (
             <span className="text-red-600 text-sm">

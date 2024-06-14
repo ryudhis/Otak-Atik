@@ -49,7 +49,16 @@ const Dashboard = () => {
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<userData>({} as userData);
-  const listKategori = ["Computer Science", "Science", "Sport", "Marketing"];
+  const listKategori = [
+    "General",
+    "Computer Science",
+    "Science",
+    "Sport",
+    "Design",
+    "Business",
+    "Music",
+    "Video",
+  ];
   const [currentKelas, setCurrentKelas] = useState("Computer Science");
 
   const switchKelas = (direction: string) => {
@@ -269,7 +278,13 @@ const Dashboard = () => {
             ) : (
               <div className='flex flex-col gap-2 overflow-y-auto max-h-full'>
                 {userData?.kelasDiambil.map((kelas) => (
-                  <div key={kelas.id} className='flex gap-3 items-center'>
+                  <div
+                    onClick={() =>
+                      router.push(`/dashboard/courses/${kelas.id}`)
+                    }
+                    key={kelas.id}
+                    className='flex gap-3 items-center hover:opacity-80 cursor-pointer'
+                  >
                     <img className='w-8 h-8' src={kelas.owner.avatar} alt='' />
                     <div className='flex flex-col'>
                       <h1 className='text-base font-semibold'>{kelas.nama}</h1>
@@ -294,10 +309,7 @@ const Dashboard = () => {
                   userData?.tutorFavorite.includes(account.id)
                 )
                 .map((tutor) => (
-                  <div
-                    key={tutor.id}
-                    className='flex flex-col items-center'
-                  >
+                  <div onClick={()=> router.push(`/dashboard/profile/${tutor.id}`)} key={tutor.id} className='flex flex-col items-center cursor-pointer hover:opacity-80'>
                     <img
                       className='w-8 h-8 rounded-full'
                       src={tutor.avatar}
