@@ -2,8 +2,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axiosConfig from "@utils/axios";
-import Cookies from "js-cookie";
-import { jwtDecode, JwtPayload } from "jwt-decode";
 import ProfileClassItem from "@/app/components/ProfileClassItem";
 
 export interface Kelas {
@@ -25,10 +23,6 @@ export interface userData {
   kelasDiambil: Kelas[];
   kelasDiampu: Kelas[];
   tutorFavorite: number[];
-}
-
-interface CustomJwtPayload extends JwtPayload {
-  id: string;
 }
 
 export interface account {
@@ -123,6 +117,7 @@ const DetailUser = ({ params }: { params: { id: string } }) => {
                       title={kelas.nama}
                       jadwal={kelas.jadwal}
                       avatar={kelas.owner.avatar}
+                      kategori={kelas.kategori}
                     />
                   ))
                 ) : (
