@@ -10,8 +10,8 @@ import cookies from "js-cookie";
 const Header = () => {
   const router = useRouter();
   return (
-    <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10">
-      <div className="flex gap-6 bg-tertiary rounded-full p-3">
+    <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-tertiary z-10">
+      <div className="flex gap-6">
         <Button
           onClick={() => {
             router.push("/dashboard/faq");

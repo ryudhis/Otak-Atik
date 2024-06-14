@@ -182,60 +182,60 @@ const CreateClassForm = () => {
   const metodeValue = watch("metode");
 
   return (
-    <div className='bg-tertiary w-[90%] overflow-auto h-screen p-28'>
+    <div className="bg-tertiary overflow-auto h-screen p-28">
       <Button
         onClick={() => {
           router.back();
         }}
-        alternateStyle='w-[10px] secondary'
+        alternateStyle="w-[10px] secondary"
       >
         &lt;
       </Button>
-      <div className='flex flex-col mt-[10px]'>
-        <h2 className='text-3xl font-bold mb-4 text-white'>Buat Kelas</h2>
-        <form onSubmit={handleSubmit(createClass)} className='space-y-6'>
+      <div className="flex flex-col mt-[10px]">
+        <h2 className="text-3xl font-bold mb-4 text-white">Buat Kelas</h2>
+        <form onSubmit={handleSubmit(createClass)} className="space-y-6">
           <div>
-            <label className='font-bold text-md'>Nama</label>
+            <label className="font-bold text-md">Nama</label>
             <input
-              type='text'
-              placeholder='Tulis nama kelas anda'
+              type="text"
+              placeholder="Tulis nama kelas anda"
               {...register("nama")}
               className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
                 errors.nama ? "border-red-500" : ""
               }`}
             />
             {errors.nama && (
-              <span className='text-red-600 text-sm'>
+              <span className="text-red-600 text-sm">
                 {errors.nama.message}
               </span>
             )}
           </div>
 
-          <div className='flex flex-col gap-3'>
-            <label className='font-bold text-md'>Materi</label>
+          <div className="flex flex-col gap-3">
+            <label className="font-bold text-md">Materi</label>
             {materiFields.map((item, index) => (
-              <div key={item.id} className='flex space-x-2'>
+              <div key={item.id} className="flex space-x-2">
                 <input
-                  type='text'
-                  placeholder='Materi kelas'
+                  type="text"
+                  placeholder="Materi kelas"
                   {...register(`materi.${index}.name`)}
-                  className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+                  className="text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary"
                 />
               </div>
             ))}
-            <div className='flex gap-5'>
+            <div className="flex gap-5">
               <button
-                type='button'
+                type="button"
                 onClick={() => appendMateri({ name: "" })}
-                className='mt-2 w-[200px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                className="mt-2 w-[200px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80"
               >
                 Tambah Materi
               </button>
               {materiFields.length > 1 && (
                 <button
-                  type='button'
+                  type="button"
                   onClick={() => removeMateri(materiFields.length - 1)}
-                  className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                  className="mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80"
                 >
                   Delete Materi
                 </button>
@@ -243,33 +243,33 @@ const CreateClassForm = () => {
             </div>
           </div>
 
-          <div className='flex flex-col gap-3'>
-            <label className='font-bold text-md'>Spesifikasi</label>
+          <div className="flex flex-col gap-3">
+            <label className="font-bold text-md">Spesifikasi</label>
             {spesifikasiFields.map((item, index) => (
-              <div key={item.id} className='flex space-x-2'>
+              <div key={item.id} className="flex space-x-2">
                 <input
-                  type='text'
-                  placeholder='Spesifikasi'
+                  type="text"
+                  placeholder="Spesifikasi"
                   {...register(`spesifikasi.${index}.name` as const)}
-                  className='text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary'
+                  className="text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary"
                 />
               </div>
             ))}
-            <div className='flex gap-5'>
+            <div className="flex gap-5">
               <button
-                type='button'
+                type="button"
                 onClick={() => appendSpesifikasi({ name: "" })}
-                className='mt-2 w-[200px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                className="mt-2 w-[200px] bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80"
               >
                 Tambah Spesifikasi
               </button>
               {spesifikasiFields.length > 1 && (
                 <button
-                  type='button'
+                  type="button"
                   onClick={() =>
                     removeSpesifikasi(spesifikasiFields.length - 1)
                   }
-                  className='mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80'
+                  className="mt-2 bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80"
                 >
                   Delete Spesifikasi
                 </button>
@@ -278,23 +278,23 @@ const CreateClassForm = () => {
           </div>
 
           <div>
-            <label className='font-bold text-md'>Metode</label>
-            <div className='flex space-x-4'>
-              <label className='font-bold text-md'>
+            <label className="font-bold text-md">Metode</label>
+            <div className="flex space-x-4">
+              <label className="font-bold text-md">
                 <input
-                  type='checkbox'
-                  value='Modul'
+                  type="checkbox"
+                  value="Modul"
                   {...register("metode")}
-                  className='mr-2 rounded-checkbox checked:bg-secondary'
+                  className="mr-2 rounded-checkbox checked:bg-secondary"
                 />
                 Modul
               </label>
-              <label className='font-bold text-md'>
+              <label className="font-bold text-md">
                 <input
-                  type='checkbox'
-                  value='Diskusi Kelas'
+                  type="checkbox"
+                  value="Diskusi Kelas"
                   {...register("metode")}
-                  className='mr-2 rounded-checkbox checked:bg-secondary'
+                  className="mr-2 rounded-checkbox checked:bg-secondary"
                 />
                 Diskusi Kelas
               </label>
@@ -302,84 +302,84 @@ const CreateClassForm = () => {
           </div>
 
           <div>
-            <label className='font-bold text-md'>Jadwal</label>
-            <div className='flex gap-5 w-[30%]'>
+            <label className="font-bold text-md">Jadwal</label>
+            <div className="flex gap-5 w-[30%]">
               <input
-                type='date'
+                type="date"
                 {...register("jadwal")}
-                className={`text-secondary font-semibold  mt-1 block w-full px-3 py-2 border bg-transparent border-secondary rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
+                className={`bg-white text-black font-semibold  mt-1 block w-full px-3 py-2 border bg-transparent rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
                   errors.jadwal ? "border-red-500" : ""
                 }`}
               />
 
               <select
                 {...register("durasi", { required: true })}
-                className={`text-secondary font-semibold mt-1 block w-full px-3 py-2 border bg-transparent border-secondary rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
+                className={`bg-white text-black font-semibold mt-1 block w-full px-3 py-2 border bg-transparent  rounded-md shadow-sm focus:outline-none focus:ring-secondary focus:border-secondary ${
                   errors.durasi ? "border-red-500" : ""
                 }`}
               >
-                <option value=''>Pilih Jam</option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
+                <option value="">Pilih Jam</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
               </select>
             </div>
-            <div className='flex gap-5'>
+            <div className="flex gap-5">
               {errors.jadwal && (
-                <span className='text-red-600 text-sm'>
+                <span className="text-red-600 text-sm">
                   Jadwal belum dipilih
                 </span>
               )}
               {errors.durasi && (
-                <span className='text-red-600 text-sm'>Jam belum dipilih</span>
+                <span className="text-red-600 text-sm">Jam belum dipilih</span>
               )}
             </div>
           </div>
 
           <div>
-            <label className='font-bold text-md'>Kategori</label>
+            <label className="font-bold text-md">Kategori</label>
             <select
               {...register("kategori")}
               className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
                 errors.kategori ? "border-red-500" : ""
               }`}
             >
-              <option value=''>Pilih Kategori</option>
-              <option value='General'>General</option>
-              <option value='Computer Science'>Computer Science</option>
-              <option value='Science'>Science</option>
-              <option value='Sport'>Sport</option>
-              <option value='Business'>Business</option>
-              <option value='Design'>Design</option>
-              <option value='Music'>Music</option>
-              <option value='Video'>Video</option>
+              <option value="">Pilih Kategori</option>
+              <option value="General">General</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Science">Science</option>
+              <option value="Sport">Sport</option>
+              <option value="Business">Business</option>
+              <option value="Design">Design</option>
+              <option value="Music">Music</option>
+              <option value="Video">Video</option>
             </select>
             {`*Kategori yang kosong akan ditambahkan ke kategori General`}
             <br></br>
           </div>
 
           <div>
-            <label className='font-bold text-md'>Harga {`(Rp)`}</label>
+            <label className="font-bold text-md">Harga {`(Rp)`}</label>
             <input
-              type='text'
-              placeholder='Rp'
+              type="text"
+              placeholder="Rp"
               {...register("harga")}
               className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
                 errors.harga ? "border-red-500" : ""
               }`}
             />
             {errors.harga && (
-              <span className='text-red-600 text-sm'>
+              <span className="text-red-600 text-sm">
                 {errors.harga.message}
               </span>
             )}
           </div>
 
           <div>
-            <label className='font-bold text-md'>Link Google Meet</label>
+            <label className="font-bold text-md">Link Google Meet</label>
             <input
-              type='text'
-              placeholder='Link Google Meet anda'
+              type="text"
+              placeholder="Link Google Meet anda"
               {...register("linkMeet")}
               className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
                 errors.linkMeet ? "border-red-500" : ""
@@ -390,9 +390,9 @@ const CreateClassForm = () => {
 
           {metodeValue.includes("Modul") && (
             <div>
-              <label className='font-bold text-md'>Upload Modul (PDF)</label>
+              <label className="font-bold text-md">Upload Modul (PDF)</label>
               <input
-                type='file'
+                type="file"
                 {...register("file", { required: false })}
                 className={`text-black mt-1 block w-full px-3 py-2 border bg-white border-gray-300 rounded-md shadow-sm placeholder-gray-600 focus:outline-none focus:ring-secondary focus:border-secondary ${
                   errors.file ? "border-red-500" : ""
@@ -403,8 +403,8 @@ const CreateClassForm = () => {
           )}
 
           <button
-            type='submit'
-            className='w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+            type="submit"
+            className="w-full bg-secondary text-slate-800 font-bold py-2 px-4 border border-transparent rounded-md shadow-sm hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Buat Kelas
           </button>
