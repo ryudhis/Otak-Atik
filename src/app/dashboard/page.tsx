@@ -303,7 +303,7 @@ const Dashboard = () => {
           ) : userData?.tutorFavorite?.length === 0 ? (
             <h1 className="text-center">Belum ada tutor favorit</h1>
           ) : (
-            <div className="flex -mb-6 gap-5 overflow-x-auto overflow-y-hidden flex-nowrap">
+            <div className="flex -mb-6 gap-8 overflow-x-auto overflow-y-hidden flex-nowrap">
               {account
                 .filter((account) =>
                   userData?.tutorFavorite.includes(account.id)
@@ -314,7 +314,7 @@ const Dashboard = () => {
                       router.push(`/dashboard/profile/${tutor.id}`)
                     }
                     key={tutor.id}
-                    className="flex flex-col items-center cursor-pointer hover:opacity-80"
+                    className="flex flex-col items-center hover:opacity-80 cursor-pointer"
                   >
                     <img
                       className="w-8 h-8 rounded-full"

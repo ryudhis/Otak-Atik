@@ -279,7 +279,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen">
+    <div className="bg-tertiary p-28 h-screen overflow-auto">
       <Button onClick={() => router.back()} alternateStyle="secondary">
         &lt;
       </Button>
