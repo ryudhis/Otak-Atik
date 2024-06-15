@@ -7,6 +7,7 @@ import axiosConfig from "@utils/axios";
 import Image from "next/image";
 import Star from "@svg/star.svg";
 import toggledStar from "@svg/Star-toggled.svg";
+import deleteIcon from "@svg/delete.svg";
 import Comments from "@svg/Comments.svg";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -186,6 +187,20 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
     } finally {
       setRefresh(!refresh);
       toggleCheckoutBox();
+    }
+  };
+
+  const deleteKelas = async () => {
+    try {
+      const response = await axiosConfig.delete(`api/kelas/${id}`);
+      if (response.data.status !== 400) {
+        toast.success("Berhasil Hapus Kelas");
+        router.push("/dashboard/courses");
+      } else {
+        toast.error("Gagal Hapus Kelas");
+      }
+    } catch (error) {
+      toast.error("Gagal Hapus Kelas");
     }
   };
 
@@ -406,19 +421,33 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                 <div className='border-b-2 border-primary flex flex-col gap-8'>
                   <div className='flex items-center justify-between'>
                     <h1 className='text-3xl font-bold'>{kelas?.nama}</h1>
-                    <Button
-                      onClick={() => toggleKelasFavorite(userData.id, kelas.id)}
-                      alternateStyle='ghost'
-                    >
-                      <Image
-                        src={
-                          userData.kelasFavorite.includes(kelas.id)
-                            ? toggledStar
-                            : Star
+
+                    <div className='flex items-center gap-5'>
+                      {userData.id === kelas.owner.id && (
+                        <Button onClick={() => deleteKelas()}>
+                          <Image
+                            src={deleteIcon}
+                            alt=''
+                          />
+                        </Button>
+                      )}
+
+                      <Button
+                        onClick={() =>
+                          toggleKelasFavorite(userData.id, kelas.id)
                         }
-                        alt=''
-                      />
-                    </Button>
+                        alternateStyle='ghost'
+                      >
+                        <Image
+                          src={
+                            userData.kelasFavorite.includes(kelas.id)
+                              ? toggledStar
+                              : Star
+                          }
+                          alt=''
+                        />
+                      </Button>
+                    </div>
                   </div>
                   <div className='grid grid-cols-3 gap-8 w-[90%] self-center'>
                     <KelasContent
