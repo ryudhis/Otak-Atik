@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "@utils/axios"
+import axios from "@utils/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,7 +15,7 @@ const formSchema = z.object({
   email: z.string().min(6).max(50),
   username: z.string().min(4).max(50),
   password: z.string().min(6).max(50),
-  type: z.string(),
+  type: z.string().min(1),
 });
 
 const Registerform = () => {
@@ -75,6 +75,11 @@ const Registerform = () => {
             }`}
           />
         </div>
+        {errors.email && (
+          <span className="text-red-600 text-sm">
+            Masukkan email minimal 6 karakter
+          </span>
+        )}
 
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -89,6 +94,11 @@ const Registerform = () => {
             }`}
           />
         </div>
+        {errors.username && (
+          <span className="text-red-600 text-sm">
+            Masukkan username minimal 4 karakter
+          </span>
+        )}
 
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -103,6 +113,11 @@ const Registerform = () => {
             }`}
           />
         </div>
+        {errors.password && (
+          <span className="text-red-600 text-sm">
+            Masukkan password minimal 6 karakter
+          </span>
+        )}
 
         <div className="flex space-x-2 justify-center">
           <button
@@ -116,7 +131,7 @@ const Registerform = () => {
           >
             Pelajar
           </button>
-          
+
           <button
             type="button"
             onClick={() => handleTypeSelection("tutor")}
@@ -132,7 +147,9 @@ const Registerform = () => {
 
         <input type="hidden" value={userType} {...register("type")} />
 
-        {errors.type && <p className="text-red-500">Type is required</p>}
+        {errors.type && (
+          <span className="text-red-600 text-sm">Pilih salah satu tipe!</span>
+        )}
 
         <button
           type="submit"

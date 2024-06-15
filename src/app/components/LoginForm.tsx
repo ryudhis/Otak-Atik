@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 import { useRouter } from "next/navigation";
-import axios from "@utils/axios"
+import axios from "@utils/axios";
 import Cookies from "js-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,7 +12,7 @@ import { toast } from "react-toastify";
 
 const formSchema = z.object({
   username: z.string().min(4).max(50),
-  password: z.string().min(4).max(50),
+  password: z.string().min(6).max(50),
 });
 
 const LoginForm = () => {
@@ -53,7 +51,7 @@ const LoginForm = () => {
       <h2 className="text-3xl font-bold mb-4 text-white">Masuk</h2>
       <form onSubmit={handleSubmit(signIn)} className="space-y-6">
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <Image src={UsernameIcon} alt="Username Icon" className="h-5 w-5" />
           </div>
           <input
@@ -64,13 +62,15 @@ const LoginForm = () => {
               errors.username ? "border-red-500" : ""
             }`}
           />
-          {errors.username && (
-            <span className="text-red-600 text-sm">This field is required</span>
-          )}
         </div>
+        {errors.username && (
+          <span className="text-red-600 text-sm">
+            Masukkan username minimal 4 karakter
+          </span>
+        )}
 
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <Image src={PasswordIcon} alt="Password Icon" className="h-5 w-5" />
           </div>
           <input
@@ -81,10 +81,12 @@ const LoginForm = () => {
               errors.password ? "border-red-500" : ""
             }`}
           />
-          {errors.password && (
-            <span className="text-red-600 text-sm">This field is required</span>
-          )}
         </div>
+        {errors.password && (
+          <span className="text-red-600 text-sm">
+            Masukkan password minimal 6 karakter
+          </span>
+        )}
 
         <button
           type="submit"
