@@ -237,7 +237,6 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
           ? [kelasId, ...prevUserData.kelasFavorite]
           : prevUserData.kelasFavorite.filter((kelas) => kelas !== kelasId),
       }));
-
       toast.error("Gagal Favorite Kelas");
     }
   };
