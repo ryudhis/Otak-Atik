@@ -34,7 +34,7 @@ export async function DELETE(req) {
     const id = req.url.split("/kelas/")[1];
     const kelas = await prisma.kelas.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
