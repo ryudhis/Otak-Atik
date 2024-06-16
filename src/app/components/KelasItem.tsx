@@ -3,6 +3,26 @@
 import React from "react";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import ComputerScience from "@svg/computerScience.svg";
+import Science from "@svg/science.svg";
+import Sport from "@svg/sport.svg";
+import Design from "@svg/design.svg";
+import General from "@svg/general.svg";
+import Business from "@svg/business.svg";
+import Music from "@svg/music.svg";
+import Video from "@svg/video.svg";
+
+const categoryIcons: { [key: string]: any } = {
+  "Computer Science": ComputerScience,
+  "Science": Science,
+  "Sport": Sport,
+  "Design": Design,
+  "General": General,
+  "Business": Business,
+  "Music": Music,
+  "Video": Video,
+};
 
 interface KelasItemProps {
   id: number;
@@ -12,6 +32,7 @@ interface KelasItemProps {
   avatar: string;
   modul?: string;
   linkMeet: string;
+  kategori: string
 }
 
 const KelasItem: React.FC<KelasItemProps> = ({
@@ -22,6 +43,7 @@ const KelasItem: React.FC<KelasItemProps> = ({
   avatar,
   modul,
   linkMeet,
+  kategori
 }) => {
   const router = useRouter();
 
@@ -34,7 +56,7 @@ const KelasItem: React.FC<KelasItemProps> = ({
       onClick={() => router.push(`/dashboard/courses/${id}`)}
       className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80 cursor-pointer'
     >
-      <div className='grid grid-cols-2 items-center gap-10'>
+      <div className='grid grid-cols-3 items-center gap-10'>
         <div className='flex flex-col gap-2'>
           <p className='font-semibold'>{title}</p>
           <p className='font-bold text-secondary'>{jadwal}</p>
@@ -63,6 +85,7 @@ const KelasItem: React.FC<KelasItemProps> = ({
             </Button>
           )}
         </div>
+        <Image width={30} src={categoryIcons[kategori] || General} alt={kategori} /> 
       </div>
 
       <div className='flex items-center gap-5'>
