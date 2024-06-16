@@ -2,12 +2,6 @@ import prisma from "@/utils/prisma";
 import { NextResponse } from 'next/server';
 import { uploadToCloudinary, deleteFromCloudinary } from "@/utils/cloudinary";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable default body parsing to handle multipart form data
-  },
-};
-
 export async function PATCH(req) {
   try {
     const id = req.url.split("/updateModul/")[1];
