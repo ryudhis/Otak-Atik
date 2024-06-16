@@ -15,7 +15,6 @@
   "dependencies": {
     "@hookform/resolvers": "^3.4.0",
     "@prisma/client": "^5.14.0",
-    "@types/formidable": "^3.4.5",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
@@ -33,7 +32,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/busboy": "^1.5.4",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
