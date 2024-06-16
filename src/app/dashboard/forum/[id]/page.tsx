@@ -313,8 +313,16 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
               <div className='border-b-2 border-primary flex flex-col gap-8'>
                 <div className='flex justify-between'>
                   <div className='flex items-center gap-4'>
-                    <img src={diskusi.owner.avatar} alt='' />
-                    <h1 className='font-bold'>{diskusi.owner.username}</h1>
+                    <div
+                      onClick={() =>
+                        router.push(`/dashboard/profile/${diskusi.owner.id}`)
+                      }
+                      className='flex items-center gap-4 cursor-pointer hover:opacity-80'
+                    >
+                      <img src={diskusi.owner.avatar} alt='' />
+                      <h1 className='font-bold'>{diskusi.owner.username}</h1>
+                    </div>
+
                     <h1>{postedAt(diskusi.postedAt)}</h1>
                   </div>
                   {userData?.id === diskusi?.owner.id && (
