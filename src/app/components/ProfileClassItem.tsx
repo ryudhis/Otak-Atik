@@ -4,14 +4,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import ComputerScience from "@svg/ComputerScience.svg";
-import Science from "@svg/Science.svg";
-import Sport from "@svg/Sport.svg";
-import Design from "@svg/Design.svg";
-import General from "@svg/General.svg";
-import Business from "@svg/Business.svg";
-import Music from "@svg/Music.svg";
-import Video from "@svg/Video.svg";
+import ComputerScience from "@svg/computerScience.svg";
+import Science from "@svg/science.svg";
+import Sport from "@svg/sport.svg";
+import Design from "@svg/design.svg";
+import General from "@svg/general.svg";
+import Business from "@svg/business.svg";
+import Music from "@svg/music.svg";
+import Video from "@svg/video.svg";
 
 interface KelasItemProps {
   id: number;
