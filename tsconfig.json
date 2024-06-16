@@ -18,12 +18,13 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["/src/*"],
-      "@components/*": ["/src/app/components/*"],
-      "@img/*": ["/public/img/*"],
-      "@svg/*": ["/public/svg/*"],
-      "@utils/*": ["/src/utils/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@img/*": ["./public/img/*"],
+      "@svg/*": ["./public/svg/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": [
