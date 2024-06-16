@@ -2,12 +2,6 @@ import prisma from "@/utils/prisma";
 import { NextResponse } from 'next/server';
 import { uploadToCloudinary } from "@/utils/cloudinary";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable default body parsing to handle multipart form data
-  },
-};
-
 export async function GET() {
   try {
     const kelas = await prisma.kelas.findMany({
