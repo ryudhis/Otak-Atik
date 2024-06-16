@@ -17,9 +17,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/logo.png" sizes="any" />
-      </head>
       <body className={`${inter.className} h-screen bg-tertiary text-white`}>
         {children}
         <ToastContainer theme="dark" />
