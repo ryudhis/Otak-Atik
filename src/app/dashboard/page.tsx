@@ -73,7 +73,7 @@ const Dashboard = () => {
       newIndex = 0;
     }
 
-    setCurrentKelas(listKategori[newIndex]);
+    setCurrentKelas(listKategori[newIndex] as string);
   };
 
   const getKelas = async () => {
