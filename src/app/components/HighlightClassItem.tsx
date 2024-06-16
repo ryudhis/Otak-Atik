@@ -3,15 +3,15 @@ import React from "react";
 import Image from "next/image";
 import Button from "@components/Button";
 import Star from "@svg/star.svg";
-import toggledStar from "@svg/Star-toggled.svg";
-import ComputerScience from "@svg/ComputerScience.svg";
-import Science from "@svg/Science.svg";
-import Sport from "@svg/Sport.svg";
-import Design from "@svg/Design.svg";
-import General from "@svg/General.svg";
-import Business from "@svg/Business.svg";
-import Music from "@svg/Music.svg";
-import Video from "@svg/Video.svg";
+import toggledStar from "@svg/star-toggled.svg";
+import ComputerScience from "@svg/computerScience.svg";
+import Science from "@svg/science.svg";
+import Sport from "@svg/sport.svg";
+import Design from "@svg/design.svg";
+import General from "@svg/general.svg";
+import Business from "@svg/business.svg";
+import Music from "@svg/music.svg";
+import Video from "@svg/video.svg";
 import { Kelas, userData } from "@/app/dashboard/page"; // Ensure userData type is imported
 import { useRouter } from "next/navigation";
 

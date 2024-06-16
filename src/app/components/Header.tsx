@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import Button from "./Button";
-import HelpCenter from "@svg/helpcenter.svg";
+import HelpCenter from "@svg/helpCenter.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import cookies from "js-cookie";

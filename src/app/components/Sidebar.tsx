@@ -10,8 +10,8 @@ import messageSolid from "@svg/message.svg";
 import message from "@svg/message-2.svg";
 import settingSolid from "@svg/settings.svg";
 import setting from "@svg/settings-2.svg";
-import search from "@svg/Search.svg";
-import solidSearch from "@svg/SolidSearch.svg";
+import search from "@svg/search.svg";
+import solidSearch from "@svg/solidSearch.svg";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 

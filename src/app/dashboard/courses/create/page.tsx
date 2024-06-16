@@ -147,6 +147,7 @@ const CreateClassForm = () => {
       if (response.data.status === 200) {
         toast.success("Berhasil Submit");
         reset();
+        router.push("/dashboard/courses");
       } else {
         toast.error("Gagal Submit");
       }
