@@ -57,7 +57,7 @@ export interface userData {
 }
 
 const formSchema = z.object({
-  content: z.string().min(1).max(255),
+  content: z.string().min(1).max(500),
 });
 
 const DetailForum = ({ params }: { params: { id: string } }) => {
