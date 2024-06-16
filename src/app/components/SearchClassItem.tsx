@@ -3,6 +3,26 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import ComputerScience from "@svg/computerScience.svg";
+import Science from "@svg/science.svg";
+import Sport from "@svg/sport.svg";
+import Design from "@svg/design.svg";
+import General from "@svg/general.svg";
+import Business from "@svg/business.svg";
+import Music from "@svg/music.svg";
+import Video from "@svg/video.svg";
+
+const categoryIcons: { [key: string]: any } = {
+  "Computer Science": ComputerScience,
+  "Science": Science,
+  "Sport": Sport,
+  "Design": Design,
+  "General": General,
+  "Business": Business,
+  "Music": Music,
+  "Video": Video,
+};
 
 interface KelasItemProps {
   id: number;
@@ -10,6 +30,7 @@ interface KelasItemProps {
   jadwal: string;
   tutorNama: string;
   avatar: string;
+  kategori: string;
 }
 
 const SearchClassItem: React.FC<KelasItemProps> = ({
@@ -18,6 +39,7 @@ const SearchClassItem: React.FC<KelasItemProps> = ({
   jadwal,
   tutorNama,
   avatar,
+  kategori
 }) => {
   return (
     <Link href={`/dashboard/courses/${id}`}>
@@ -27,6 +49,7 @@ const SearchClassItem: React.FC<KelasItemProps> = ({
             <p className="font-semibold">{title}</p>
             <p className="font-bold text-secondary">{jadwal}</p>
           </div>
+          <Image width={30} src={categoryIcons[kategori] || General} alt={kategori} />
         </div>
 
         <div className="flex items-center gap-5">

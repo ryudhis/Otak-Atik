@@ -122,6 +122,7 @@ const Search = () => {
                   jadwal={kelas.jadwal}
                   tutorNama={kelas.owner.username}
                   avatar={kelas.owner.avatar}
+                  kategori={kelas.kategori}
                 />
               ))}
             </div>

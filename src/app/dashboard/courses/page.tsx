@@ -93,6 +93,7 @@ const Courses = () => {
                   linkMeet={kelas.linkMeet}
                   tutorNama={kelas.owner.username}
                   avatar={kelas.owner.avatar}
+                  kategori={kelas.kategori}
                 />
               ))
             ) : (
