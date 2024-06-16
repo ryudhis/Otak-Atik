@@ -121,6 +121,22 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const deleteComment = async (idComment: number) => {
+    try {
+      console.log(idComment);
+
+      const response = await axiosConfig.delete(`api/commentKelas/${idComment}`);
+      if (response.data.status !== 400) {
+        toast.success("Berhasil Hapus Komentar");
+        setRefresh(!refresh);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const uploadModul = async (values: any) => {
     const formData = new FormData();
     formData.append("file", values.file[0]);
@@ -463,9 +479,12 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
 
                     <div className='flex items-center gap-5'>
                       {userData.id === kelas.owner.id && (
-                        <Button onClick={() => deleteKelas()}>
-                          <Image src={deleteIcon} alt='Delete' />
-                        </Button>
+                        <Image
+                          onClick={() => deleteKelas()}
+                          className='cursor-pointer hover:scale-110 transition ease-in-out'
+                          src={deleteIcon}
+                          alt=''
+                        />
                       )}
 
                       <Button
@@ -654,7 +673,12 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       : 0}
                     )
                   </h1>
-                  <CommentItem comments={kelas.comment} postedAt={postedAt} />
+                  <CommentItem
+                    comments={kelas.comment}
+                    postedAt={postedAt}
+                    deleteComment={deleteComment}
+                    userDataId={userData.id}
+                  />
                 </div>
               </>
             ) : (
