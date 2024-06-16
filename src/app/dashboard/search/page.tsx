@@ -41,6 +41,7 @@ const Search = () => {
     "Business",
     "Music",
     "Video",
+    "wang"
   ];
 
   const getAllKelas = async () => {
