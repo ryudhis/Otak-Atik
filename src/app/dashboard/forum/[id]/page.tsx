@@ -66,7 +66,7 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [diskusi, setDiskusi] = useState<forumItem | undefined>(undefined);
-  const [userData, setUserData] = useState<userData | undefined>(undefined);
+  const [userData, setUserData] = useState<userData>({} as userData);
   const [commentBoxVisible, setCommentBoxVisible] = useState(false);
 
   const {
@@ -103,6 +103,22 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
     } finally {
       setRefresh(!refresh);
       reset();
+    }
+  };
+
+  const deleteComment = async (idComment: number) => {
+    try {
+      console.log(id);
+
+      const response = await axiosConfig.delete(`api/commentForum/${idComment}`);
+      if (response.data.status !== 400) {
+        toast.success("Berhasil Hapus Komentar");
+        setRefresh(!refresh);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -326,9 +342,12 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                     <h1>{postedAt(diskusi.postedAt)}</h1>
                   </div>
                   {userData?.id === diskusi?.owner.id && (
-                    <Button onClick={() => deleteDiskusi()}>
-                      <Image src={deleteIcon} alt='' />
-                    </Button>
+                    <Image
+                      onClick={() => deleteDiskusi()}
+                      className='cursor-pointer hover:scale-110 transition ease-in-out'
+                      src={deleteIcon}
+                      alt=''
+                    />
                   )}
                 </div>
                 <p className='text-xl font-bold'>{diskusi.title}</p>
@@ -425,7 +444,12 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                 <h1 className='text-2xl font-bold'>
                   Komentar({diskusi.comment ? diskusi.comment.length : 0})
                 </h1>
-                <CommentItem comments={diskusi.comment} postedAt={postedAt} />
+                <CommentItem
+                  comments={diskusi.comment}
+                  postedAt={postedAt}
+                  deleteComment={deleteComment}
+                  userDataId={userData.id}
+                />
               </div>
             </>
           )}

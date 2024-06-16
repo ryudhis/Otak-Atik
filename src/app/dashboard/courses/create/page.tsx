@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "@utils/axios";
+import axiosConfig from "@utils/axios";
 import Cookies from "js-cookie";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -140,7 +140,7 @@ const CreateClassForm = () => {
     formData.append("data", JSON.stringify(data));
 
     try {
-      const response = await axios.post("/api/kelas", formData, {
+      const response = await axiosConfig.post("/api/kelas", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -168,7 +168,7 @@ const CreateClassForm = () => {
           const decodedToken = jwtDecode<CustomJwtPayload>(token);
           const userId = decodedToken.id;
 
-          const response = await axios.get(`/api/account/${userId}`);
+          const response = await axiosConfig.get(`/api/account/${userId}`);
           if (response.data.data.type === "pelajar") {
             router.push("/dashboard/courses");
           } else {
