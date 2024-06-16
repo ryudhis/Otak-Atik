@@ -18,6 +18,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import Logo from "@img/logo.png";
 import CommentItem from "@/app/components/CommentItem";
+import deleteIcon from "@svg/delete.svg";
 
 export interface forumItem {
   id: number;
@@ -41,6 +42,7 @@ export interface commentItem {
 }
 
 export interface ownerItem {
+  id: number;
   username: string;
   avatar: string;
 }
@@ -120,6 +122,20 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
       console.log(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const deleteDiskusi = async () => {
+    try {
+      const response = await axiosConfig.delete(`api/forumDiskusi/${id}`);
+      if (response.data.status !== 400) {
+        toast.success("Berhasil Hapus Diskusi");
+        router.push("/dashboard/forum/");
+      } else {
+        toast.success("Gagal Hapus Diskusi");
+      }
+    } catch (error) {
+      toast.error("Gagal Hapus Diskusi");
     }
   };
 
@@ -279,30 +295,37 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className="bg-tertiary p-28 h-screen overflow-auto">
-      <Button onClick={() => router.back()} alternateStyle="secondary">
+    <div className='bg-tertiary p-28 h-screen overflow-auto'>
+      <Button onClick={() => router.back()} alternateStyle='secondary'>
         &lt;
       </Button>
       {isLoading ? (
-        <div className="-mt-52 h-screen flex flex-col justify-center items-center w-full gap-4">
-          <Image className="scale-110" src={Logo} alt="Logo" />
-          <h1 className="text-center text-secondary font-bold text-2xl animate-pulse">
+        <div className='-mt-52 h-screen flex flex-col justify-center items-center w-full gap-4'>
+          <Image className='scale-110' src={Logo} alt='Logo' />
+          <h1 className='text-center text-secondary font-bold text-2xl animate-pulse'>
             Loading konten...
           </h1>
         </div>
       ) : (
-        <div className="mt-6 py-4 flex flex-col gap-8">
+        <div className='mt-6 py-4 flex flex-col gap-8'>
           {diskusi && (
             <>
-              <div className="border-b-2 border-primary flex flex-col gap-8">
-                <div className="flex gap-4">
-                  <img src={diskusi.owner.avatar} alt="" />
-                  <h1 className="font-bold">{diskusi.owner.username}</h1>
-                  <h1>{postedAt(diskusi.postedAt)}</h1>
+              <div className='border-b-2 border-primary flex flex-col gap-8'>
+                <div className='flex justify-between'>
+                  <div className='flex items-center gap-4'>
+                    <img src={diskusi.owner.avatar} alt='' />
+                    <h1 className='font-bold'>{diskusi.owner.username}</h1>
+                    <h1>{postedAt(diskusi.postedAt)}</h1>
+                  </div>
+                  {userData?.id === diskusi?.owner.id && (
+                    <Button onClick={() => deleteDiskusi()}>
+                      <Image src={deleteIcon} alt='' />
+                    </Button>
+                  )}
                 </div>
-                <p className="text-xl font-bold">{diskusi.title}</p>
-                <p className="text-lg">{diskusi.content}</p>
-                <div className="flex gap-6">
+                <p className='text-xl font-bold'>{diskusi.title}</p>
+                <p className='text-lg'>{diskusi.content}</p>
+                <div className='flex gap-6'>
                   {userData &&
                   userData.username &&
                   diskusi.like.includes(userData.username) ? (
@@ -311,9 +334,9 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                         e.stopPropagation();
                         toggleLike();
                       }}
-                      alternateStyle="ghost"
+                      alternateStyle='ghost'
                     >
-                      <Image src={Liked} alt="" />
+                      <Image src={Liked} alt='' />
                     </Button>
                   ) : (
                     <Button
@@ -321,9 +344,9 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                         e.stopPropagation();
                         toggleLike();
                       }}
-                      alternateStyle="ghost"
+                      alternateStyle='ghost'
                     >
-                      <Image src={Like} alt="" />
+                      <Image src={Like} alt='' />
                     </Button>
                   )}
                   {userData &&
@@ -334,9 +357,9 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                         e.stopPropagation();
                         toggleDislike();
                       }}
-                      alternateStyle="ghost"
+                      alternateStyle='ghost'
                     >
-                      <Image src={Disliked} alt="" />
+                      <Image src={Disliked} alt='' />
                     </Button>
                   ) : (
                     <Button
@@ -344,16 +367,16 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
                         e.stopPropagation();
                         toggleDislike();
                       }}
-                      alternateStyle="ghost"
+                      alternateStyle='ghost'
                     >
-                      <Image src={Dislike} alt="" />
+                      <Image src={Dislike} alt='' />
                     </Button>
                   )}
                   <Button
                     onClick={() => toggleCommentBox()}
-                    alternateStyle="ghost"
+                    alternateStyle='ghost'
                   >
-                    <Image src={Comments} alt="" />
+                    <Image src={Comments} alt='' />
                   </Button>
                 </div>
               </div>
@@ -366,32 +389,32 @@ const DetailForum = ({ params }: { params: { id: string } }) => {
               >
                 <form onSubmit={handleSubmit(postComment)}>
                   <textarea
-                    placeholder="Komentar disini..."
+                    placeholder='Komentar disini...'
                     {...register("content", { required: true })}
                     className={`w-full p-4 h-32 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                       errors.content ? "border-red-500" : ""
                     }`}
                   />
                   {errors.content && (
-                    <span className="text-red-600 text-sm">
+                    <span className='text-red-600 text-sm'>
                       This field is required
                     </span>
                   )}
-                  <div className="flex justify-start items-center gap-3 p-3">
+                  <div className='flex justify-start items-center gap-3 p-3'>
                     <Button
                       onClick={() => toggleCommentBox()}
-                      alternateStyle="secondary"
+                      alternateStyle='secondary'
                     >
                       Batal
                     </Button>
-                    <Button type="submit" alternateStyle="primary">
+                    <Button type='submit' alternateStyle='primary'>
                       Komen
                     </Button>
                   </div>
                 </form>
               </div>
               <div>
-                <h1 className="text-2xl font-bold">
+                <h1 className='text-2xl font-bold'>
                   Komentar({diskusi.comment ? diskusi.comment.length : 0})
                 </h1>
                 <CommentItem comments={diskusi.comment} postedAt={postedAt} />

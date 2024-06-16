@@ -176,7 +176,7 @@ const Dashboard = () => {
           <div className="flex flex-col">
             {userData.kelasDiampu.map((kelas) => (
               <KelasTutor
-                detail={`/dashboard/course/${kelas.id}`}
+                detail={`/dashboard/courses/${kelas.id}`}
                 title={kelas.nama}
                 jadwal={kelas.jadwal}
                 siswa={kelas.siswa.length}
@@ -330,17 +330,6 @@ const Dashboard = () => {
                 ))}
             </div>
           )}
-        </div>
-
-        <div className="bg-primary p-6 w-[420px] h-[120px] rounded-3xl flex justify-between">
-          <div className="flex flex-col justify-center items-center">
-            <h1 className="text-xl font-bold">Kelas Selanjutnya:</h1>
-            <h1 className="text-xl font-semibold">React Expert</h1>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h1 className="text-lg font-bold text-secondary">Senin, 13 Mei</h1>
-            <h1 className="text-lg font-semibold">13.00 - 15.00</h1>
-          </div>
         </div>
       </div>
     </>

@@ -50,24 +50,24 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10">
-      <div className="flex items-center gap-6 bg-tertiary rounded-full p-3">
-        {!isLoading && (
-          <>
-            <img src={userData?.avatar} alt="avatar" />
+    <div className='h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10'>
+      <div className='flex items-center gap-6 bg-tertiary rounded-full p-3'>
+        {!isLoading && userData && (
+          <div onClick={()=> router.push(`/dashboard/profile/${userData.id}`)} className='flex items-center gap-3 cursor-pointer hover:opacity-80'>
+            <img src={userData?.avatar} alt='avatar' />
             <p>{userData?.username}</p>
-          </>
+          </div>
         )}
         <Button
           onClick={() => {
             router.push("/dashboard/faq");
           }}
-          alternateStyle="ghost"
+          alternateStyle='ghost'
         >
-          <Image src={HelpCenter} alt="help center" />
+          <Image src={HelpCenter} alt='help center' />
         </Button>
         <Button
-          alternateStyle="primary"
+          alternateStyle='primary'
           onClick={() => {
             cookies.remove("token");
             router.push("/login");

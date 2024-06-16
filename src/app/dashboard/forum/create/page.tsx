@@ -63,6 +63,7 @@ const CreateForum = () => {
       toast.error("Gagal Membuat Diskusi");
     } finally {
       reset();
+      router.push(`/dashboard/forum`)
     }
   };
 

@@ -4,7 +4,7 @@ import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { jwtDecode, JwtPayload } from "jwt-decode";
+import  { jwtDecode, JwtPayload } from "jwt-decode";
 import KelasItem from "@/app/components/KelasItem";
 import Image from "next/image";
 import addButton from "@img/courses/add.png";
@@ -82,18 +82,24 @@ const Courses = () => {
       ) : (
         <>
           <div className="flex flex-col gap-4 h-[80vh] overflow-auto">
-            {classesToDisplay?.map((kelas) => (
-              <KelasItem
-                key={kelas.id}
-                id={kelas.id}
-                title={kelas.nama}
-                jadwal={kelas.jadwal}
-                modul={kelas.modul}
-                linkMeet={kelas.linkMeet}
-                tutorNama={kelas.owner.username}
-                avatar={kelas.owner.avatar}
-              />
-            ))}
+            {classesToDisplay && classesToDisplay.length > 0 ? (
+              classesToDisplay.map((kelas) => (
+                <KelasItem
+                  key={kelas.id}
+                  id={kelas.id}
+                  title={kelas.nama}
+                  jadwal={kelas.jadwal}
+                  modul={kelas.modul}
+                  linkMeet={kelas.linkMeet}
+                  tutorNama={kelas.owner.username}
+                  avatar={kelas.owner.avatar}
+                />
+              ))
+            ) : (
+              <p className="text-center text-secondary font-bold text-xl mt-[10%]">
+                Belum ada kelas ...
+              </p>
+            )}
           </div>
           {userData?.type !== "pelajar" && (
             <Button

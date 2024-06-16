@@ -29,7 +29,7 @@ export async function DELETE(req) {
     const id = req.url.split("/forumDiskusi/")[1];
     const forumDiskusi = await prisma.forumDiskusi.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
