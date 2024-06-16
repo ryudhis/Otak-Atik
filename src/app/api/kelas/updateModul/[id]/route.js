@@ -1,5 +1,5 @@
 import prisma from "@/utils/prisma";
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/utils/cloudinary";
 
 export const config = {
@@ -14,10 +14,10 @@ export async function PATCH(req) {
     const formData = await req.formData();
 
     // Extract the new file from the formData
-    const newFile = formData.get('file');
+    const newFile = formData.get("file");
 
     if (!newFile) {
-      return NextResponse.json({ status: 400, message: 'File not found' });
+      return NextResponse.json({ status: 400, message: "File not found" });
     }
 
     // Read the new file buffer
@@ -39,7 +39,7 @@ export async function PATCH(req) {
 
     // If the module URL exists, delete the old file from Cloudinary
     if (modulUrl) {
-      const publicId = modulUrl.split('/').pop().split('.')[0];
+      const publicId = modulUrl.split("/").pop().split(".")[0];
       await deleteFromCloudinary(publicId);
     }
 
