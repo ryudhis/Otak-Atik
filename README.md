@@ -36,7 +36,7 @@ Aplikasi ini telah dihosting dan dapat diakses melalui tautan berikut: [otak-ati
 ## Teknologi yang Digunakan
 - **Frontend**: Next.js
 - **Backend**: Next.js
-- **Database**: MongoDB
+- **Database**: CockroachDB
 - **Hosting**: Vercel
 
 Terima kasih telah menggunakan Otak Atik! Selamat belajar dan mengajar!
