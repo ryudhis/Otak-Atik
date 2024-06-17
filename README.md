@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Otak Atik - Aplikasi Pembelajaran Online
 
-## Getting Started
+Selamat datang di Otak Atik, aplikasi pembelajaran online berbasis website yang memungkinkan semua orang untuk belajar dan mengajar berbagai materi, mulai dari mata pelajaran dasar hingga topik-topik khusus seperti pemrograman dan marketing, dan lengkap dengan Forum Diskusi.
 
-First, run the development server:
+## Tautan Aplikasi
+Aplikasi ini telah dihosting dan dapat diakses melalui tautan berikut: [otak-atik.vercel.app](https://otak-atik.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Fitur Utama
+- **Registrasi Pengguna**: Daftar sebagai pelajar atau tutor.
+- **Fleksibilitas Materi**: Pilih dan ajarkan materi sesuai keahlian dan minat.
+- **Pendaftaran Kelas**: Pengajar dapat membuat kelas dan menjadwalkan sesi pembelajaran melalui Link Meeting seperti Google Meet, Zoom, Jitsy, dan lain-lain.
+- **Modul Pembelajaran**: Pengajar dapat menyediakan modul tambahan dan kuis untuk murid.
+- **Forum Diskusi**: Pengajar maupun Pelajar dapat berpatisipasi dalam Forum Diskusi untuk membahas berbagai macam topik.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Cara Menggunakan Aplikasi
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Registrasi Akun**
+   - Buka halaman register di [otak-atik.vercel.app/register](https://otak-atik.vercel.app/register).
+   - Pilih tipe user: "Pelajar" atau "Tutor".
+   - Isi form registrasi dan buat akun.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **Login dengan Akun Dummy**
+   - Jika tidak ingin membuat akun, gunakan akun dummy yang telah disediakan:
+     - **Tutor**:
+       - Username: `Tutor`
+       - Password: `123456`
+     - **Pelajar**:
+       - Username: `Pelajar`
+       - Password: `123456`
 
-## Learn More
+3. **Menggunakan Fitur Pembelajaran**
+   - Sebagai tutor, buat kelas baru dan jadwalkan sesi pembelajaran melalui Google Meet.
+   - Sebagai pelajar, daftar ke kelas yang tersedia dan ikuti sesi pembelajaran.
+   - Akses modul tambahan dan kerjakan kuis yang disediakan oleh tutor untuk menguji pemahaman.
 
-To learn more about Next.js, take a look at the following resources:
+## Teknologi yang Digunakan
+- **Frontend**: Next.js
+- **Backend**: Next.js
+- **Database**: MongoDB
+- **Hosting**: Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Terima kasih telah menggunakan Otak Atik! Selamat belajar dan mengajar!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Tim Otak Atik - C624-PS090
