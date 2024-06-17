@@ -15,7 +15,7 @@ Aplikasi ini telah dihosting dan dapat diakses melalui tautan berikut: [otak-ati
 ## Cara Menggunakan Aplikasi
 
 1. **Registrasi Akun**
-   - Buka halaman register di [otak-atik.vercel.app/register](https://otak-atik.vercel.app/register).
+   - Buka halaman register di [otak-atik.vercel.app/register](https://otak-atik.vercel.app/login/register).
    - Pilih tipe user: "Pelajar" atau "Tutor".
    - Isi form registrasi dan buat akun.
 
