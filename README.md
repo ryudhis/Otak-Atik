@@ -29,9 +29,14 @@ Aplikasi ini telah dihosting dan dapat diakses melalui tautan berikut: [otak-ati
        - Password: `123456`
 
 3. **Menggunakan Fitur Pembelajaran**
-   - Sebagai tutor, buat kelas baru dan jadwalkan sesi pembelajaran melalui Google Meet.
+   - Sebagai tutor, buat kelas baru dan jadwalkan sesi pembelajaran melalui Link Meeting.
    - Sebagai pelajar, daftar ke kelas yang tersedia dan ikuti sesi pembelajaran.
-   - Akses modul tambahan dan kerjakan kuis yang disediakan oleh tutor untuk menguji pemahaman.
+   - Akses modul tambahan yang disediakan oleh tutor untuk menguji pemahaman.
+  
+3. **Forum Diskusi**
+   - Membuat Forum Diskusi dengan topik yang diinginkan.
+   - Ikut berpartisipasi dalam diskusi menggunakan fitur comment pada Forum Diskusi.
+   - Fitur Like dan Dislike pada Forum Diskusi yang diinginkan.
 
 ## Teknologi yang Digunakan
 - **Frontend**: Next.js
