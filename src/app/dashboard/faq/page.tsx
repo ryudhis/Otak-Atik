@@ -17,7 +17,7 @@ const FAQ = () => {
       <h1 className="font-bold text-2xl mb-8">Frequently Asked Questions</h1>
       <Accordion
         title="Kelas virtual menggunakan apa?"
-        answer="Kelas virtual akan menggunakan Google Meet."
+        answer="Kelas virtual akan menggunakan Link Meeting seperti Google Meet, Zoom, Jitsy, dan lainnya."
       />
       <Accordion
         title="Apa modul selalu bisa diakses?"
