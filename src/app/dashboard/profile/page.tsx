@@ -105,6 +105,7 @@ const Profile = () => {
         updateData
       );
       if (response.data.status === 400) {
+        toast.error(`Data ${modalType} gagal diubah`);
         alert(response.data.message);
       } else {
         if (modalType !== "password") {
@@ -121,7 +122,8 @@ const Profile = () => {
         }
         toast.success(`Data ${modalType} berhasil diubah`);
       }
-    } catch (error) {
+    } catch (error:any) {
+      toast.error(`${error.response.data.message}`);
       console.log(error);
     } finally {
       setIsModalOpen(false);

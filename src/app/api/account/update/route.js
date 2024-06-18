@@ -34,7 +34,7 @@ export async function PATCH(req) {
         return new Response(
           JSON.stringify({
             status: 400,
-            message: "Old password is incorrect!",
+            message: "Password Lama Salah!",
           }),
           { status: 400 }
         );
