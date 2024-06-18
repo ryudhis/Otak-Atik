@@ -81,7 +81,7 @@ const Search = () => {
             onChange={(e) => setSelectedKategori(e.target.value)}
             className="bg-primary rounded-xl w-50 px-2 placeholder:font-bold"
           >
-            <option value="">Pilih Topik</option>
+            <option value="">Pilih Kategori</option>
             {kategori.map((kat) => (
               <option key={kat} value={kat}>
                 {kat}
@@ -90,7 +90,7 @@ const Search = () => {
           </select>
           <input
             className="bg-primary rounded-xl min-w-40 px-6 placeholder:font-bold"
-            placeholder="Cari judul diskusi"
+            placeholder="Cari judul kelas"
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
