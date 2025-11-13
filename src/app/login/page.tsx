@@ -11,9 +11,21 @@ const Login = () => {
   return (
     <main className='bg-tertiary'>
       <div className='h-screen w-screen flex flex-col items-center justify-center'>
-        <Image className='mb-6' src={logo} alt='logo-image' />
-        <LoginForm />
-        <div className='flex justify-between w-[450px] mt-6'>
+        <Image 
+          className='mb-6' 
+          src={logo} 
+          alt='logo-image' 
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+        />
+        <div data-aos="fade-up" data-aos-delay="200">
+          <LoginForm />
+        </div>
+        <div 
+          className='flex justify-between w-[450px] mt-6'
+          data-aos="fade-up" 
+          data-aos-delay="400"
+        >
           <p className='text-white font-semibold'>Belum punya akun?</p>
           <p onClick={()=>{
 			router.push('/login/register');

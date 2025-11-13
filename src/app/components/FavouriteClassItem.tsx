@@ -23,11 +23,13 @@ const FavouriteClassItem: React.FC<FavouriteClassItemProps> = ({
     <div className="overflow-y-auto max-h-full flex flex-col gap-2 pr-2">
       {kelas
         .filter((item) => userData?.kelasFavorite.includes(item.id))
-        .map((item) => (
+        .map((item, index) => (
           <div
             key={item.id}
-            className="flex justify-between items-center gap-4 hover:opacity-80 cursor-pointer"
+            className="flex justify-between items-center gap-4 hover:opacity-80 cursor-pointer transition-all duration-200 hover:scale-105"
             onClick={(e) => handleUserClick(e, item.id)}
+            data-aos="fade-left"
+            data-aos-delay={index * 50}
           >
             <div className="flex gap-1 items-center">
               <img src={item.owner.avatar} alt={item.owner.username} />

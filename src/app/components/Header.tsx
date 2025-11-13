@@ -51,9 +51,13 @@ const Header = () => {
 
   return (
     <div className='h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10'>
-      <div className='flex items-center gap-6 bg-tertiary rounded-full p-3'>
+      <div 
+        className='flex items-center gap-6 bg-tertiary rounded-full p-3'
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         {!isLoading && userData && (
-          <div onClick={()=> router.push(`/dashboard/profile/${userData.id}`)} className='flex items-center gap-3 cursor-pointer hover:opacity-80'>
+          <div onClick={()=> router.push(`/dashboard/profile/${userData.id}`)} className='flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity duration-200'>
             <img src={userData?.avatar} alt='avatar' />
             <p>{userData?.username}</p>
           </div>

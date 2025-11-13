@@ -33,10 +33,12 @@ const ForumItem: React.FC<ForumItemProps> = ({
   return (
     <div className="mt-8 flex flex-col">
       {filteredDiskusi.length > 0 ? (
-        filteredDiskusi.map((item: forumItem) => (
+        filteredDiskusi.map((item: forumItem, index: number) => (
           <div
             key={item.id}
-            className="py-4 border-b-2 border-primary flex flex-col gap-4"
+            className="py-4 border-b-2 border-primary flex flex-col gap-4 hover:bg-gray-900 transition-colors duration-300"
+            data-aos="fade-up"
+            data-aos-delay={index * 50}
           >
             <div className="flex gap-4">
               <div className="basis-full flex gap-4">

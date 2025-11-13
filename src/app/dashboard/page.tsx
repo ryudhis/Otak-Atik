@@ -168,20 +168,29 @@ const Dashboard = () => {
   }, [currentKelas]);
 
   const renderTutorDashboard = () => (
-    <div className="flex flex-col p-8 border-solid border-[2px] rounded-2xl border-primary shadow-box-kelas h-full w-full relative">
+    <div 
+      className="flex flex-col p-8 border-solid border-[2px] rounded-2xl border-primary shadow-box-kelas h-full w-full relative"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
       <h1 className="font-bold text-2xl mb-4">Kelas Saya</h1>
 
       {!isLoading && userData ? (
         <>
           <div className="flex flex-col">
-            {userData.kelasDiampu.map((kelas) => (
-              <KelasTutor
-                detail={`/dashboard/courses/${kelas.id}`}
-                title={kelas.nama}
-                jadwal={kelas.jadwal}
-                siswa={kelas.siswa.length}
+            {userData.kelasDiampu.map((kelas, index) => (
+              <div 
                 key={kelas.id}
-              />
+                data-aos="fade-right"
+                data-aos-delay={index * 100}
+              >
+                <KelasTutor
+                  detail={`/dashboard/courses/${kelas.id}`}
+                  title={kelas.nama}
+                  jadwal={kelas.jadwal}
+                  siswa={kelas.siswa.length}
+                />
+              </div>
             ))}
             {userData.kelasDiampu.length === 0 && (
               <h1 className="text-secondary text-center mx-auto self-center mt-[10%] font-semibold">
@@ -192,7 +201,7 @@ const Dashboard = () => {
 
           <div
             onClick={() => router.push(`/dashboard/profile/${userData.id}`)}
-            className="flex items-center gap-4 bottom-6 right-6 absolute hover:opacity-80 cursor-pointer z-10"
+            className="flex items-center gap-4 bottom-6 right-6 absolute hover:opacity-80 cursor-pointer z-10 transition-opacity duration-200"
           >
             <p className="font-semibold">{userData.username}</p>
             <img width={45} src={userData.avatar} alt="avatar tutor"></img>
@@ -210,7 +219,11 @@ const Dashboard = () => {
     <>
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-12 min-w-[600px] max-w-[600px] min-h-[380px] max-h-[380px]">
-          <div className="flex justify-between">
+          <div 
+            className="flex justify-between"
+            data-aos="fade-right"
+            data-aos-duration="800"
+          >
             <h1 className="text-4xl font-bold">Kelas {currentKelas}</h1>
             <div className="flex gap-4">
               <Button
@@ -251,7 +264,11 @@ const Dashboard = () => {
             </h1>
           )}
         </div>
-        <div className="p-6 w-[600px] h-80 border-2 border-primary rounded-3xl flex flex-col gap-8">
+        <div 
+          className="p-6 w-[600px] h-80 border-2 border-primary rounded-3xl flex flex-col gap-8"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           <h1 className="text-3xl font-bold">Kelas Favorit</h1>
           {isLoading ? (
             <h1 className="text-center animate-pulse my-auto">
@@ -265,7 +282,11 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="p-6 w-[420px] h-[588px] border-2 border-primary rounded-3xl flex flex-col gap-6">
+        <div 
+          className="p-6 w-[420px] h-[588px] border-2 border-primary rounded-3xl flex flex-col gap-6"
+          data-aos="fade-left"
+          data-aos-delay="300"
+        >
           <h1 className="text-2xl font-bold">Performa Saya</h1>
           <h1 className="text-lg font-semibold">Kelas diikuti</h1>
           <div className="min-h-[300px] max-h-[300px]">
@@ -277,13 +298,15 @@ const Dashboard = () => {
               <h1 className="text-center">Belum ada kelas diikuti</h1>
             ) : (
               <div className="flex flex-col gap-2 overflow-y-auto max-h-full">
-                {userData?.kelasDiambil.map((kelas) => (
+                {userData?.kelasDiambil.map((kelas, index) => (
                   <div
                     onClick={() =>
                       router.push(`/dashboard/courses/${kelas.id}`)
                     }
                     key={kelas.id}
-                    className="flex gap-3 items-center hover:opacity-80 cursor-pointer"
+                    className="flex gap-3 items-center hover:opacity-80 cursor-pointer transition-opacity duration-200"
+                    data-aos="fade-left"
+                    data-aos-delay={index * 50}
                   >
                     <img className="w-8 h-8" src={kelas.owner.avatar} alt="" />
                     <div className="flex flex-col">
@@ -314,7 +337,7 @@ const Dashboard = () => {
                       router.push(`/dashboard/profile/${tutor.id}`)
                     }
                     key={tutor.id}
-                    className="flex flex-col items-center hover:opacity-80 cursor-pointer"
+                    className="flex flex-col items-center hover:opacity-80 cursor-pointer transition-opacity duration-200"
                   >
                     <img
                       className="w-8 h-8 rounded-full"

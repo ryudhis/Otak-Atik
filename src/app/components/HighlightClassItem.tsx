@@ -60,13 +60,15 @@ const HighlightClassItem: React.FC<HighlightClassItemProps> = ({
       {kelas
         .filter((item) => item.kategori === currentKelas)
         .slice(0, 3)
-        .map((item) => (
+        .map((item, index) => (
           <div
             key={item.id}
-            className='p-6 w-56 h-72 border-2 border-primary rounded-3xl flex flex-col gap-8 cursor-pointer'
+            className='p-6 w-56 h-72 border-2 border-primary rounded-3xl flex flex-col gap-8 cursor-pointer hover:scale-105 transition-transform duration-300'
             onClick={() => {
               router.push(`/dashboard/courses/${item.id}`);
             }}
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
           >
             <div className="flex justify-between items-center">
               <div onClick={(e) => { handleUserClick(e, item.owner.id) }} className="flex gap-1 items-center justify-center hover:opacity-80">

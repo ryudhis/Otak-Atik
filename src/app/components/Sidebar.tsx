@@ -18,7 +18,11 @@ import Link from "next/link";
 const Sidebar = () => {
   const pathname = usePathname();
   return (
-    <div className="w-20 h-screen py-8 bg-tertiary border-r-[3px] border-r-primary flex flex-col justify-between items-center fixed">
+    <div 
+      className="w-20 h-screen py-8 bg-tertiary border-r-[3px] border-r-primary flex flex-col justify-between items-center fixed"
+      data-aos="fade-right"
+      data-aos-duration="800"
+    >
       <Link href="/dashboard">
         <Image src={logo} alt="logo image" />
       </Link>

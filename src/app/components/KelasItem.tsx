@@ -55,6 +55,8 @@ const KelasItem: React.FC<KelasItemProps> = ({
     <div
       onClick={() => router.push(`/dashboard/courses/${id}`)}
       className='bg-tertiary p-6 flex justify-between items-center border-b-[1px] border-gray-700 hover:opacity-80 cursor-pointer'
+      data-aos="fade-right"
+      data-aos-duration="600"
     >
       <div className='grid grid-cols-3 items-center gap-10'>
         <div className='flex flex-col gap-2'>

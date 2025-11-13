@@ -228,7 +228,11 @@ const Forum = () => {
 
   return (
     <div className="bg-tertiary p-28 h-screen overflow-auto">
-      <div className="flex justify-between">
+      <div 
+        className="flex justify-between"
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         <div className="flex gap-6 justify-center">
           <h1 className="text-2xl font-bold">Forum Diskusi</h1>
           <Button
