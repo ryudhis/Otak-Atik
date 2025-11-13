@@ -4,14 +4,13 @@ import axiosConfig from "@utils/axios";
 import React, { useState, useEffect } from "react";
 import Button from "@components/Button";
 import Image from "next/image";
-import Cookies from "js-cookie";
-import { jwtDecode, JwtPayload } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import KelasTutor from "../components/KelasTutor";
 import Logo from "@img/logo.png";
 import HighlightClassItem from "../components/HighlightClassItem";
 import FavouriteClassItem from "../components/FavouriteClassItem";
+import { useUser } from "@/app/context/UserContext";
 
 export interface Kelas {
   nama: string;
@@ -39,16 +38,12 @@ export interface account {
   avatar: string;
 }
 
-interface CustomJwtPayload extends JwtPayload {
-  id: string;
-}
-
 const Dashboard = () => {
   const router = useRouter();
+  const { userData, isLoading: isUserLoading, setUserData } = useUser();
   const [kelas, setKelas] = useState<Kelas[]>([]);
   const [account, setAccount] = useState<account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<userData>({} as userData);
   const listKategori = [
     "General",
     "Computer Science",
@@ -106,6 +101,8 @@ const Dashboard = () => {
   };
 
   const toggleKelasFavorite = async (userId: number, kelasId: number) => {
+    if (!userData) return;
+    
     const data = { userId, kelasId };
 
     let updatedKelasFavorite;
@@ -118,10 +115,12 @@ const Dashboard = () => {
       updatedKelasFavorite = [kelasId, ...userData.kelasFavorite];
     }
 
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      kelasFavorite: updatedKelasFavorite,
-    }));
+    setUserData((prevUserData) => 
+      prevUserData ? {
+        ...prevUserData,
+        kelasFavorite: updatedKelasFavorite,
+      } : null
+    );
 
     try {
       const response = await axiosConfig.patch(
@@ -132,35 +131,18 @@ const Dashboard = () => {
         throw new Error(response.data.message);
       }
     } catch (error) {
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-        kelasFavorite: userData.kelasFavorite.includes(kelasId)
-          ? [kelasId, ...prevUserData.kelasFavorite]
-          : prevUserData.kelasFavorite.filter((kelas) => kelas !== kelasId),
-      }));
+      setUserData((prevUserData) =>
+        prevUserData ? {
+          ...prevUserData,
+          kelasFavorite: userData.kelasFavorite.includes(kelasId)
+            ? [kelasId, ...prevUserData.kelasFavorite]
+            : prevUserData.kelasFavorite.filter((kelas) => kelas !== kelasId),
+        } : null
+      );
 
       toast.error("Gagal Favorite Kelas");
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = Cookies.get("token");
-        if (token) {
-          const decodedToken = jwtDecode<CustomJwtPayload>(token);
-          const userId = decodedToken.id;
-
-          const response = await axiosConfig.get(`/api/account/${userId}`);
-          setUserData(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     getKelas();
@@ -244,12 +226,14 @@ const Dashboard = () => {
           </div>
           {!isLoading ? (
             <div className="flex gap-5">
-              <HighlightClassItem
-                userData={userData}
-                kelas={kelas}
-                currentKelas={currentKelas}
-                toggleFavorite={toggleKelasFavorite}
-              />
+              {userData && (
+                <HighlightClassItem
+                  userData={userData}
+                  kelas={kelas}
+                  currentKelas={currentKelas}
+                  toggleFavorite={toggleKelasFavorite}
+                />
+              )}
               {kelas.filter((item) => item.kategori === currentKelas).length ===
                 0 &&
                 !isLoading && (
@@ -276,9 +260,9 @@ const Dashboard = () => {
             </h1>
           ) : userData?.kelasFavorite?.length === 0 ? (
             <h1 className="text-center">Belum ada kelas favorit</h1>
-          ) : (
+          ) : userData ? (
             <FavouriteClassItem kelas={kelas} userData={userData} />
-          )}
+          ) : null}
         </div>
       </div>
       <div className="flex flex-col gap-6">

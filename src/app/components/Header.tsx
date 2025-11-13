@@ -6,48 +6,11 @@ import HelpCenter from "@svg/helpCenter.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import cookies from "js-cookie";
-import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { jwtDecode, JwtPayload } from "jwt-decode";
-import axiosConfig from "@utils/axios";
-
-export interface userData {
-  id: number;
-  username: string;
-  avatar: string;
-  type: string;
-}
-
-interface CustomJwtPayload extends JwtPayload {
-  id: string;
-}
+import { useUser } from "@/app/context/UserContext";
 
 const Header = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<userData | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const token = Cookies.get("token");
-        if (token) {
-          const decodedToken = jwtDecode<CustomJwtPayload>(token);
-          const userId = decodedToken.id;
-
-          const response = await axiosConfig.get(`/api/account/${userId}`);
-          setUserData(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { userData, isLoading } = useUser();
 
   return (
     <div className='h-20 w-full py-8 px-36 flex justify-end items-center fixed top-0 bg-transparent z-10'>
