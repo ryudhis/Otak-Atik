@@ -155,14 +155,22 @@ const Profile = () => {
     </div>
   ) : (
     <div className="bg-tertiary p-28 h-screen justify-between">
-      <div className="flex gap-4 items-center">
+      <div 
+        className="flex gap-4 items-center"
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         <img className="w-20" src={userData?.avatar} alt="" />
         <div className="flex flex-col">
           <h1 className="font-bold text-2xl">{userData?.username}</h1>
           <p className="text-lg">{userData?.email}</p>
         </div>
       </div>
-      <div className="mt-16">
+      <div 
+        className="mt-16"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
         <h1 className="font-bold text-2xl">Biodata Diri</h1>
         <div className="flex flex-col gap-2 mt-4">
           <div className="flex items-center">
@@ -179,7 +187,11 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="my-4">
+      <div 
+        className="my-4"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
         <h1 className="font-bold text-2xl">Kontak</h1>
         <div className="flex flex-col gap-2 mt-4">
           <div className="flex items-center">
@@ -196,16 +208,22 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <Button
-        alternateStyle="secondary"
-        onClick={() => handleOpenModal("password")}
-      >
-        Ubah sandi
-      </Button>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <Button
+          alternateStyle="secondary"
+          onClick={() => handleOpenModal("password")}
+        >
+          Ubah sandi
+        </Button>
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-tertiary bg-opacity-50 flex justify-center items-center">
-          <div className="bg-tertiary p-6 shadow-lg border-4 border-primary rounded-xl">
+          <div 
+            className="bg-tertiary p-6 shadow-lg border-4 border-primary rounded-xl"
+            data-aos="zoom-in"
+            data-aos-duration="500"
+          >
             <h2 className="text-2xl font-bold mb-4">
               Ubah{" "}
               {modalType === "username"

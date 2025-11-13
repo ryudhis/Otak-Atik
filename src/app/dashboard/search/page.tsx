@@ -73,7 +73,11 @@ const Search = () => {
 
   return (
     <div className="bg-tertiary p-28 h-screen flex flex-col overflow-auto">
-      <div className="flex justify-between">
+      <div 
+        className="flex justify-between"
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         <h1 className="font-bold text-2xl mb-4">Cari Kelas</h1>
         <div className="flex gap-6">
           <select
@@ -107,23 +111,32 @@ const Search = () => {
       ) : (
         <>
           {filteredKelas.length === 0 ? (
-            <div className="mt-8 flex justify-center items-center h-[80vh]">
+            <div 
+              className="mt-8 flex justify-center items-center h-[80vh]"
+              data-aos="fade-up"
+            >
               <h1 className="text-secondary font-bold text-xl">
                 Belum ada kelas
               </h1>
             </div>
           ) : (
             <div className="mt-8 flex flex-col gap-4 h-[80vh] overflow-auto">
-              {filteredKelas.map((kelas) => (
-                <SearchClassItem
+              {filteredKelas.map((kelas, index) => (
+                <div
                   key={kelas.id}
-                  id={kelas.id}
-                  title={kelas.nama}
-                  jadwal={kelas.jadwal}
-                  tutorNama={kelas.owner.username}
-                  avatar={kelas.owner.avatar}
-                  kategori={kelas.kategori}
-                />
+                  data-aos="fade-up"
+                  data-aos-delay={index * 50}
+                  data-aos-duration="600"
+                >
+                  <SearchClassItem
+                    id={kelas.id}
+                    title={kelas.nama}
+                    jadwal={kelas.jadwal}
+                    tutorNama={kelas.owner.username}
+                    avatar={kelas.owner.avatar}
+                    kategori={kelas.kategori}
+                  />
+                </div>
               ))}
             </div>
           )}

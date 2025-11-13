@@ -83,14 +83,22 @@ const DetailUser = ({ params }: { params: { id: string } }) => {
         </div>
       ) : (
         <div className="bg-tertiary p-28 h-screen flex flex-col items-center">
-          <div className="flex flex-col items-center justify-center">
+          <div 
+            className="flex flex-col items-center justify-center"
+            data-aos="fade-down"
+            data-aos-duration="800"
+          >
             <img className="w-16 mb-4" src={userData?.avatar} alt="avatar" />
             <h1 className="font-bold text-2xl">
               {userData?.username} ({userData?.type})
             </h1>
             <h1>{userData?.email}</h1>
           </div>
-          <div className="mt-10 p-6 w-2/3 h-[500px] overflow-auto border-2 border-primary rounded-3xl flex flex-col gap-8 shadow-box-kelas">
+          <div 
+            className="mt-10 p-6 w-2/3 h-[500px] overflow-auto border-2 border-primary rounded-3xl flex flex-col gap-8 shadow-box-kelas"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             {userData?.type === "tutor" ? (
               <>
                 <h1 className="font-semibold text-2xl">Kelas Diampu</h1>
@@ -128,7 +136,11 @@ const DetailUser = ({ params }: { params: { id: string } }) => {
               </>
             )}
           </div>
-          <div className="mt-8 p-6 w-1/3 h-[200px] border-2 border-primary rounded-3xl shadow-box-kelas mr-[33%]">
+          <div 
+            className="mt-8 p-6 w-1/3 h-[200px] border-2 border-primary rounded-3xl shadow-box-kelas mr-[33%]"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <h1 className="font-semibold text-2xl">Tutor Favorit</h1>
             <div className="flex mt-5 gap-5 overflow-x-auto flex-nowrap">
               {tutorFavorit.length > 0 ? (

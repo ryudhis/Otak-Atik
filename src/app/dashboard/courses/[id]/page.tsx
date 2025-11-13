@@ -387,14 +387,25 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
             : `hidden`
         }
       >
-        <div className='p-8 px-12 border-solid border-[2px] rounded-xl border-primary shadow-box-kelas mt-5'>
+        <div 
+          className='p-8 px-12 border-solid border-[2px] rounded-xl border-primary shadow-box-kelas mt-5'
+          data-aos="zoom-in"
+          data-aos-duration="800"
+        >
           {kelas && (
             <>
               <div className='flex flex-col gap-8'>
-                <div className='flex items-center'>
+                <div 
+                  className='flex items-center'
+                  data-aos="fade-down"
+                >
                   <h1 className='text-3xl font-bold'>Checkout Kelas</h1>
                 </div>
-                <div className='grid grid-cols-3 gap-8 w-[90%] self-center'>
+                <div 
+                  className='grid grid-cols-3 gap-8 w-[90%] self-center'
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
                   <KelasContent
                     title={"Materi"}
                     subtitle={"Materi yang akan dibahas"}
@@ -412,7 +423,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                   />
                 </div>
 
-                <div className='flex flex-col gap-5'>
+                <div 
+                  className='flex flex-col gap-5'
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
                   <div className='font-semibold text-xl'>
                     <p>Kelas :</p>
                     <p className='text-secondary'>{kelas.nama}</p>
@@ -436,7 +451,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                   </div>
                 </div>
 
-                <div className='grid grid-cols-2 gap-5 self-center '>
+                <div 
+                  className='grid grid-cols-2 gap-5 self-center '
+                  data-aos="fade-up"
+                  data-aos-delay="300"
+                >
                   <Button
                     onClick={() => toggleCheckoutBox()}
                     alternateStyle='secondary'
@@ -460,9 +479,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
             : "hidden"
         }
       >
-        <Button onClick={() => router.back()} alternateStyle='secondary'>
-          &lt;
-        </Button>
+        <div data-aos="fade-right" data-aos-duration="600">
+          <Button onClick={() => router.back()} alternateStyle='secondary'>
+            &lt;
+          </Button>
+        </div>
         {isLoading ? (
           <div className='mt-[25%] h-screen'>
             <h1 className='text-center text-secondary font-bold text-2xl animate-pulse'>
@@ -474,7 +495,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
             {kelas ? (
               <>
                 <div className='border-b-2 border-primary flex flex-col gap-8'>
-                  <div className='flex items-center justify-between'>
+                  <div 
+                    className='flex items-center justify-between'
+                    data-aos="fade-down"
+                    data-aos-duration="800"
+                  >
                     <h1 className='text-3xl font-bold'>{kelas?.nama}</h1>
 
                     <div className='flex items-center gap-5'>
@@ -505,7 +530,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                     </div>
                   </div>
 
-                  <div className='grid grid-cols-3 gap-8 w-[90%] self-center'>
+                  <div 
+                    className='grid grid-cols-3 gap-8 w-[90%] self-center'
+                    data-aos="fade-up"
+                    data-aos-delay="100"
+                  >
                     <KelasContent
                       title={"Materi"}
                       subtitle={"Materi yang akan dibahas"}
@@ -522,7 +551,11 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       content={[`Meet : ${kelas.durasi} Jam `, ...kelas.metode]}
                     />
                   </div>
-                  <div className='flex flex-col gap-3 items-center'>
+                  <div 
+                    className='flex flex-col gap-3 items-center'
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                  >
                     <h1 className='font-bold text-2xl'>Jadwal Kelas</h1>
                     <p className='text-secondary font-semibold text-md border-x-[2px] border-primary p-5 mb-4'>
                       {kelas.jadwal}
@@ -595,7 +628,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       </div>
                     )}
                   </div>
-                  <div>
+                  <div data-aos="fade-up" data-aos-delay="300">
                     <div className='flex items-center gap-3 mb-4'>
                       <div
                         onClick={() =>
@@ -638,6 +671,8 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                       ? `w-full rounded-md border-2 border-primary shadow-md`
                       : `hidden`
                   }
+                  data-aos="fade-up"
+                  data-aos-duration="500"
                 >
                   <form onSubmit={handleSubmit(postComment)}>
                     <textarea
@@ -665,7 +700,7 @@ const DetailKelas = ({ params }: { params: { id: string } }) => {
                     </div>
                   </form>
                 </div>
-                <div>
+                <div data-aos="fade-up" data-aos-delay="100">
                   <h1 className='text-2xl font-bold'>
                     Komentar(
                     {kelas?.comment && kelas.comment.length > 0

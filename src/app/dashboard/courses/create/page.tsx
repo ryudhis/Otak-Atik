@@ -187,17 +187,28 @@ const CreateClassForm = () => {
 
   return (
     <div className="bg-tertiary overflow-auto h-screen p-28">
-      <Button
-        onClick={() => {
-          router.back();
-        }}
-        alternateStyle="w-[10px] secondary"
-      >
-        &lt;
-      </Button>
+      <div data-aos="fade-right" data-aos-duration="600">
+        <Button
+          onClick={() => {
+            router.back();
+          }}
+          alternateStyle="w-[10px] secondary"
+        >
+          &lt;
+        </Button>
+      </div>
       <div className="flex flex-col mt-[10px]">
-        <h2 className="text-3xl font-bold mb-4 text-white">Buat Kelas</h2>
-        <form onSubmit={handleSubmit(createClass)} className="space-y-6">
+        <h2 
+          className="text-3xl font-bold mb-4 text-white"
+          data-aos="fade-down"
+          data-aos-duration="800"
+        >Buat Kelas</h2>
+        <form 
+          onSubmit={handleSubmit(createClass)} 
+          className="space-y-6"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
           <div>
             <label className="font-bold text-md">Nama</label>
             <input
